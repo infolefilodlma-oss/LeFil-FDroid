@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- Requis par AgoraFragment (WebView vers social.le-fil.net, HTTPS uniquement). -->
+    <!-- Requis par MainActivity (WebView vers le-fil.net et ses sous-domaines, HTTPS uniquement). -->
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application

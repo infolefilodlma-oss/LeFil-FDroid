@@ -1,13 +1,3 @@
 <resources>
     <string name="app_name">Le Fil</string>
-
-    <string name="nav_agora">Agora</string>
-    <string name="nav_atrium">Atrium</string>
-    <string name="nav_messages">Messages</string>
-    <string name="nav_notifications">Notifications</string>
-
-    <string name="placeholder_agora">Agora — connexion à social.le-fil.net non encore implémentée.</string>
-    <string name="placeholder_atrium">Atrium — connexion à team.le-fil.net non encore implémentée.</string>
-    <string name="placeholder_messages">Messages — en attente de confirmation des interfaces disponibles.</string>
-    <string name="placeholder_notifications">Notifications — en attente d\'une solution sans services Google.</string>
 </resources>
