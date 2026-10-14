@@ -1,7 +1,10 @@
 package net.lefil.fdroid
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.webkit.CookieManager
 import android.webkit.ValueCallback
@@ -12,6 +15,7 @@ import android.widget.ProgressBar
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 
 /**
  * Interface unique de l'application : le site complet https://le-fil.net/
@@ -37,6 +41,14 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     ) { uri ->
         pendingFileCallback?.onReceiveValue(uri?.let { arrayOf(it) })
         pendingFileCallback = null
+    }
+
+    // PROTOTYPE expérimental : démarrage du service de notifications simulées,
+    // sans rapport avec la navigation WebView ci-dessous.
+    private val notificationPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) {
+        startNotificationPrototype()
     }
 
     private fun isFilHost(host: String?): Boolean {
@@ -129,6 +141,28 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                     }
                 }
             }
+        )
+
+        startNotificationPrototype()
+    }
+
+    // PROTOTYPE expérimental : n'affecte ni le WebView, ni la navigation,
+    // ni les connexions ci-dessus. Vérifie uniquement la faisabilité d'un
+    // service de notifications simulées, sans connexion réseau réelle.
+    private fun startNotificationPrototype() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+            ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            return
+        }
+
+        ContextCompat.startForegroundService(
+            this,
+            Intent(this, SimulatedNotificationService::class.java)
         )
     }
 

@@ -4,6 +4,12 @@
     <!-- Requis par MainActivity (WebView vers le-fil.net et ses sous-domaines, HTTPS uniquement). -->
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!-- PROTOTYPE expérimental (notifications simulées, aucune connexion réseau réelle). -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
     <application
         android:theme="@style/Theme.LeFilFDroid"
         android:label="Le Fil"
@@ -22,6 +28,29 @@
             </intent-filter>
 
         </activity>
+
+        <!--
+            PROTOTYPE expérimental : vérifie uniquement la faisabilité technique
+            Android d'un service de premier plan type specialUse et de
+            notifications générées en arrière-plan. Aucune donnée réelle,
+            aucune connexion réseau, aucun serveur contacté.
+        -->
+        <service
+            android:name=".SimulatedNotificationService"
+            android:foregroundServiceType="specialUse"
+            android:exported="false">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="Prototype experimental de reception de notifications pour Agora et Atrium (test technique uniquement, aucune donnee reelle, aucune connexion serveur)" />
+        </service>
+
+        <receiver
+            android:name=".BootReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
 
     </application>
 </manifest>
