@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Variant debug UNIQUEMENT (jamais mergé dans le build release / F-Droid).
+    Autorise le trafic non chiffré seulement vers la boucle locale utilisée
+    par le serveur de test éphémère du banc d'essai émulateur. Tout le reste
+    (y compris le-fil.net et ses sous-domaines) reste en HTTPS obligatoire,
+    comme sur le build release.
+-->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false" />
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="false">127.0.0.1</domain>
+        <domain includeSubdomains="false">10.0.2.2</domain>
+    </domain-config>
+</network-security-config>
