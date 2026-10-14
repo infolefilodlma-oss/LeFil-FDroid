@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- Requis par AgoraFragment (WebView vers social.le-fil.net, HTTPS uniquement). -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:theme="@style/Theme.LeFilFDroid"
         android:label="Le Fil"
