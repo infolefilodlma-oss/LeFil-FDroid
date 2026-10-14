@@ -31,7 +31,7 @@ class AgoraFragment : Fragment(R.layout.fragment_agora) {
         val progress = view.findViewById<ProgressBar>(R.id.agora_progress)
 
         CookieManager.getInstance().setAcceptCookie(true)
-        CookieManager.getInstance().acceptThirdPartyCookies(webView, true)
+        CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true)
 
         webView.settings.javaScriptEnabled = true
         webView.settings.domStorageEnabled = true
