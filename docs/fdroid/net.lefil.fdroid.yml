@@ -1,0 +1,24 @@
+Categories:
+  - Internet
+License: MIT
+WebSite: https://le-fil.net
+SourceCode: https://github.com/infolefilodlma-oss/LeFil-FDroid
+IssueTracker: https://github.com/infolefilodlma-oss/LeFil-FDroid/issues
+
+AutoName: Le Fil
+
+RepoType: git
+Repo: https://github.com/infolefilodlma-oss/LeFil-FDroid.git
+
+Builds:
+  - versionName: '0.2'
+    versionCode: 2
+    commit: 1f7b55dba2d06b53a3fcd131f813f3e8f15691b2
+    subdir: app
+    gradle:
+      - yes
+
+AutoUpdateMode: Version
+UpdateCheckMode: Tags v[0-9].*
+CurrentVersion: '0.2'
+CurrentVersionCode: 2
