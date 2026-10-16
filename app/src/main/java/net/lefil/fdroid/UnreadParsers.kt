@@ -5,6 +5,8 @@ internal object UnreadParsers {
     private val standard = Regex("""class="mail-subject unseen"\s*>\s*<a href="message/(\d+)"[^>]*>([\s\S]*?)</a>""")
     private val login = Regex("""type=["']password["']|name=["']password["']""")
     fun isLoginPage(html: String) = login.containsMatchIn(html)
+    private val agoraCount = Regex("""<p class="text-muted">([\\s\\S]*?)</p>""")
+    private val lastEntry = Regex("""<div class="mail-last-entry">([\\s\\S]*?)</div>""")
     private val tags = Regex("<[^>]*>")
     private val spaces = Regex("\\s+")
     private val entity = Regex("&(#x[0-9a-fA-F]+|#[0-9]+|[a-zA-Z]+);")
@@ -23,7 +25,10 @@ internal object UnreadParsers {
         val found = linkedMapOf<String,UnreadItem>()
         for (regex in listOf(frio,standard)) for (m in regex.findAll(html)) {
             val id=m.groupValues[1]
-            found.putIfAbsent(id,UnreadItem(id,cleanText(m.groupValues[2]),"${base.trimEnd('/')}/message/$id"))
+            val blockEnd = html.indexOf("mail-list-outside-wrapper", m.range.last + 1).let { if (it < 0) html.length else it }
+            val block = html.substring(m.range.last + 1, blockEnd)
+            val version = agoraCount.find(block)?.groupValues?.get(1)?.let(::cleanText).orEmpty()
+            found.putIfAbsent(id,UnreadItem(id,cleanText(m.groupValues[2]),"${base.trimEnd('/')}/message/$id",version))
         }
         return found.values.toList()
     }
@@ -50,7 +55,8 @@ internal object UnreadParsers {
             }
             val end=if(i+1<entries.size) entries[i+1].range.first else html.length
             val section=html.substring(m.range.last+1,end)
-            found[mid]=UnreadItem(mid,title.find(section)?.groupValues?.get(1)?.let(::cleanText).orEmpty(),url)
+            val version = lastEntry.find(section)?.groupValues?.get(1)?.let(::cleanText).orEmpty()
+            found[mid]=UnreadItem(mid,title.find(section)?.groupValues?.get(1)?.let(::cleanText).orEmpty(),url,version)
         }
         return found.values.toList()
     }
