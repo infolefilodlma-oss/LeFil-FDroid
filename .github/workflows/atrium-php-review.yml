@@ -1,0 +1,25 @@
+name: Talk - controle syntaxe PHP hors production
+
+on:
+  push:
+    branches:
+      - 'prototype/atrium-session-client'
+    paths:
+      - 'server/humhub/**'
+      - '.github/workflows/atrium-php-review.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  php-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Recuperer la branche experimentale
+        uses: actions/checkout@v4
+      - name: Verifier la syntaxe sans serveur HumHub
+        run: |
+          set -Eeuo pipefail
+          php -v
+          php -l server/humhub/messenger-contacts/controllers/LeFilNotificationController.php
