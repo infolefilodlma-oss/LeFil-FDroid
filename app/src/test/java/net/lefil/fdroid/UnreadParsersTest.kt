@@ -42,4 +42,10 @@ class UnreadParsersTest {
         val html = """<a class="messagePreviewEntry unread" data-message-id="31" href="/mail/mail/index?id=31"><h4>Marie <time>12:00</time></h4><div class="mail-last-entry">Bonjour &amp; merci</div></a>"""
         assertEquals("Bonjour & merci", UnreadParsers.parseAtrium(html,"https://team.le-fil.net").single().version)
     }
+
+    @Test fun missingTalkHrefUsesTheSupportedFrontControllerRoute() {
+        val html = """<a class="messagePreviewEntry unread" data-message-id="31"><h4>Marie <time>12:00</time></h4><div class="mail-last-entry">Bonjour</div></a>"""
+        val item = UnreadParsers.parseAtrium(html, "https://team.le-fil.net").single()
+        assertEquals("https://team.le-fil.net/index.php?r=mail%2Fmail%2Findex&id=31", item.url)
+    }
 }

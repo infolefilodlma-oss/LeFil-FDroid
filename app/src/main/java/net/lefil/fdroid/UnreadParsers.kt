@@ -52,7 +52,7 @@ internal object UnreadParsers {
             val cs=classes.find(attrs)?.groupValues?.get(1)?.split(Regex("\\s+")) ?: continue
             if ("unread" !in cs) continue
             val mid=id.find(attrs)?.groupValues?.get(1) ?: continue
-            val raw=href.find(attrs)?.groupValues?.get(1)?.let(::decodeEntities) ?: "/mail/mail/index?id=$mid"
+            val raw=href.find(attrs)?.groupValues?.get(1)?.let(::decodeEntities) ?: "/index.php?r=mail%2Fmail%2Findex&id=$mid"
             val url=when {
                 raw.startsWith("https://team.le-fil.net/") -> raw
                 raw.startsWith("https://") -> continue

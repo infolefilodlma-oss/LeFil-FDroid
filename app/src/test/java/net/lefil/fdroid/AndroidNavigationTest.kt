@@ -44,7 +44,7 @@ class AndroidNavigationTest {
         assertEquals("Atrium", menu.findItem(3).title)
         assertEquals("Talk (Atrium)", menu.findItem(4).title)
         menu.performIdentifierAction(4, 0)
-        assertEquals("https://team.le-fil.net/mail/mail/index", shadowOf(controller.get().findViewById<WebView>(R.id.site_webview)).lastLoadedUrl)
+        assertEquals("https://team.le-fil.net/index.php?r=mail%2Fmail%2Findex", shadowOf(controller.get().findViewById<WebView>(R.id.site_webview)).lastLoadedUrl)
         controller.pause().stop().destroy()
     }
 }

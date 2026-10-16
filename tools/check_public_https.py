@@ -13,6 +13,7 @@ import urllib.parse
 ENDPOINTS = [
     ("Agora", "https://social.le-fil.net/message"),
     ("Agora NodeInfo", "https://social.le-fil.net/.well-known/nodeinfo"),
+    ("Talk inbox", "https://team.le-fil.net/index.php?r=mail%2Fmail%2Findex"),
     ("Atrium home", "https://team.le-fil.net/"),
     ("Talk list PHP", "https://team.le-fil.net/index.php?r=mail%2Fmail%2Fnotification-list"),
     ("Talk count PHP", "https://team.le-fil.net/index.php?r=mail%2Fmail%2Fget-new-message-count-json"),
@@ -102,6 +103,7 @@ def main():
         return record["tls_verified_response"] and record["http_status"] in {"200", "401", "403"}
     # The Android reader already supports both pretty URLs and index.php routing.
     return 0 if (available(records[0]) and
+                 any(available(record) for record in records if record["label"] == "Talk inbox") and
                  any(available(record) for record in records if record["label"] in {"Talk list", "Talk list PHP"}) and
                  any(available(record) for record in records if record["label"] in {"Talk count", "Talk count PHP"})) else 1
 
