@@ -1,6 +1,7 @@
 package net.lefil.fdroid
 
 import android.content.Context
+import android.net.Uri
 
 /**
  * Assemble les composants deja valides : session HumHub du WebView,
@@ -25,8 +26,21 @@ internal class AtriumInboxBridge(
 
     @Synchronized
     fun syncOnce(verifiedEndpointUrl: String): AtriumInboxSync.Result {
+        val requestUrl = try {
+            val base = Uri.parse(verifiedEndpointUrl)
+            // Le curseur appartient exclusivement a la synchronisation locale.
+            if (base.getQueryParameterNames().contains("after")) {
+                return AtriumInboxSync.Result.TransportError
+            }
+            base.buildUpon()
+                .appendQueryParameter("after", checkpoint.lastPublishedId().toString())
+                .build()
+                .toString()
+        } catch (_: Exception) {
+            return AtriumInboxSync.Result.TransportError
+        }
         return AtriumInboxSync(
-            fetch = { session.get(verifiedEndpointUrl) },
+            fetch = { session.get(requestUrl) },
             checkpoint = checkpoint,
             publish = publish
         ).runOnce()
