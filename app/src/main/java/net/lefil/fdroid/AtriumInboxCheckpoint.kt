@@ -17,6 +17,10 @@ internal class AtriumInboxCheckpoint(private val store: SharedPreferences) {
         const val KEY_LAST_PUBLISHED_ID = "atrium_last_published_id"
     }
 
+    /** Curseur durable : exclusivement le dernier evenement effectivement publie. */
+    fun lastPublishedId(): Long =
+        store.getLong(KEY_LAST_PUBLISHED_ID, 0L).coerceAtLeast(0L)
+
     fun pending(batch: AtriumInboxBatch): List<AtriumInboxEvent> {
         val previousRecipient = store.getString(KEY_RECIPIENT, null)
         if (previousRecipient != batch.recipient) {
