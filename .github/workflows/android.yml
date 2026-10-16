@@ -38,6 +38,18 @@ jobs:
           test -f settings.gradle
           test -f app/build.gradle
           test -d app/src/main
+      - name: Verifier acces public Agora et Atrium (sans identifiants)
+        shell: bash
+        run: |
+          for url in https://social.le-fil.net/message https://team.le-fil.net/mail/mail/notification-list; do
+            echo "Controle public: $url"
+            curl --silent --show-error --location --max-time 15 --output /dev/null \
+              --write-out 'HTTP final: %{http_code}; destination: %{url_effective}\n' "$url" || true
+          done
+      - name: Tester les lecteurs de messages
+        run: gradle --no-daemon :app:testDebugUnitTest
+      - name: Verifier Android Lint
+        run: gradle --no-daemon :app:lintDebug
       - name: Compiler la version de test
         run: gradle --no-daemon :app:assembleDebug
       - name: Verifier Android Lint

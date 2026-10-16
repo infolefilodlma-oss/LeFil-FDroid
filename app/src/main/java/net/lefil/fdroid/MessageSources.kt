@@ -1,0 +1,73 @@
+package net.lefil.fdroid
+
+import android.webkit.CookieManager
+import org.json.JSONObject
+import java.net.HttpURLConnection
+import java.net.URL
+
+internal sealed class FetchResult {
+    data class Unread(val items:List<UnreadItem>):FetchResult()
+    object LoginRequired:FetchResult()
+    object Failed:FetchResult()
+}
+internal interface MessageSource {
+    val key:String
+    val displayName:String
+    fun fetch():FetchResult
+}
+internal class SessionHttp {
+    data class Reply(val status:Int,val body:String)
+    fun get(url:String):Reply? {
+        val u=URL(url)
+        if (u.protocol!="https" || u.host !in listOf("social.le-fil.net","team.le-fil.net")) return null
+        var c:HttpURLConnection?=null
+        return try {
+            c=(u.openConnection() as HttpURLConnection).apply {
+                instanceFollowRedirects=false
+                connectTimeout=15000
+                readTimeout=15000
+                setRequestProperty("Accept","text/html,application/json")
+                CookieManager.getInstance().getCookie(url)?.let { setRequestProperty("Cookie",it) }
+            }
+            val status=c.responseCode
+            val text=if(status in 200..299) c.inputStream.bufferedReader().use { it.readText() } else ""
+            Reply(status,text)
+        } catch (_:Exception) { null } finally { c?.disconnect() }
+    }
+}
+internal class AgoraSource(private val http:SessionHttp=SessionHttp()):MessageSource {
+    override val key="agora"
+    override val displayName="Agora"
+    override fun fetch():FetchResult {
+        val r=http.get("https://social.le-fil.net/message")?:return FetchResult.Failed
+        if (r.status in 300..399 || r.status==401 || r.status==403 || UnreadParsers.isLoginPage(r.body)) return FetchResult.LoginRequired
+        if(r.status!=200) return FetchResult.Failed
+        return FetchResult.Unread(UnreadParsers.parseAgora(r.body,"https://social.le-fil.net"))
+    }
+}
+internal class AtriumSource(private val http:SessionHttp=SessionHttp()):MessageSource {
+    override val key="atrium"
+    override val displayName="Atrium"
+    override fun fetch():FetchResult {
+        val base="https://team.le-fil.net"
+        for(path in listOf("/mail/mail/notification-list","/index.php?r=mail%2Fmail%2Fnotification-list")) {
+            val r=http.get(base+path)?:return FetchResult.Failed
+            if(r.status==404) continue
+            if(r.status in 300..399 || r.status==401 || r.status==403) return FetchResult.LoginRequired
+            if(r.status!=200) return FetchResult.Failed
+            val html=if(r.body.trimStart().startsWith("{")) try {
+                JSONObject(r.body).let { it.optString("html").ifEmpty { it.optString("output") } }
+            } catch(_:Exception) { r.body } else r.body
+            if(!UnreadParsers.hasAtriumList(html)) return FetchResult.LoginRequired
+            val messages=UnreadParsers.parseAtrium(html,base)
+            val count=http.get(base+path.replace("notification-list","get-new-message-count-json"))
+                ?.takeIf { it.status==200 }?.let { UnreadParsers.parseNewMessageCount(it.body) }
+            // The counter is a count, not a mapping from count to conversation identities.
+            // Never arbitrarily take the first N messages.
+            if(count==0) return FetchResult.Unread(emptyList())
+            if(count!=null && count<messages.size) return FetchResult.Failed
+            return FetchResult.Unread(messages)
+        }
+        return FetchResult.Failed
+    }
+}
