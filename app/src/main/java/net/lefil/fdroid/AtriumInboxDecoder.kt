@@ -28,7 +28,9 @@ internal object AtriumInboxDecoder {
     fun decode(body: String): AtriumInboxBatch? {
         return try {
             val document = JSONObject(body)
-            val recipient = document.optString("recipient", "").trim()
+            val rawRecipient = document.opt("recipient")
+            if (rawRecipient !is String) return null
+            val recipient = rawRecipient.trim()
             if (recipient.isEmpty() || recipient.length > MAX_RECIPIENT_LENGTH) return null
 
             val events: JSONArray = document.optJSONArray("events") ?: return null
