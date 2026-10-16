@@ -18,16 +18,28 @@ class MessageWatchService: Service() {
         private const val MESSAGE_CHANNEL="lefil_messages"
         private const val STATUS_ID=1
         const val ACTION_POLL="net.lefil.fdroid.POLL"
-        fun start(context:Context) {
-            runCatching { ContextCompat.startForegroundService(context,Intent(context,MessageWatchService::class.java)) }
+        fun enabled(context: Context) = context.getSharedPreferences("lefil_watch", Context.MODE_PRIVATE)
+            .getBoolean("enabled", false)
+        fun setEnabled(context: Context, enabled: Boolean) {
+            context.getSharedPreferences("lefil_watch", Context.MODE_PRIVATE).edit().putBoolean("enabled", enabled).apply()
+        }
+        fun start(context:Context): Boolean {
+            if (!enabled(context)) return false
+            return runCatching { ContextCompat.startForegroundService(context,Intent(context,MessageWatchService::class.java)); true }.getOrDefault(false)
+        }
+        fun stop(context: Context) {
+            setEnabled(context, false)
+            context.stopService(Intent(context, MessageWatchService::class.java))
         }
         fun pollNow(context:Context) {
+            if (!enabled(context)) return
             runCatching { context.startService(Intent(context,MessageWatchService::class.java).setAction(ACTION_POLL)) }
         }
     }
     private var executor:ScheduledExecutorService?=null
     private lateinit var tracker:UnreadTracker
     private var loginNeeded=false
+    private var unavailable=false
     private val sources=listOf<MessageSource>(AgoraSource(),AtriumSource())
     override fun onCreate() {
         super.onCreate()
@@ -41,12 +53,12 @@ class MessageWatchService: Service() {
             if(Build.VERSION.SDK_INT>=34) ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE else 0)
     }
     override fun onStartCommand(intent:Intent?,flags:Int,startId:Int):Int {
+        if (!enabled(this)) { stopSelf(); return START_NOT_STICKY }
         if(executor==null) {
             executor=Executors.newSingleThreadScheduledExecutor().also {
                 it.scheduleWithFixedDelay({pollSafe()},0,60,TimeUnit.SECONDS)
             }
         } else if(intent?.action==ACTION_POLL) executor?.execute {pollSafe()}
-        scheduleAlarm()
         return START_STICKY
     }
     override fun onBind(intent:Intent?):IBinder?=null
@@ -54,31 +66,25 @@ class MessageWatchService: Service() {
     private fun pollSafe() {
         val power=getSystemService(Context.POWER_SERVICE) as PowerManager
         val wake=power.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,"LeFil:poll")
-        wake.acquire(60_000L)
+        wake.acquire(120_000L)
         try { pollAll() } catch(_:Exception) {} finally {if(wake.isHeld)wake.release()}
     }
     @Synchronized private fun pollAll() {
-        var needLogin=false
-        for(source in sources) {
-            when(val result=runCatching{source.fetch()}.getOrDefault(FetchResult.Failed)) {
-                is FetchResult.Unread -> {
-                    val fresh=tracker.newlyUnread(source.key,result.items)
-                    val successes=fresh.map { item -> item.id to showMessage(source,item) }.toMap()
-                    val previous=result.items.map{it.id}.toSet()
-                    val accepted=previous.filter { id -> id !in fresh.map{it.id} || successes[id]==true }.toSet()
-                    tracker.remember(source.key,result.items.filter{it.id in accepted})
-                }
-                FetchResult.LoginRequired -> needLogin=true
-                FetchResult.Failed -> Unit
-            }
-        }
-        if(needLogin!=loginNeeded) {
-            loginNeeded=needLogin
-            try { NotificationManagerCompat.from(this).notify(STATUS_ID,statusNotification()) } catch (_: SecurityException) { /* Permission revoked: leave the foreground notification to Android. */ }
+        val status = MessagePoller(sources, tracker, ::showMessage).poll()
+        val changed = status.loginRequired != loginNeeded || status.unavailable != unavailable
+        loginNeeded = status.loginRequired
+        unavailable = status.unavailable
+        if (changed) {
+            try { NotificationManagerCompat.from(this).notify(STATUS_ID, statusNotification()) }
+            catch (_: SecurityException) { /* Permission can be revoked while polling. */ }
         }
     }
-    private fun showMessage(source:MessageSource,item:UnreadItem):Boolean {
+    internal fun showMessage(source:MessageSource,item:UnreadItem):Boolean {
+        if (!enabled(this)) return false
         val nm=NotificationManagerCompat.from(this)
+        if (!MessageLinks.trusted(item.url)) return false
+        if (Build.VERSION.SDK_INT >= 26 && getSystemService(NotificationManager::class.java)
+                .getNotificationChannel(MESSAGE_CHANNEL)?.importance == NotificationManager.IMPORTANCE_NONE) return false
         if(!nm.areNotificationsEnabled()) return false
         val open=Intent(this,MainActivity::class.java).setAction("open-${source.key}-${item.id}")
             .putExtra(MainActivity.EXTRA_URL,item.url)
@@ -101,7 +107,7 @@ class MessageWatchService: Service() {
         return NotificationCompat.Builder(this,STATUS_CHANNEL)
             .setSmallIcon(R.drawable.ic_launcher_monochrome)
             .setContentTitle("Le Fil")
-            .setContentText(if(loginNeeded) "Touchez pour vous reconnecter" else "Surveillance des messages Agora et Atrium")
+            .setContentText(if(loginNeeded) "Touchez pour vous reconnecter" else if(unavailable) "Vérification indisponible — nouvel essai automatique" else "Surveillance Agora et Talk (Atrium)")
             .setOngoing(true).setShowWhen(false).setPriority(NotificationCompat.PRIORITY_MIN)
             .setContentIntent(pending).build()
     }
@@ -110,13 +116,5 @@ class MessageWatchService: Service() {
         val manager=getSystemService(NotificationManager::class.java)
         manager.createNotificationChannel(NotificationChannel(STATUS_CHANNEL,"Le Fil actif",NotificationManager.IMPORTANCE_MIN))
         manager.createNotificationChannel(NotificationChannel(MESSAGE_CHANNEL,"Messages privés",NotificationManager.IMPORTANCE_HIGH))
-    }
-    private fun scheduleAlarm() {
-        val alarm=getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val pending=PendingIntent.getBroadcast(this,0,Intent(this,PollAlarmReceiver::class.java),
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
-        val at=SystemClock.elapsedRealtime()+5*60_000L
-        if(Build.VERSION.SDK_INT>=23) alarm.setAndAllowWhileIdle(AlarmManager.ELAPSED_REALTIME_WAKEUP,at,pending)
-        else alarm.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,at,pending)
     }
 }

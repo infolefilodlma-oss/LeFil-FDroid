@@ -1,0 +1,1 @@
+Version de candidature : lecteurs Agora et Talk corrigés et testés, activation explicite des notifications, liens de conversation contrôlés et adaptation aux marges système Android. Les essais sur téléphone et comptes réels restent requis avant publication.

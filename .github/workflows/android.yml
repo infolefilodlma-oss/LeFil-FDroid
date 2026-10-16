@@ -2,6 +2,7 @@ name: Android - verification
 
 on:
   workflow_dispatch:
+  pull_request:
   push:
     paths:
       - 'app/**'
@@ -44,9 +45,27 @@ jobs:
         run: gradle --no-daemon :app:lintDebug
       - name: Compiler la version de test
         run: gradle --no-daemon :app:assembleDebug
+      - name: Compiler le candidat release non signe
+        run: gradle --no-daemon :app:assembleRelease
+      - name: Conserver le candidat release non signe
+        uses: actions/upload-artifact@v4
+        with:
+          name: lefil-release-unsigned-candidate
+          path: app/build/outputs/apk/release/*-unsigned.apk
+          if-no-files-found: error
       - name: Conserver le resultat de compilation
         uses: actions/upload-artifact@v4
         with:
           name: lefil-android-debug
           path: app/build/outputs/apk/debug/*.apk
           if-no-files-found: error
+      - name: Conserver les rapports de controle
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lefil-verification-reports
+          path: |
+            app/build/test-results/testDebugUnitTest/*.xml
+            app/build/reports/tests/testDebugUnitTest/**
+            app/build/reports/lint-results-debug.*
+          if-no-files-found: warn

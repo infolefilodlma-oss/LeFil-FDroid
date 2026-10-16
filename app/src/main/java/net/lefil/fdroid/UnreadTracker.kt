@@ -23,7 +23,12 @@ internal class UnreadTracker(
     }
 
     /** À appeler après affichage effectif des notifications. */
-    fun remember(sourceKey: String, current: List<UnreadItem>) {
-        save(sourceKey, current.map { mark(it) }.toSet())
+    fun remember(sourceKey: String, current: List<UnreadItem>, complete: Boolean = true) {
+        val marks = current.map { mark(it) }.toSet()
+        // A truncated inbox cannot prove that an absent conversation has been read.
+        val previous = if (complete) emptySet() else load(sourceKey).filterTo(mutableSetOf()) {
+            it.substringBefore('|') !in current.map { item -> item.id }.toSet()
+        }
+        save(sourceKey, previous + marks)
     }
 }

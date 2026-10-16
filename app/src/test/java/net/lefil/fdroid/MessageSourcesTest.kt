@@ -65,4 +65,13 @@ class MessageSourcesTest {
     @Test fun talkAcceptsConfirmedEmptyState() {
         assertTrue((talk(reply(body = "<div>There are no messages yet.</div>"), reply(body = """{"newMessages":0}""")) as FetchResult.Unread).items.isEmpty())
     }
+
+    @Test fun talkMarksTruncatedListsAsIncomplete() {
+        assertFalse((talk(reply(body = talkHtml), reply(body = """{"newMessages":6}""")) as FetchResult.Unread).complete)
+    }
+    @Test fun emptyAgoraInboxHasTheComposeHeader() {
+        val result = AgoraSource(SessionTransport { reply(body = """<div id="message-new"><a href="/message/new">New message</a></div>""") }).fetch()
+        assertTrue((result as FetchResult.Unread).items.isEmpty())
+        assertFalse(result.complete)
+    }
 }

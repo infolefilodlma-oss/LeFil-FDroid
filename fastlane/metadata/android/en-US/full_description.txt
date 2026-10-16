@@ -1,0 +1,9 @@
+Access Le Fil’s Agora (Friendica), Atrium (HumHub) and Talk, the messaging module built into Atrium. Talk does not refer to Nextcloud Talk.
+
+Services run in a WebView using your existing accounts. The native menu provides direct access to each service.
+
+Optional native message polling uses the WebView’s signed-in sessions without Firebase or Google Play Services. An ongoing notification indicates that polling is enabled. Message notifications open the matching conversation.
+
+Polling runs approximately once per minute when Android permits it. This is not push messaging. Doze, battery restrictions, expired sessions and force-stop can delay or interrupt checks. Reopen the app after force-stop. Polling can be disabled from the menu.
+
+Internet access and service accounts are required for messaging. Immediate or exhaustive delivery is not guaranteed: server lists are paginated and detection depends on their response format.

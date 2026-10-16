@@ -6,7 +6,7 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 internal sealed class FetchResult {
-    data class Unread(val items:List<UnreadItem>):FetchResult()
+    data class Unread(val items:List<UnreadItem>, val complete: Boolean = true):FetchResult()
     object LoginRequired:FetchResult()
     object Failed:FetchResult()
 }
@@ -48,7 +48,7 @@ internal class AgoraSource(private val http:SessionTransport=SessionHttp()):Mess
         val r=http.get("https://social.le-fil.net/message")?:return FetchResult.Failed
         if (r.status in 300..399 || r.status==401 || r.status==403 || UnreadParsers.isLoginPage(r.body)) return FetchResult.LoginRequired
         if(r.status!=200 || !UnreadParsers.hasAgoraInbox(r.body)) return FetchResult.Failed
-        return FetchResult.Unread(UnreadParsers.parseAgora(r.body,"https://social.le-fil.net"))
+        return FetchResult.Unread(UnreadParsers.parseAgora(r.body,"https://social.le-fil.net"), complete = false)
     }
 }
 internal class AtriumSource(private val http:SessionTransport=SessionHttp()):MessageSource {
@@ -74,7 +74,7 @@ internal class AtriumSource(private val http:SessionTransport=SessionHttp()):Mes
             if(count==null) return FetchResult.Failed
             if(count==0) return FetchResult.Unread(emptyList())
             if(count<messages.size) return FetchResult.Failed
-            return FetchResult.Unread(messages)
+            return FetchResult.Unread(messages, complete = count == messages.size)
         }
         return FetchResult.Failed
     }

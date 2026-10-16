@@ -25,7 +25,7 @@ internal object UnreadParsers {
         } catch (_: Exception) { m.value }
     }
     fun hasAgoraInbox(html: String) = html.contains("mail-list-outside-wrapper") ||
-        html.contains("mail-list-wrapper") || html.contains("id=\"mail-conversations\"")
+        html.contains("mail-list-wrapper") || html.contains("id=\"message-new\"")
     fun parseAgora(html: String, base: String): List<UnreadItem> {
         val found = linkedMapOf<String,UnreadItem>()
         for (regex in listOf(frio,standard)) for (m in regex.findAll(html)) {

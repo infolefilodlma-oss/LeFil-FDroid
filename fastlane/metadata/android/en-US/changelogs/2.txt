@@ -1,0 +1,1 @@
+Candidate: tested Agora and Talk readers, explicit notification controls, validated conversation origins and Android system insets. Phone and real-account acceptance checks are still required before publication.

@@ -10,6 +10,3 @@ class BootReceiver:BroadcastReceiver() {
             MessageWatchService.start(context)
     }
 }
-class PollAlarmReceiver:BroadcastReceiver() {
-    override fun onReceive(context:Context,intent:Intent) {MessageWatchService.pollNow(context)}
-}

@@ -1,11 +1,9 @@
 package net.lefil.fdroid
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
-import android.os.PowerManager
 import android.provider.Settings
 import androidx.core.content.ContextCompat
 import android.content.Intent
@@ -20,6 +18,12 @@ import android.widget.ProgressBar
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AlertDialog
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.appbar.MaterialToolbar
+import android.view.Menu
+import android.widget.Toast
 
 /**
  * Interface unique de l'application : le site complet https://le-fil.net/
@@ -40,7 +44,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private lateinit var webView: WebView
 
     private val permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-        askBatteryOnce()
+        granted ->
+        if (granted) enableWatch() else Toast.makeText(this, "Notifications refusées : activez-les dans les réglages Android pour recevoir les messages.", Toast.LENGTH_LONG).show()
     }
 
     private var pendingFileCallback: ValueCallback<Array<Uri>>? = null
@@ -59,6 +64,12 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.app_root)) { view, insets ->
+            val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout())
+            view.setPadding(bars.left, bars.top, bars.right, bars.bottom)
+            insets
+        }
+        configureMenu()
         webView = findViewById(R.id.site_webview)
         val progress = findViewById<ProgressBar>(R.id.site_progress)
 
@@ -74,7 +85,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 request: android.webkit.WebResourceRequest
             ): Boolean {
                 val uri = request.url
-                if (isFilHost(uri.host)) {
+                if (uri.scheme == "https" && isFilHost(uri.host)) {
                     return false
                 }
                 // Hors du Fil (lien réellement externe) : ouvert par le
@@ -109,6 +120,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 runCatching {
                     fileChooserLauncher.launch("*/*")
                 }.onFailure {
+                    pendingFileCallback?.onReceiveValue(null)
                     pendingFileCallback = null
                 }
                 return true
@@ -134,7 +146,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         }
 
         MessageWatchService.start(this)
-        askPermissions()
 
         onBackPressedDispatcher.addCallback(
             this,
@@ -165,29 +176,65 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private fun messageUrlFrom(intent: Intent?): String? {
         val url = intent?.getStringExtra(EXTRA_URL) ?: return null
-        val uri = Uri.parse(url)
-        return if (uri.scheme == "https" && isFilHost(uri.host)) url else null
+        return url.takeIf(MessageLinks::trusted)
     }
 
-    private fun askPermissions() {
+    private fun configureMenu() {
+        val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
+        toolbar.title = "Le Fil"
+        val destinations = listOf(
+            "Accueil" to FIL_URL,
+            "Agora" to "https://social.le-fil.net/",
+            "Atrium" to "https://team.le-fil.net/",
+            "Talk (Atrium)" to "https://team.le-fil.net/mail/mail/index"
+        )
+        destinations.forEachIndexed { index, (label, url) ->
+            toolbar.menu.add(Menu.NONE, index + 1, index, label).setOnMenuItemClickListener {
+                webView.loadUrl(url); true
+            }
+        }
+        toolbar.menu.add("Notifications des messages").setOnMenuItemClickListener {
+            if (MessageWatchService.enabled(this)) {
+                AlertDialog.Builder(this).setTitle("Notifications activées")
+                    .setMessage("La surveillance utilise votre connexion Agora et Atrium. Elle peut être retardée par la veille ou les restrictions Android.")
+                    .setPositiveButton("Désactiver") { _, _ -> MessageWatchService.stop(this) }
+                    .setNegativeButton("Conserver", null).show()
+            } else {
+                AlertDialog.Builder(this).setTitle("Activer les notifications ?")
+                    .setMessage("Connectez-vous à Agora et à Atrium dans l’application. Une notification permanente signale la vérification des messages, environ chaque minute lorsque le téléphone est actif. Android peut retarder la réception en veille. Aucun service Google n’est utilisé.")
+                    .setPositiveButton("Activer") { _, _ -> askNotificationPermission() }
+                    .setNegativeButton("Plus tard", null).show()
+            }
+            true
+        }
+        toolbar.menu.add("Réglages des notifications").setOnMenuItemClickListener {
+            val settings = if (Build.VERSION.SDK_INT >= 26) Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+                .putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
+            else Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:$packageName"))
+            runCatching { startActivity(settings) }; true
+        }
+        toolbar.menu.add("Batterie et arrière-plan").setOnMenuItemClickListener {
+            AlertDialog.Builder(this).setTitle("Réception en arrière-plan")
+                .setMessage("La veille, l’économie de batterie, une session expirée ou un arrêt forcé peuvent interrompre les vérifications. Après un arrêt forcé, rouvrez l’application. Vous pouvez adapter les réglages de batterie d’Android ; la réception instantanée n’est pas garantie.")
+                .setPositiveButton("Réglages Android") { _, _ ->
+                    runCatching { startActivity(Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS)) }
+                }.setNegativeButton("Fermer", null).show()
+            true
+        }
+    }
+
+    private fun askNotificationPermission() {
         if (Build.VERSION.SDK_INT >= 33 &&
-            ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
-                != PackageManager.PERMISSION_GRANTED) {
+            ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
             permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-        } else askBatteryOnce()
+        } else enableWatch()
     }
 
-    @SuppressLint("BatteryLife")
-    private fun askBatteryOnce() {
-        if (Build.VERSION.SDK_INT < 23) return
-        val prefs = getSharedPreferences("lefil_app", Context.MODE_PRIVATE)
-        if (prefs.getBoolean("battery_asked", false)) return
-        val power = getSystemService(Context.POWER_SERVICE) as PowerManager
-        if (power.isIgnoringBatteryOptimizations(packageName)) return
-        prefs.edit().putBoolean("battery_asked", true).apply()
-        runCatching {
-            startActivity(Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)
-                .setData(Uri.parse("package:$packageName")))
+    private fun enableWatch() {
+        MessageWatchService.setEnabled(this, true)
+        if (!MessageWatchService.start(this)) {
+            MessageWatchService.setEnabled(this, false)
+            Toast.makeText(this, "Android n’a pas autorisé le démarrage. Réessayez avec l’application ouverte.", Toast.LENGTH_LONG).show()
         }
     }
 

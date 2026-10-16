@@ -15,6 +15,19 @@ android {
         versionName '0.2'
     }
 
+    testOptions {
+        unitTests.includeAndroidResources = true
+        unitTests.all {
+            def testHome = layout.buildDirectory.dir('test-home').get().asFile
+            systemProperty 'user.home', testHome.absolutePath
+            doFirst { testHome.mkdirs() }
+            // Robolectric's SDK downloader uses the same verified network route as Gradle.
+            ['http.proxyHost', 'http.proxyPort', 'https.proxyHost', 'https.proxyPort', 'javax.net.ssl.trustStore'].each { name ->
+                if (System.getProperty(name) != null) systemProperty name, System.getProperty(name)
+            }
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
@@ -32,4 +45,5 @@ dependencies {
     implementation 'com.google.android.material:material:1.12.0'
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.json:json:20240303'
+    testImplementation 'org.robolectric:robolectric:4.14.1'
 }

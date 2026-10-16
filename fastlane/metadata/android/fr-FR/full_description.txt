@@ -1,0 +1,9 @@
+Le Fil donne accès au réseau Le Fil depuis Android : Agora (Friendica), Atrium (HumHub) et Talk, la messagerie intégrée à Atrium.
+
+Les services s’utilisent dans une interface WebView avec vos comptes habituels. Le menu permet de passer directement d’un service à l’autre. Talk ne désigne pas Nextcloud Talk.
+
+Vous pouvez activer une surveillance native des conversations non lues, sans Firebase ni Google Play Services. Une notification permanente signale la surveillance. Les alertes ouvrent la conversation correspondante dans l’application.
+
+La surveillance réutilise les sessions de connexion du WebView. Elle consulte les services environ chaque minute lorsque Android le permet ; il ne s’agit pas de notifications push. La veille, les restrictions de batterie, une session expirée et un arrêt forcé peuvent retarder ou interrompre les vérifications. Après un arrêt forcé, rouvrez l’application. Le menu permet de désactiver la surveillance.
+
+Une connexion Internet et un compte sur chaque service sont nécessaires pour la messagerie. La réception immédiate et exhaustive n’est pas garantie : les listes serveur sont paginées et l’identification des messages dépend de leur format.
