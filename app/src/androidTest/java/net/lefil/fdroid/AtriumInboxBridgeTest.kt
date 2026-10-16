@@ -60,6 +60,63 @@ class AtriumInboxBridgeTest {
         }
     }
 
+    @Test fun centQuaranteMessagesSontRecuperesEnDeuxLotsSansPerte() {
+        val prefs = context.getSharedPreferences("lefil_atrium_inbox", Context.MODE_PRIVATE)
+        assertTrue(prefs.edit().clear().commit())
+        try {
+            var lastAvailable = 100
+            val requestedAfter = mutableListOf<Int>()
+            val session = AtriumSessionClient(
+                readCookies = { "humhub_session=fiction" },
+                openConnection = { url ->
+                    val after = url.query.substringAfter("after=").toInt()
+                    requestedAfter.add(after)
+                    val ids = if (after == 0) {
+                        ((lastAvailable - 99)..lastAvailable).toList()
+                    } else {
+                        ((after + 1)..minOf(after + 100, lastAvailable)).toList()
+                            .filter { it <= lastAvailable }
+                    }
+                    val events = ids.joinToString(",") { """{"id":$it}""" }
+                    FakeResponse(url, """{"recipient":"compte-test","events":[$events]}""")
+                }
+            )
+            val published = mutableListOf<Long>()
+            val bridge = AtriumInboxBridge(context, session) {
+                published.add(it.id)
+                true
+            }
+            val endpoint = "https://team.le-fil.net/index.php?r=messenger-contacts%2Fle-fil-notification%2Findex"
+
+            assertEquals(AtriumInboxSync.Result.Success(0), bridge.syncOnce(endpoint))
+            lastAvailable = 240
+            assertEquals(AtriumInboxSync.Result.Success(100), bridge.syncOnce(endpoint))
+            assertEquals(AtriumInboxSync.Result.Success(40), bridge.syncOnce(endpoint))
+            assertEquals(listOf(0, 100, 200), requestedAfter)
+            assertEquals((101L..240L).toList(), published)
+        } finally {
+            prefs.edit().clear().commit()
+        }
+    }
+
+    @Test fun endpointAvecCurseurInjecteEstRefuseSansReseau() {
+        val prefs = context.getSharedPreferences("lefil_atrium_inbox", Context.MODE_PRIVATE)
+        assertTrue(prefs.edit().clear().commit())
+        try {
+            var opened = false
+            val session = AtriumSessionClient(
+                readCookies = { "humhub_session=fiction" },
+                openConnection = { opened = true; FakeResponse(it, "{}") }
+            )
+            val bridge = AtriumInboxBridge(context, session) { true }
+            val result = bridge.syncOnce("https://team.le-fil.net/index.php?after=500")
+            assertTrue(result === AtriumInboxSync.Result.TransportError)
+            assertTrue(!opened)
+        } finally {
+            prefs.edit().clear().commit()
+        }
+    }
+
     @Test fun endpointNonAutoriseNePublieAucunMessage() {
         val prefs = context.getSharedPreferences("lefil_atrium_inbox", Context.MODE_PRIVATE)
         prefs.edit().clear().commit()
