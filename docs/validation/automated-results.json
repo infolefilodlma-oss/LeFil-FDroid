@@ -84,5 +84,22 @@
     "Anonymous HTTPS verifies response and login pages, not account sessions or message detection.",
     "Pagination and identical message detection still require authorized accounts.",
     "No main/PR2 merge, official release, F-Droid submission or acceptance."
-  ]
+  ],
+  "github_actions": {
+    "run_id": 38964668550,
+    "url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/38964668550",
+    "source_commit": "ae7cf28e5429ed9618b14040a1b24b0c038113b8",
+    "conclusion": "success",
+    "jobs": [
+      "public-https",
+      "build"
+    ],
+    "artifacts": [
+      "lefil-android-debug",
+      "lefil-public-https-report",
+      "lefil-release-unsigned-candidate",
+      "lefil-verification-reports"
+    ],
+    "evidence": "Public run summary, annotations, job conclusions and artifact names; raw logs require GitHub sign-in."
+  }
 }

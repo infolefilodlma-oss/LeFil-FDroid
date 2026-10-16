@@ -8,6 +8,8 @@
 
 ## Réponses anonymes observées
 
+**Exécution nº 49 réussie** : les jobs `public-https` et `build` terminent avec succès et quatre artefacts sont disponibles (APK debug, release non signé, rapport HTTPS, rapports de vérification).
+
 [Preuve : diagnostic de l'exécution nº 49](https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/38964668550), source `ae7cf28` :
 
 | Requête | Réponse et observation |
