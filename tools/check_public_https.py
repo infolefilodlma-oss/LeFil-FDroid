@@ -13,6 +13,9 @@ import urllib.parse
 ENDPOINTS = [
     ("Agora", "https://social.le-fil.net/message"),
     ("Agora NodeInfo", "https://social.le-fil.net/.well-known/nodeinfo"),
+    ("Atrium home", "https://team.le-fil.net/"),
+    ("Talk list PHP", "https://team.le-fil.net/index.php?r=mail%2Fmail%2Fnotification-list"),
+    ("Talk count PHP", "https://team.le-fil.net/index.php?r=mail%2Fmail%2Fget-new-message-count-json"),
     ("Talk list", "https://team.le-fil.net/mail/mail/notification-list"),
     ("Talk count", "https://team.le-fil.net/mail/mail/get-new-message-count-json"),
 ]
@@ -39,10 +42,15 @@ def check(label, url):
         parsed = urllib.parse.urlsplit(effective)
         safe_destination = urllib.parse.urlunsplit((parsed.scheme, parsed.hostname or "", parsed.path, "", ""))
         contents = body.read_text(errors="replace") if body.exists() else ""
+        header_text = headers.read_text(errors="replace") if headers.exists() else ""
+        title = re.search(r"<title[^>]*>([\s\S]*?)</title>", contents, re.I)
+        page_title = re.sub(r"\s+", " ", html.unescape(title.group(1))).strip()[:120] if title else ""
         chain = re.findall(r"^HTTP/\S+ (\d{3})", headers.read_text(errors="replace") if headers.exists() else "", re.M)
         record = {
             "label": label, "url": url, "curl_exit": result.returncode,
             "http_status": status, "http_chain": chain, "destination": safe_destination,
+            "page_title": page_title,
+            "server": re.findall(r"^server:\s*([^\r\n]+)", header_text, re.I | re.M)[-1:],
             "login_form": bool(re.search(r"(?:type|name)\s*=\s*['\"]password['\"]", contents, re.I)),
             "friendica_marker": "friendica" in contents.lower(),
             "humhub_marker": "humhub" in contents.lower(),
@@ -65,7 +73,7 @@ def check(label, url):
         message = (f"curl_exit={record['curl_exit']}; HTTP={status}; chain={','.join(chain)}; "
                    f"destination={safe_destination}; login_form={record['login_form']}; "
                    f"Friendica={record['friendica_marker']}; HumHub={record['humhub_marker']}; "
-                   f"software={record.get('software', {})}")
+                   f"software={record.get('software', {})}; title={page_title}; server={record['server']}")
         print(f"::notice title={label} HTTPS public::{annotation(message)}", flush=True)
         return record
 
@@ -90,8 +98,13 @@ def main():
                 summary.write(f"| {html.escape(record['label'])} | {record['curl_exit']} | {record['http_status']} | {record['login_form']} | {html.escape(record['destination'])} |\n")
     # Authentication refusals are HTTP responses, not proof of an authenticated session.
     # Transport errors and missing/broken required routes must remain visible failures.
-    required = [record for record in records if record["label"] not in {"Agora NodeInfo", "Agora software"}]
-    return 0 if all(record["tls_verified_response"] and record["http_status"] in {"200", "401", "403"} for record in required) else 1
+    def available(record):
+        return record["tls_verified_response"] and record["http_status"] in {"200", "401", "403"}
+    # The Android reader already supports both pretty URLs and index.php routing.
+    return 0 if (available(records[0]) and
+                 any(available(record) for record in records if record["label"] in {"Talk list", "Talk list PHP"}) and
+                 any(available(record) for record in records if record["label"] in {"Talk count", "Talk count PHP"})) else 1
+
 
 
 if __name__ == "__main__":
