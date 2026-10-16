@@ -1,5 +1,7 @@
 package net.lefil.fdroid
 
+internal data class UnreadItem(val id: String, val label: String, val url: String, val version: String = "")
+
 internal object UnreadParsers {
     private val frio = Regex("""<strong>\s*<a\s+href="message/(\d+)"[^>]*>([\s\S]*?)</a>""")
     private val standard = Regex("""class="mail-subject unseen"\s*>\s*<a href="message/(\d+)"[^>]*>([\s\S]*?)</a>""")
