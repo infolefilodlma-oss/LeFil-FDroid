@@ -11,11 +11,26 @@ on:
       - 'gradle.properties'
       - 'gradle/**'
       - '.github/workflows/android.yml'
+      - 'tools/check_public_https.py'
 
 permissions:
   contents: read
 
 jobs:
+  public-https:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sources
+        uses: actions/checkout@v4
+      - name: Verifier HTTPS public Agora et Talk sans identifiants
+        run: python3 tools/check_public_https.py
+      - name: Conserver le diagnostic HTTPS anonyme
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lefil-public-https-report
+          path: public-https-report.json
+          if-no-files-found: error
   build:
     runs-on: ubuntu-latest
     steps:

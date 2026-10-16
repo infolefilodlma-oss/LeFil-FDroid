@@ -1,0 +1,98 @@
+#!/usr/bin/env python3
+"""Anonymous HTTPS diagnosis for CI; never proves authenticated message delivery."""
+import datetime
+import html
+import json
+import os
+import pathlib
+import re
+import subprocess
+import tempfile
+import urllib.parse
+
+ENDPOINTS = [
+    ("Agora", "https://social.le-fil.net/message"),
+    ("Agora NodeInfo", "https://social.le-fil.net/.well-known/nodeinfo"),
+    ("Talk list", "https://team.le-fil.net/mail/mail/notification-list"),
+    ("Talk count", "https://team.le-fil.net/mail/mail/get-new-message-count-json"),
+]
+
+
+def annotation(value):
+    return str(value).replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A")
+
+
+def check(label, url):
+    with tempfile.TemporaryDirectory(prefix="lefil-public-") as directory:
+        body = pathlib.Path(directory, "body")
+        headers = pathlib.Path(directory, "headers")
+        result = subprocess.run([
+            "curl", "--disable", "--silent", "--show-error", "--location", "--max-redirs", "5",
+            "--proto", "=https", "--proto-redir", "=https", "--connect-timeout", "10",
+            "--max-time", "30", "--max-filesize", "2097152",
+            "--user-agent", "LeFil-Public-CI/1.0", "--header", "Accept: text/html,application/json",
+            "--dump-header", str(headers), "--output", str(body),
+            "--write-out", "%{http_code}\\n%{url_effective}", url,
+        ], capture_output=True, text=True, check=False)
+        # curl interprets the literal \\n in its write-out format.
+        status, _, effective = result.stdout.strip().partition("\n")
+        parsed = urllib.parse.urlsplit(effective)
+        safe_destination = urllib.parse.urlunsplit((parsed.scheme, parsed.hostname or "", parsed.path, "", ""))
+        contents = body.read_text(errors="replace") if body.exists() else ""
+        chain = re.findall(r"^HTTP/\S+ (\d{3})", headers.read_text(errors="replace") if headers.exists() else "", re.M)
+        record = {
+            "label": label, "url": url, "curl_exit": result.returncode,
+            "http_status": status, "http_chain": chain, "destination": safe_destination,
+            "login_form": bool(re.search(r"(?:type|name)\s*=\s*['\"]password['\"]", contents, re.I)),
+            "friendica_marker": "friendica" in contents.lower(),
+            "humhub_marker": "humhub" in contents.lower(),
+            "tls_verified_response": result.returncode == 0 and status.isdigit() and status != "000",
+        }
+        # Store only public software metadata, never page bodies, cookies or tokens.
+        if label in {"Agora NodeInfo", "Agora software"} and status == "200":
+            try:
+                payload = json.loads(contents)
+                if not isinstance(payload, dict):
+                    raise ValueError("Not an object")
+                if label == "Agora software":
+                    software = payload.get("software", {})
+                    record["software"] = {key: str(software[key])[:100] for key in ["name", "version"] if key in software}
+                record["nodeinfo_links"] = [link["href"] for link in payload.get("links", [])
+                    if urllib.parse.urlsplit(link.get("href", "")).hostname == "social.le-fil.net"
+                    and urllib.parse.urlsplit(link.get("href", "")).scheme == "https"]
+            except (ValueError, TypeError, KeyError):
+                record["nodeinfo_json"] = False
+        message = (f"curl_exit={record['curl_exit']}; HTTP={status}; chain={','.join(chain)}; "
+                   f"destination={safe_destination}; login_form={record['login_form']}; "
+                   f"Friendica={record['friendica_marker']}; HumHub={record['humhub_marker']}; "
+                   f"software={record.get('software', {})}")
+        print(f"::notice title={label} HTTPS public::{annotation(message)}", flush=True)
+        return record
+
+
+def main():
+    records = [check(label, url) for label, url in ENDPOINTS]
+    nodeinfo = next(record for record in records if record["label"] == "Agora NodeInfo")
+    links = nodeinfo.get("nodeinfo_links", [])
+    if links:
+        uri = urllib.parse.urlsplit(links[0])
+        if uri.username is None and uri.port in (None, 443) and not uri.query and not uri.fragment:
+            records.append(check("Agora software", links[0]))
+    report = {"checked_at_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+              "authenticated": False, "notification_delivery_validated": False, "checks": records}
+    output = pathlib.Path("public-https-report.json")
+    output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
+    if os.environ.get("GITHUB_STEP_SUMMARY"):
+        with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as summary:
+            summary.write("## Anonymous HTTPS checks\n\nNo accounts or cookies supplied. This does not validate message detection or notifications.\n\n")
+            summary.write("| Endpoint | curl exit | HTTP | Login form | Destination |\n|---|---:|---|---|---|\n")
+            for record in records:
+                summary.write(f"| {html.escape(record['label'])} | {record['curl_exit']} | {record['http_status']} | {record['login_form']} | {html.escape(record['destination'])} |\n")
+    # Authentication refusals are HTTP responses, not proof of an authenticated session.
+    # Transport errors and missing/broken required routes must remain visible failures.
+    required = [record for record in records if record["label"] not in {"Agora NodeInfo", "Agora software"}]
+    return 0 if all(record["tls_verified_response"] and record["http_status"] in {"200", "401", "403"} for record in required) else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
