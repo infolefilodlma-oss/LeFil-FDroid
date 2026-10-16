@@ -48,6 +48,7 @@ class LeFilNotificationController extends Controller
         $bootstrap = ($after === 0);
         $entries = MessageEntry::find()
             ->alias('me')
+            ->select(['me.*'])
             ->innerJoin(
                 ['um' => UserMessage::tableName()],
                 'um.message_id = me.message_id'
