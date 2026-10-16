@@ -7,8 +7,9 @@ internal object UnreadParsers {
     private val standard = Regex("""class="mail-subject unseen"\s*>\s*<a href="message/(\d+)"[^>]*>([\s\S]*?)</a>""")
     private val login = Regex("""type=["']password["']|name=["']password["']""")
     fun isLoginPage(html: String) = login.containsMatchIn(html)
-    private val agoraCount = Regex("""<p class="text-muted">([\\s\\S]*?)</p>""")
-    private val lastEntry = Regex("""<div class="mail-last-entry">([\\s\\S]*?)</div>""")
+    private val agoraCount = Regex("""<p class="text-muted">([\s\S]*?)</p>""")
+    private val standardCount = Regex("""<span class="mail-count">([\s\S]*?)</span>""")
+    private val lastEntry = Regex("""<div class="mail-last-entry">([\s\S]*?)</div>""")
     private val tags = Regex("<[^>]*>")
     private val spaces = Regex("\\s+")
     private val entity = Regex("&(#x[0-9a-fA-F]+|#[0-9]+|[a-zA-Z]+);")
@@ -23,13 +24,16 @@ internal object UnreadParsers {
             }
         } catch (_: Exception) { m.value }
     }
+    fun hasAgoraInbox(html: String) = html.contains("mail-list-outside-wrapper") ||
+        html.contains("mail-list-wrapper") || html.contains("id=\"mail-conversations\"")
     fun parseAgora(html: String, base: String): List<UnreadItem> {
         val found = linkedMapOf<String,UnreadItem>()
         for (regex in listOf(frio,standard)) for (m in regex.findAll(html)) {
             val id=m.groupValues[1]
-            val blockEnd = html.indexOf("mail-list-outside-wrapper", m.range.last + 1).let { if (it < 0) html.length else it }
+            val blockEnd = listOf("mail-list-outside-wrapper", "mail-list-wrapper")
+                .map { html.indexOf(it, m.range.last + 1) }.filter { it >= 0 }.minOrNull() ?: html.length
             val block = html.substring(m.range.last + 1, blockEnd)
-            val version = agoraCount.find(block)?.groupValues?.get(1)?.let(::cleanText).orEmpty()
+            val version = (agoraCount.find(block) ?: standardCount.find(block))?.groupValues?.get(1)?.let(::cleanText).orEmpty()
             found.putIfAbsent(id,UnreadItem(id,cleanText(m.groupValues[2]),"${base.trimEnd('/')}/message/$id",version))
         }
         return found.values.toList()
@@ -39,7 +43,7 @@ internal object UnreadParsers {
     private val id = Regex("""data-message-id="(\d+)"""")
     private val href = Regex("""href="([^"]+)"""")
     private val title = Regex("""<h4[^>]*>([\s\S]*?)<time""")
-    fun hasAtriumList(html: String): Boolean = html.contains("messagePreviewEntry") || (!html.contains("<form") && !isLoginPage(html) && !html.contains("<html",true))
+    fun hasAtriumList(html: String): Boolean = html.contains("messagePreviewEntry") || (Regex("""^\s*<div>[^<]*</div>\s*$""").matches(html) && !isLoginPage(html))
     fun parseAtrium(html: String, base: String): List<UnreadItem> {
         val found=linkedMapOf<String,UnreadItem>()
         val entries=entry.findAll(html).toList()

@@ -28,4 +28,18 @@ class UnreadParsersTest {
         tracker.remember("agora",listOf(message))
         assertTrue(tracker.newlyUnread("agora",listOf(message)).isEmpty())
     }
+
+    @Test fun agoraVersionChangesWhenUnreadThreadReceivesAnotherMessage() {
+        fun parse(count: Int) = UnreadParsers.parseAgora("""<div class="mail-list-outside-wrapper"><strong><a href="message/12">Marie</a></strong><p class="text-muted">$count messages</p></div>""", "https://social.le-fil.net").single()
+        assertEquals("2 messages", parse(2).version)
+        assertNotEquals(parse(2).version, parse(3).version)
+    }
+    @Test fun standardFriendicaVersionIsReadFromMailCount() {
+        val html = """<div class="mail-list-wrapper"><span class="mail-subject unseen"><a href="message/4">Sujet</a></span><span class="mail-count">3</span></div>"""
+        assertEquals("3", UnreadParsers.parseAgora(html,"https://social.le-fil.net").single().version)
+    }
+    @Test fun atriumVersionContainsLastEntry() {
+        val html = """<a class="messagePreviewEntry unread" data-message-id="31" href="/mail/mail/index?id=31"><h4>Marie <time>12:00</time></h4><div class="mail-last-entry">Bonjour &amp; merci</div></a>"""
+        assertEquals("Bonjour & merci", UnreadParsers.parseAtrium(html,"https://team.le-fil.net").single().version)
+    }
 }

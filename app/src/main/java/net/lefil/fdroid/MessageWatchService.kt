@@ -74,7 +74,7 @@ class MessageWatchService: Service() {
         }
         if(needLogin!=loginNeeded) {
             loginNeeded=needLogin
-            runCatching {NotificationManagerCompat.from(this).notify(STATUS_ID,statusNotification())}
+            try { NotificationManagerCompat.from(this).notify(STATUS_ID,statusNotification()) } catch (_: SecurityException) { /* Permission revoked: leave the foreground notification to Android. */ }
         }
     }
     private fun showMessage(source:MessageSource,item:UnreadItem):Boolean {
@@ -93,7 +93,7 @@ class MessageWatchService: Service() {
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
             .setContentIntent(pending).setAutoCancel(true).build()
-        return try {nm.notify("${source.key}-${item.id}",0,n);true} catch(_:Exception){false}
+        return try {nm.notify("${source.key}-${item.id}",0,n);true} catch(_:SecurityException){false}
     }
     private fun statusNotification():Notification {
         val pending=PendingIntent.getActivity(this,0,Intent(this,MainActivity::class.java),
