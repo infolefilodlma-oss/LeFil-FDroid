@@ -1,7 +1,13 @@
 {
-  "source_commit": "1f7b55dba2d06b53a3fcd131f813f3e8f15691b2",
+  "source_commit": "ae7cf28e5429ed9618b14040a1b24b0c038113b8",
   "command": "gradle --no-daemon --max-workers=2 :app:testDebugUnitTest :app:lintDebug :app:assembleDebug :app:assembleRelease",
   "result": "BUILD SUCCESSFUL",
+  "counts": {
+    "tests": 61,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
   "suites": [
     {
       "name": "net.lefil.fdroid.AndroidNavigationTest",
@@ -9,7 +15,7 @@
       "failures": "0",
       "errors": "0",
       "skipped": "0",
-      "timestamp": "2026-10-16T20:28:47"
+      "timestamp": "2026-10-16T20:46:02"
     },
     {
       "name": "net.lefil.fdroid.AndroidNotificationsTest",
@@ -17,7 +23,7 @@
       "failures": "0",
       "errors": "0",
       "skipped": "0",
-      "timestamp": "2026-10-16T20:28:57"
+      "timestamp": "2026-10-16T20:46:14"
     },
     {
       "name": "net.lefil.fdroid.MessageLinksTest",
@@ -25,7 +31,7 @@
       "failures": "0",
       "errors": "0",
       "skipped": "0",
-      "timestamp": "2026-10-16T20:28:58"
+      "timestamp": "2026-10-16T20:46:15"
     },
     {
       "name": "net.lefil.fdroid.MessagePollerTest",
@@ -33,7 +39,7 @@
       "failures": "0",
       "errors": "0",
       "skipped": "0",
-      "timestamp": "2026-10-16T20:28:58"
+      "timestamp": "2026-10-16T20:46:15"
     },
     {
       "name": "net.lefil.fdroid.MessageSourcesTest",
@@ -41,41 +47,42 @@
       "failures": "0",
       "errors": "0",
       "skipped": "0",
-      "timestamp": "2026-10-16T20:28:58"
+      "timestamp": "2026-10-16T20:46:15"
     },
     {
       "name": "net.lefil.fdroid.UnreadParsersTest",
-      "tests": "6",
+      "tests": "7",
       "failures": "0",
       "errors": "0",
       "skipped": "0",
-      "timestamp": "2026-10-16T20:28:58"
+      "timestamp": "2026-10-16T20:46:15"
     }
   ],
   "lint": {
     "Warning": 19
   },
   "artifacts": {
-    "app/build/outputs/apk/debug/app-debug.apk": "7e371e08a0dbcb368dba3d03a63cbc3bd13fde942232cb46c1c1e25046452750",
-    "app/build/outputs/apk/release/app-release-unsigned.apk": "31e4bbd68a1acf77de4ebd7159096b55cfee1eefe6ef9964641bfcf1dd1a4a7d"
+    "app/build/outputs/apk/debug/app-debug.apk": "63ae4213f564416ab90e839508601696fff29bfb78ac91348f929997f5a6c0c5",
+    "app/build/outputs/apk/release/app-release-unsigned.apk": "44017eabf7c4b116e0767511a4946ef83e1c881279eb32f9f02fff3dd76f347c"
   },
-  "limitations": [
-    "Robolectric simulates Android APIs 34 and 35; no phone delivery test.",
-    "Source tests use synthetic server fragments and a fake transport, not live accounts.",
-    "No F-Droid submission, official build-server run, acceptance, or signed official release."
-  ],
   "fdroid": {
     "tool_version": "2.4.5",
     "readmeta": "passed",
-    "lint": "passed with official fdroiddata categories configuration",
-    "source_scan_fatal_issues": 0,
-    "apk_scan": "passed with bundled scanner signatures",
+    "lint": "passed",
     "build_command": "fdroid build --test --scan-binary --no-tarball net.lefil.fdroid:2",
     "build_result": "1 build succeeded",
-    "build_commit": "1f7b55dba2d06b53a3fcd131f813f3e8f15691b2",
-    "local_build_apk_sha256": "b63c9e45077cd7fe47b2bf128e99ed76cd17ce4de3910051d138ccd9b0367d18",
+    "build_commit": "ae7cf28e5429ed9618b14040a1b24b0c038113b8",
+    "local_build_apk_sha256": "ffb25cd4a940465e79e1ca4d7a8b532545d1bd3adde1ef762c3f6db4da379910",
     "official_build_server": "not run",
     "submitted": false,
     "accepted": false
-  }
+  },
+  "public_https_evidence": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/38964668550",
+  "limitations": [
+    "The 60 previous tests are preserved; a Talk fallback-route regression test was added.",
+    "Robolectric is simulation, not phone or Doze validation.",
+    "Anonymous HTTPS verifies response and login pages, not account sessions or message detection.",
+    "Pagination and identical message detection still require authorized accounts.",
+    "No main/PR2 merge, official release, F-Droid submission or acceptance."
+  ]
 }

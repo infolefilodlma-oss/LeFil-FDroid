@@ -10,3 +10,5 @@ Le menu natif ouvre Agora, Atrium et Talk et permet d'activer/désactiver la sur
 - [État de candidature F-Droid](docs/fdroid/SUBMISSION.md)
 
 L'APK de débogage sert uniquement aux essais. Aucun résultat de compilation ou test simulé ne prouve une réception sur téléphone, ni une admission au catalogue F-Droid.
+
+Dernière vérification : [HTTPS réel et candidat Talk corrigé](docs/validation/HTTPS-AND-CANDIDATE.md) — 61 tests réussis ; essais authentifiés et téléphone à effectuer.

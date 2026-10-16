@@ -1,0 +1,81 @@
+{
+  "source_commit": "1f7b55dba2d06b53a3fcd131f813f3e8f15691b2",
+  "command": "gradle --no-daemon --max-workers=2 :app:testDebugUnitTest :app:lintDebug :app:assembleDebug :app:assembleRelease",
+  "result": "BUILD SUCCESSFUL",
+  "suites": [
+    {
+      "name": "net.lefil.fdroid.AndroidNavigationTest",
+      "tests": "8",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "timestamp": "2026-10-16T20:28:47"
+    },
+    {
+      "name": "net.lefil.fdroid.AndroidNotificationsTest",
+      "tests": "20",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "timestamp": "2026-10-16T20:28:57"
+    },
+    {
+      "name": "net.lefil.fdroid.MessageLinksTest",
+      "tests": "2",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "timestamp": "2026-10-16T20:28:58"
+    },
+    {
+      "name": "net.lefil.fdroid.MessagePollerTest",
+      "tests": "9",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "timestamp": "2026-10-16T20:28:58"
+    },
+    {
+      "name": "net.lefil.fdroid.MessageSourcesTest",
+      "tests": "15",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "timestamp": "2026-10-16T20:28:58"
+    },
+    {
+      "name": "net.lefil.fdroid.UnreadParsersTest",
+      "tests": "6",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "timestamp": "2026-10-16T20:28:58"
+    }
+  ],
+  "lint": {
+    "Warning": 19
+  },
+  "artifacts": {
+    "app/build/outputs/apk/debug/app-debug.apk": "7e371e08a0dbcb368dba3d03a63cbc3bd13fde942232cb46c1c1e25046452750",
+    "app/build/outputs/apk/release/app-release-unsigned.apk": "31e4bbd68a1acf77de4ebd7159096b55cfee1eefe6ef9964641bfcf1dd1a4a7d"
+  },
+  "limitations": [
+    "Robolectric simulates Android APIs 34 and 35; no phone delivery test.",
+    "Source tests use synthetic server fragments and a fake transport, not live accounts.",
+    "No F-Droid submission, official build-server run, acceptance, or signed official release."
+  ],
+  "fdroid": {
+    "tool_version": "2.4.5",
+    "readmeta": "passed",
+    "lint": "passed with official fdroiddata categories configuration",
+    "source_scan_fatal_issues": 0,
+    "apk_scan": "passed with bundled scanner signatures",
+    "build_command": "fdroid build --test --scan-binary --no-tarball net.lefil.fdroid:2",
+    "build_result": "1 build succeeded",
+    "build_commit": "1f7b55dba2d06b53a3fcd131f813f3e8f15691b2",
+    "local_build_apk_sha256": "b63c9e45077cd7fe47b2bf128e99ed76cd17ce4de3910051d138ccd9b0367d18",
+    "official_build_server": "not run",
+    "submitted": false,
+    "accepted": false
+  }
+}

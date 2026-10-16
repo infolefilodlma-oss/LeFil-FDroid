@@ -6,7 +6,7 @@ Tester au minimum Android 7/8, 13, 14 et 15 ; inclure Android 16 et un appareil 
 
 | Étape | Manipulation | Résultat attendu | État |
 |---|---|---|---|
-| Accès | Ouvrir le menu et les entrées Agora, Atrium, Talk | Friendica, HumHub puis sa messagerie s'ouvrent ; aucun Nextcloud Talk | À faire |
+| Accès | Installer le candidat `ae7cf28` puis ouvrir le menu et les entrées Agora, Atrium, Talk | Friendica, HumHub puis sa messagerie s'ouvrent ; aucun Nextcloud Talk | À faire |
 | Connexion | Se connecter séparément à Agora et Atrium, fermer puis rouvrir l'app | Sessions conservées selon les réglages serveur ; aucun secret dans les logs | À faire |
 | Activation | Activer les notifications depuis le menu | Explication puis permission Android 13+, notification permanente si autorisé | À faire |
 | Refus | Refuser la permission, puis l'autoriser dans les réglages | Pas de crash ; activer la surveillance ensuite et recevoir le message encore non lu | À faire |
@@ -30,7 +30,7 @@ Pour chaque essai, noter : commit, SHA-256 de l'APK, modèle/API Android, heure,
 ## Limites développées / limites non résolues
 
 - Le service `specialUse` s'appuie sur `START_STICKY` et les broadcasts de reboot/mise à jour. Ce n'est pas une garantie de fonctionnement continu. Aucun contournement de l'arrêt forcé ou des restrictions Android n'est ajouté.
-- Le polling utilise les pages authentifiées existantes, pas une API de push. Les versions de Friendica/HumHub réellement déployées ne sont pas encore vérifiées.
+- Le polling utilise les pages authentifiées existantes, pas une API de push. Agora annonce publiquement Friendica 2026.05-1595 ; la version HumHub et les sessions natives restent non vérifiées. Les URL simplifiées Atrium renvoient 404 : utiliser les liens `index.php?r=...` du candidat corrigé.
 - HumHub limite `notification-list` à cinq conversations ; Friendica pagine les messages. Le client conserve l'historique lorsqu'une liste est partielle mais cela ne récupère pas toutes les pages.
 - Une empreinte fondée sur le nombre de messages Agora ou l'aperçu Talk ne constitue pas un identifiant serveur de message universel. Les aperçus identiques et changements de format doivent être testés et peuvent nécessiter un endpoint serveur documenté fournissant un identifiant stable.
 - Aucun accès serveur authentifié ni aucune réception sur téléphone n'est attesté par les tests automatisés.

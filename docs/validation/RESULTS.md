@@ -1,4 +1,6 @@
-# Résultats de validation — 16 octobre 2026
+# Résultats de validation — référence initiale du 16 octobre 2026
+
+**Mise à jour :** voir [la vérification HTTPS réelle et le candidat corrigé](HTTPS-AND-CANDIDATE.md). Les 60 tests initiaux sont conservés ; le total est désormais de 61 après correction du lien Talk. Le bilan initial JSON est archivé dans `automated-results-baseline.json`.
 
 ## Objectif et historique
 
