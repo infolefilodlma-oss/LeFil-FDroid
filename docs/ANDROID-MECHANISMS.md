@@ -10,7 +10,7 @@ Les notifications refusées ou dont le canal Messages est bloqué ne sont pas m�
 
 La notification persistante fournit un statut de reconnexion ou d'indisponibilité quand le service l'observe. Le menu donne accès aux réglages Android ; aucune exemption batterie n'est imposée au premier lancement.
 
-À partir d'Android 8, `onRenderProcessGone` retire et détruit le WebView devenu inutilisable, puis retourne `true` pour prendre en charge la perte du moteur. Un panneau natif permet de recréer l'affichage sur la dernière URL, sans effacer les sessions ni recharger en boucle. Le menu reste disponible. Android 7 ne fournit pas ce rappel. Le déclencheur `chrome://crash` figure exclusivement dans le test instrumenté, jamais dans le code de l'application.
+À partir d'Android 8, `onRenderProcessGone` retire et détruit le WebView devenu inutilisable, puis retourne `true` pour prendre en charge la perte du moteur. Un panneau natif permet de recréer l'affichage sur la dernière URL, sans effacer les sessions ni recharger en boucle. Le menu reste disponible. Android 7 ne fournit pas ce rappel. La terminaison forcée du moteur figure exclusivement dans le test instrumenté, jamais dans le code de l'application.
 
 ## Documentation officielle
 
@@ -26,6 +26,7 @@ Ces pages n'étaient pas accessibles dans le réseau initial (CONNECT 403). La d
 - `AlarmManager.setAndAllowWhileIdle` : https://github.com/aosp-mirror/platform_frameworks_base/blob/android-15.0.0_r1/apex/jobscheduler/framework/java/android/app/AlarmManager.java
 - `FGS_BOOT_COMPLETED_RESTRICTIONS` : https://github.com/aosp-mirror/platform_frameworks_base/blob/android-15.0.0_r1/services/core/java/com/android/server/am/ActiveServices.java (le type `specialUse` figure dans les exceptions Android 15 ; cela ne prouve pas la réception sur appareil).
 - `WebViewClient.onRenderProcessGone`, nettoyage du WebView et déclencheur de test : https://github.com/aosp-mirror/platform_frameworks_base/blob/android-15.0.0_r1/core/java/android/webkit/WebViewClient.java ; https://developer.android.com/reference/android/webkit/WebViewClient#onRenderProcessGone(android.webkit.WebView,android.webkit.RenderProcessGoneDetail)
+- `WebViewRenderProcess.terminate()` et confirmation de terminaison : https://github.com/aosp-mirror/platform_frameworks_base/blob/android-15.0.0_r1/core/java/android/webkit/WebViewRenderProcess.java
 
 ## Contrats des services consultés
 

@@ -31,7 +31,7 @@ Tests uniquement : JUnit 4.13.2, JSON-java 20240303, Robolectric 4.14.1 et Andro
 
 ## Test du moteur d'affichage dans Android complet
 
-`RendererRecoveryInstrumentedTest` utilise le déclencheur officiel `chrome://crash` pour provoquer deux arrêts du moteur, puis vérifie la reprise par le bouton natif et le menu Talk. Il nécessite Android 8+ (API 26), refuse les appareils physiques et doit être exécuté exclusivement dans un émulateur jetable sans comptes. Il désactive la surveillance dans ce profil d'essai. Android 7 reste couvert par un test de démarrage Robolectric ; l'API de reprise du moteur n'y existe pas.
+`RendererRecoveryInstrumentedTest` utilise l'API publique `WebViewRenderProcess.terminate()` pour provoquer deux arrêts réels du moteur, puis vérifie la reprise par le bouton natif et le menu Talk. Il charge une page locale et exige que l'API confirme la terminaison ; il ne dépend ni du réseau ni du générateur de rapports de crash du moteur. Il nécessite Android 10+ (API 29), refuse les appareils physiques et doit être exécuté exclusivement dans un émulateur jetable sans comptes. Il désactive la surveillance dans ce profil d'essai. Le rappel de reprise existe depuis Android 8 ; Android 7 reste couvert par un test de démarrage Robolectric.
 
 Avec cet émulateur déjà démarré, et **uniquement** son identifiant ADB :
 

@@ -14,10 +14,30 @@ import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
 
-/** Uses the documented chrome://crash hook only in an account-free test emulator. */
+/** Terminates a real renderer only in an account-free test emulator. */
 @RunWith(AndroidJUnit4::class)
-@SdkSuppress(minSdkVersion = 26)
+@SdkSuppress(minSdkVersion = 29)
 class RendererRecoveryInstrumentedTest {
+    private fun terminateRenderer(scenario: ActivityScenario<MainActivity>): WebView {
+        lateinit var failedView: WebView
+        scenario.onActivity { activity ->
+            failedView = activity.findViewById(R.id.site_webview)
+            // Local content starts the renderer independently of remote services or accounts.
+            failedView.loadDataWithBaseURL("https://le-fil.net/", "<p>Renderer recovery test</p>",
+                "text/html", "UTF-8", null)
+        }
+        val deadline = SystemClock.uptimeMillis() + 60_000
+        while (SystemClock.uptimeMillis() < deadline) {
+            var terminated = false
+            scenario.onActivity {
+                terminated = failedView.webViewRenderProcess?.terminate() == true
+            }
+            if (terminated) return failedView
+            SystemClock.sleep(200)
+        }
+        throw AssertionError("Renderer did not start; no termination was injected")
+    }
+
     private fun awaitRecovery(scenario: ActivityScenario<MainActivity>) {
         val deadline = SystemClock.uptimeMillis() + 60_000
         while (SystemClock.uptimeMillis() < deadline) {
@@ -31,18 +51,13 @@ class RendererRecoveryInstrumentedTest {
         fail("Renderer exit did not leave the native recovery screen available")
     }
 
-    @Test fun realRendererCrashesKeepTheAppOpenAndAllowRetryAndServiceSelection() {
+    @Test fun realRendererTerminationKeepsTheAppOpenAndAllowsRetryAndServiceSelection() {
         assertTrue("Run only in a disposable emulator without user accounts",
             Build.HARDWARE in setOf("ranchu", "goldfish"))
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         context.getSharedPreferences("lefil_watch", 0).edit().putBoolean("enabled", false).commit()
         ActivityScenario.launch(MainActivity::class.java).use { scenario ->
-            var failedView: WebView? = null
-            scenario.onActivity { activity ->
-                val current = activity.findViewById<WebView>(R.id.site_webview)
-                failedView = current
-                current.loadUrl("chrome://crash")
-            }
+            val failedView = terminateRenderer(scenario)
             awaitRecovery(scenario)
             scenario.onActivity { activity ->
                 assertFalse(activity.isFinishing)
@@ -52,8 +67,8 @@ class RendererRecoveryInstrumentedTest {
                 assertNotNull(replacement)
                 assertNotSame(failedView, replacement)
                 assertEquals(View.GONE, activity.findViewById<View>(R.id.site_renderer_error).visibility)
-                replacement.loadUrl("chrome://crash")
             }
+            terminateRenderer(scenario)
             awaitRecovery(scenario)
             scenario.onActivity { activity ->
                 val menu = activity.findViewById<MaterialToolbar>(R.id.toolbar).menu
