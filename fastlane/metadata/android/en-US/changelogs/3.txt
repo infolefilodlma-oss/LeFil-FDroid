@@ -1,0 +1,1 @@
+Handle web renderer exits on Android 8 and newer without closing the app. Keep the native interface available and offer to reload the last page or select another service. Test candidate; phone notification acceptance is still pending.

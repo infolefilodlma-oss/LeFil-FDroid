@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Le Fil</string>
+    <string name="renderer_error_title">L’affichage s’est interrompu</string>
+    <string name="renderer_error_message">Réessayez ou choisissez un autre service dans le menu.</string>
+    <string name="reload_site">Recharger le site</string>
 </resources>

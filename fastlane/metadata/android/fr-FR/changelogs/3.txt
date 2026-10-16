@@ -1,0 +1,1 @@
+Corrige la fermeture de l’application lorsque le moteur d’affichage s’arrête sur Android 8 ou supérieur. L’interface reste ouverte et propose de recharger la dernière page ou de choisir un autre service. Version candidate pour essais ; notifications sur téléphone encore à valider.

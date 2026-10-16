@@ -14,6 +14,11 @@ import android.webkit.ValueCallback
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.webkit.RenderProcessGoneDetail
+import android.view.View
+import android.view.ViewGroup
+import android.widget.FrameLayout
+import androidx.annotation.RequiresApi
 import android.widget.ProgressBar
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
@@ -38,10 +43,12 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     companion object {
         private const val FIL_URL = "https://le-fil.net/"
         private const val STATE_WEBVIEW = "site_webview_state"
+        private const val STATE_LAST_URL = "site_last_url"
         const val EXTRA_URL = "net.lefil.fdroid.OPEN_URL"
     }
 
-    private lateinit var webView: WebView
+    private var webView: WebView? = null
+    private var lastSiteUrl = FIL_URL
 
     private val permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
         granted ->
@@ -70,7 +77,38 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             insets
         }
         configureMenu()
-        webView = findViewById(R.id.site_webview)
+        configureWebView(findViewById(R.id.site_webview))
+        findViewById<View>(R.id.reload_site).setOnClickListener { loadSite(lastSiteUrl) }
+
+        val messageUrl = messageUrlFrom(intent)
+        if (messageUrl != null) {
+            loadSite(messageUrl)
+        } else {
+            lastSiteUrl = savedInstanceState?.getString(STATE_LAST_URL) ?: FIL_URL
+            val history = savedInstanceState?.getBundle(STATE_WEBVIEW)?.let { webView?.restoreState(it) }
+            if (history == null) loadSite(lastSiteUrl)
+        }
+
+        MessageWatchService.start(this)
+
+        onBackPressedDispatcher.addCallback(
+            this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (webView?.canGoBack() == true) {
+                        webView?.goBack()
+                    } else {
+                        isEnabled = false
+                        onBackPressedDispatcher.onBackPressed()
+                    }
+                }
+            }
+        )
+    }
+
+    private fun configureWebView(view: WebView) {
+        this.webView = view
+        val webView = view
         val progress = findViewById<ProgressBar>(R.id.site_progress)
 
         CookieManager.getInstance().setAcceptCookie(true)
@@ -97,12 +135,34 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             }
 
             override fun onPageStarted(view: WebView, url: String?, favicon: android.graphics.Bitmap?) {
-                progress.visibility = android.view.View.VISIBLE
+                if (view !== this@MainActivity.webView) return
+                if (url != null) {
+                    val uri = Uri.parse(url)
+                    if (uri.scheme == "https" && isFilHost(uri.host)) lastSiteUrl = url
+                }
+                progress.visibility = View.VISIBLE
             }
 
             override fun onPageFinished(view: WebView, url: String?) {
-                progress.visibility = android.view.View.GONE
+                if (view !== this@MainActivity.webView) return
+                progress.visibility = View.GONE
                 CookieManager.getInstance().flush()
+            }
+
+            @RequiresApi(26)
+            override fun onRenderProcessGone(view: WebView, detail: RenderProcessGoneDetail): Boolean {
+                val current = view === this@MainActivity.webView
+                if (current) this@MainActivity.webView = null
+                (view.parent as? ViewGroup)?.removeView(view)
+                view.destroy()
+                if (current) {
+                    val callback = pendingFileCallback
+                    pendingFileCallback = null
+                    runCatching { callback?.onReceiveValue(null) }
+                    progress.visibility = View.GONE
+                    findViewById<View>(R.id.site_renderer_error).visibility = View.VISIBLE
+                }
+                return true
             }
         }
 
@@ -135,37 +195,26 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
             }
         }
+    }
 
-        val messageUrl = messageUrlFrom(intent)
-        if (messageUrl != null) {
-            webView.loadUrl(messageUrl)
-        } else if (savedInstanceState != null) {
-            webView.restoreState(savedInstanceState.getBundle(STATE_WEBVIEW) ?: Bundle())
-        } else {
-            webView.loadUrl(FIL_URL)
+    private fun loadSite(url: String) {
+        lastSiteUrl = url
+        val view = webView ?: WebView(this).also { replacement ->
+            replacement.id = R.id.site_webview
+            replacement.layoutParams = FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            findViewById<FrameLayout>(R.id.site_container).addView(replacement, 0)
+            configureWebView(replacement)
         }
-
-        MessageWatchService.start(this)
-
-        onBackPressedDispatcher.addCallback(
-            this,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    if (webView.canGoBack()) {
-                        webView.goBack()
-                    } else {
-                        isEnabled = false
-                        onBackPressedDispatcher.onBackPressed()
-                    }
-                }
-            }
-        )
+        findViewById<View>(R.id.site_renderer_error).visibility = View.GONE
+        findViewById<View>(R.id.site_progress).visibility = View.VISIBLE
+        view.loadUrl(url)
     }
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         setIntent(intent)
-        messageUrlFrom(intent)?.let { webView.loadUrl(it) }
+        messageUrlFrom(intent)?.let { loadSite(it) }
     }
 
     override fun onPause() {
@@ -190,7 +239,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         )
         destinations.forEachIndexed { index, (label, url) ->
             toolbar.menu.add(Menu.NONE, index + 1, index, label).setOnMenuItemClickListener {
-                webView.loadUrl(url); true
+                loadSite(url); true
             }
         }
         toolbar.menu.add("Notifications des messages").setOnMenuItemClickListener {
@@ -240,8 +289,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        val state = Bundle()
-        webView.saveState(state)
-        outState.putBundle(STATE_WEBVIEW, state)
+        outState.putString(STATE_LAST_URL, lastSiteUrl)
+        webView?.let { current ->
+            val state = Bundle()
+            current.saveState(state)
+            outState.putBundle(STATE_WEBVIEW, state)
+        }
     }
 }
