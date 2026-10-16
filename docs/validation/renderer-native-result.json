@@ -1,0 +1,27 @@
+{
+  "source_commit": "c85f5a3cbb78ab58e6207f770cd9f6df60fb818d",
+  "android_api": 35,
+  "android_version": "15",
+  "device": "AOSP x86_64 emulator, software emulation without KVM",
+  "webview": "com.android.webview 124.0.6367.219",
+  "command": "adb -s emulator-5554 shell am instrument -w -r net.lefil.fdroid.test/androidx.test.runner.AndroidJUnitRunner",
+  "result": "OK (1 test)",
+  "duration_seconds": 47.022,
+  "renderer_terminations": 2,
+  "method": "WebViewRenderProcess.terminate(), returned true for each termination",
+  "content": "local synthetic HTML, no accounts",
+  "asserted": [
+    "Activity remains running",
+    "native recovery view shown after both terminations",
+    "destroyed WebView removed",
+    "Retry creates a different WebView",
+    "Talk menu creates a new WebView after the second termination"
+  ],
+  "tested_artifacts_sha256": {
+    "app/build/outputs/apk/debug/app-debug.apk": "1d82596df9c83b724cd7492ed8110af077a94ccf39dd69a19bbfc638bbc72ce4",
+    "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk": "2c2710f4d0d2cf083b06b23116462554967969a1975ea02a672131d9ab255efd"
+  },
+  "phone_validation": false,
+  "remote_services_validated": false,
+  "notifications_validated": false
+}

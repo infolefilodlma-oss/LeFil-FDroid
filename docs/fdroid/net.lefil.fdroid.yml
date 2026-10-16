@@ -11,14 +11,14 @@ RepoType: git
 Repo: https://github.com/infolefilodlma-oss/LeFil-FDroid.git
 
 Builds:
-  - versionName: '0.2'
-    versionCode: 2
-    commit: ae7cf28e5429ed9618b14040a1b24b0c038113b8
+  - versionName: 0.2.1
+    versionCode: 3
+    commit: c85f5a3cbb78ab58e6207f770cd9f6df60fb818d
     subdir: app
     gradle:
       - yes
 
 AutoUpdateMode: Version
 UpdateCheckMode: Tags v[0-9].*
-CurrentVersion: '0.2'
-CurrentVersionCode: 2
+CurrentVersion: 0.2.1
+CurrentVersionCode: 3

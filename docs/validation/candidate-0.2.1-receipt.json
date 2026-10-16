@@ -1,0 +1,11 @@
+{
+  "file": "LeFil-0.2.1-c85f5a3-debug.apk",
+  "package": "net.lefil.fdroid",
+  "versionName": "0.2.1",
+  "versionCode": 3,
+  "source_commit": "c85f5a3cbb78ab58e6207f770cd9f6df60fb818d",
+  "sha256": "1d82596df9c83b724cd7492ed8110af077a94ccf39dd69a19bbfc638bbc72ce4",
+  "signer_certificate_sha256": "b40aa34d48c29e928d26a587dd9442b8bff5c44e463f5d50247a52c33a367890",
+  "usage": "Debug-signed test APK, not official F-Droid release",
+  "same_apk_as_passing_native_test": true
+}

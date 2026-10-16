@@ -1,0 +1,14 @@
+2026-10-16 21:40:08,267 INFO: Using /workspace/.cloud-setup/android-sdk/build-tools/34.0.0/apksigner
+2026-10-16 21:40:08,270 INFO: Building version 0.2.1 (3) of net.lefil.fdroid
+2026-10-16 21:40:08,273 INFO: Getting source for revision c85f5a3cbb78ab58e6207f770cd9f6df60fb818d
+2026-10-16 21:40:11,289 INFO: Creating local.properties file at build/net.lefil.fdroid/local.properties
+2026-10-16 21:40:11,290 INFO: Creating local.properties file at build/net.lefil.fdroid/app/local.properties
+2026-10-16 21:40:11,293 INFO: Cleaning Gradle project...
+2026-10-16 21:40:12,704 INFO: Scanning source for common problems...
+2026-10-16 21:40:12,739 INFO: Building Gradle project...
+2026-10-16 21:40:23,096 INFO: Successfully built version 0.2.1 of net.lefil.fdroid from c85f5a3cbb78ab58e6207f770cd9f6df60fb818d
+2026-10-16 21:40:23,167 INFO: Scanning APK with dexdump for known non-free classes.
+2026-10-16 21:40:26,475 INFO: Scanning APK for extra signing blocks.
+2026-10-16 21:40:26,500 INFO: success: net.lefil.fdroid
+2026-10-16 21:40:26,500 INFO: Finished
+2026-10-16 21:40:26,500 INFO: 1 build succeeded

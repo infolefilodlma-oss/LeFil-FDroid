@@ -1,0 +1,2 @@
+10-16 21:07:05.708  1870  1870 E chromium: [ERROR:aw_browser_terminator.cc(154)] Renderer process (2049) crash detected (code 5).
+10-16 21:07:05.760  1870  1870 F chromium: [FATAL:crashpad_client_linux.cc(745)] Render process (2049)'s crash wasn't handled by all associated  webviews, triggering application crash.

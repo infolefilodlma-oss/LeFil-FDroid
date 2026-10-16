@@ -1,5 +1,7 @@
 # Vérification réelle HTTPS et candidat corrigé — 16 octobre 2026
 
+Historique du candidat `0.2` : ce paquet a ensuite été signalé défaillant au démarrage. Ses résultats ne valent pas acceptation sur téléphone. Le correctif de reprise du moteur fait l'objet du [bilan suivant](RENDERER-RECOVERY.md).
+
 ## Résultats récupérés sur GitHub Actions
 
 - [Exécution nº 45](https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/38962818582), commit `1f7b55d`, branche candidate : **réussie**, trois artefacts (APK debug, release non signé, rapports). Ce résultat vérifie les contrôles existants ; aucun besoin de recommencer leur implémentation.
@@ -32,7 +34,7 @@ Le raccourci natif Talk utilisait l'URL simplifiée qui répond 404. Il utilise 
 
 Le test existant de navigation a été ajusté à cette URL réellement accessible, et un test de régression couvre le lien de secours. Les 60 tests précédents sont conservés, pour **61 tests exécutés avec zéro échec/erreur/ignoré**, dont Android simulé API 34/35. Lint : zéro erreur et 19 avertissements. Les deux APK sont générés et la signature debug vérifiée.
 
-La recette F-Droid épingle maintenant `ae7cf28e5429ed9618b14040a1b24b0c038113b8`. `readmeta`, `lint`, compilation locale F-Droid et scan binaire réussissent : **1 build succeeded**. Le serveur officiel et une vérification de reproductibilité indépendante ne sont pas exécutés. [Résultats et SHA-256](automated-results.json).
+La recette F-Droid épinglait `ae7cf28e5429ed9618b14040a1b24b0c038113b8` pour ce candidat. `readmeta`, `lint`, compilation locale F-Droid et scan binaire réussissaient : **1 build succeeded**. Le serveur officiel et une vérification de reproductibilité indépendante ne sont pas exécutés. [Résultats et SHA-256 de ce candidat](automated-results-talk-candidate.json).
 
 ## Lecture des messages et exigences F-Droid restantes
 

@@ -11,4 +11,4 @@ Le menu natif ouvre Agora, Atrium et Talk et permet d'activer/désactiver la sur
 
 L'APK de débogage sert uniquement aux essais. Aucun résultat de compilation ou test simulé ne prouve une réception sur téléphone, ni une admission au catalogue F-Droid.
 
-Dernière vérification : [HTTPS réel et candidat Talk corrigé](docs/validation/HTTPS-AND-CANDIDATE.md) — 61 tests réussis ; essais authentifiés et téléphone à effectuer.
+Dernière vérification : [reprise du moteur et candidat 0.2.1](docs/validation/RENDERER-RECOVERY.md) — 70 tests JVM réussis et un test natif réussi dans l'émulateur Android 15. La panne signalée sur téléphone reste à recontrôler ; les essais authentifiés et de notifications sur téléphone restent à effectuer.

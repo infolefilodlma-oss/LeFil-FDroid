@@ -6,7 +6,8 @@ Tester au minimum Android 7/8, 13, 14 et 15 ; inclure Android 16 et un appareil 
 
 | Étape | Manipulation | Résultat attendu | État |
 |---|---|---|---|
-| Accès | Installer le candidat `ae7cf28` puis ouvrir le menu et les entrées Agora, Atrium, Talk | Friendica, HumHub puis sa messagerie s'ouvrent ; aucun Nextcloud Talk | À faire |
+| Démarrage | Installer le candidat `0.2.1` / code `3` en conservant les données, puis ouvrir et refermer l'app | L'app reste ouverte et affiche l'accueil ; relever immédiatement modèle, Android et symptôme en cas d'échec | À faire sur le téléphone concerné |
+| Accès | Ouvrir le menu et les entrées Agora, Atrium, Talk | Friendica, HumHub puis sa messagerie s'ouvrent ; aucun Nextcloud Talk | À faire |
 | Connexion | Se connecter séparément à Agora et Atrium, fermer puis rouvrir l'app | Sessions conservées selon les réglages serveur ; aucun secret dans les logs | À faire |
 | Activation | Activer les notifications depuis le menu | Explication puis permission Android 13+, notification permanente si autorisé | À faire |
 | Refus | Refuser la permission, puis l'autoriser dans les réglages | Pas de crash ; activer la surveillance ensuite et recevoir le message encore non lu | À faire |
@@ -24,6 +25,7 @@ Tester au minimum Android 7/8, 13, 14 et 15 ; inclure Android 16 et un appareil 
 | Canal bloqué | Désactiver uniquement le canal Messages, puis le réactiver | Messages non marqués comme notifiés tant que le canal est bloqué | À faire |
 | Smartphone | Tester grande police, mode sombre, clavier, rotation et découpes/barres Android 15 | Menu, formulaire et conversation utilisables | À faire |
 | Pièce jointe | Choisir puis annuler un fichier et ouvrir un téléchargement | Choix/annulation sans blocage du prochain essai | À faire |
+| Perte du moteur | Si l'affichage s'interrompt sous Android 8+, toucher Recharger puis changer de service dans le menu | Un panneau explicite remplace le WebView perdu ; reprise sans fermeture ni effacement des sessions. Ne pas provoquer de crash sur un téléphone personnel | À faire sur téléphone ; test automatique réservé à un émulateur sans comptes |
 
 Pour chaque essai, noter : commit, SHA-256 de l'APK, modèle/API Android, heure, réglages batterie, serveur/version, cas, résultat réel, délai et preuve anonymisée. Ne pas conserver le corps des messages privés ni les cookies.
 

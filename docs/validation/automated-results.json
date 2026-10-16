@@ -1,21 +1,31 @@
 {
-  "source_commit": "ae7cf28e5429ed9618b14040a1b24b0c038113b8",
-  "command": "gradle --no-daemon --max-workers=2 :app:testDebugUnitTest :app:lintDebug :app:assembleDebug :app:assembleRelease",
+  "source_commit": "c85f5a3cbb78ab58e6207f770cd9f6df60fb818d",
+  "versionName": "0.2.1",
+  "versionCode": 3,
+  "command": "gradle --no-daemon --max-workers=2 :app:testDebugUnitTest :app:lintDebug :app:assembleDebug :app:assembleRelease :app:assembleDebugAndroidTest",
   "result": "BUILD SUCCESSFUL",
   "counts": {
-    "tests": 61,
+    "tests": 70,
     "failures": 0,
     "errors": 0,
     "skipped": 0
   },
   "suites": [
     {
+      "name": "net.lefil.fdroid.AndroidLegacyStartupTest",
+      "tests": "1",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "timestamp": "2026-10-16T21:29:09"
+    },
+    {
       "name": "net.lefil.fdroid.AndroidNavigationTest",
       "tests": "8",
       "failures": "0",
       "errors": "0",
       "skipped": "0",
-      "timestamp": "2026-10-16T20:46:02"
+      "timestamp": "2026-10-16T21:29:12"
     },
     {
       "name": "net.lefil.fdroid.AndroidNotificationsTest",
@@ -23,7 +33,15 @@
       "failures": "0",
       "errors": "0",
       "skipped": "0",
-      "timestamp": "2026-10-16T20:46:14"
+      "timestamp": "2026-10-16T21:29:19"
+    },
+    {
+      "name": "net.lefil.fdroid.AndroidRendererRecoveryTest",
+      "tests": "8",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "timestamp": "2026-10-16T21:29:20"
     },
     {
       "name": "net.lefil.fdroid.MessageLinksTest",
@@ -31,7 +49,7 @@
       "failures": "0",
       "errors": "0",
       "skipped": "0",
-      "timestamp": "2026-10-16T20:46:15"
+      "timestamp": "2026-10-16T21:29:21"
     },
     {
       "name": "net.lefil.fdroid.MessagePollerTest",
@@ -39,7 +57,7 @@
       "failures": "0",
       "errors": "0",
       "skipped": "0",
-      "timestamp": "2026-10-16T20:46:15"
+      "timestamp": "2026-10-16T21:29:21"
     },
     {
       "name": "net.lefil.fdroid.MessageSourcesTest",
@@ -47,7 +65,7 @@
       "failures": "0",
       "errors": "0",
       "skipped": "0",
-      "timestamp": "2026-10-16T20:46:15"
+      "timestamp": "2026-10-16T21:29:21"
     },
     {
       "name": "net.lefil.fdroid.UnreadParsersTest",
@@ -55,40 +73,72 @@
       "failures": "0",
       "errors": "0",
       "skipped": "0",
-      "timestamp": "2026-10-16T20:46:15"
+      "timestamp": "2026-10-16T21:29:21"
     }
   ],
   "lint": {
     "Warning": 19
   },
   "artifacts": {
-    "app/build/outputs/apk/debug/app-debug.apk": "63ae4213f564416ab90e839508601696fff29bfb78ac91348f929997f5a6c0c5",
-    "app/build/outputs/apk/release/app-release-unsigned.apk": "44017eabf7c4b116e0767511a4946ef83e1c881279eb32f9f02fff3dd76f347c"
+    "app/build/outputs/apk/debug/app-debug.apk": "1d82596df9c83b724cd7492ed8110af077a94ccf39dd69a19bbfc638bbc72ce4",
+    "app/build/outputs/apk/release/app-release-unsigned.apk": "904364e593c3ee755d0da223cccd6669268fefb8237095666c957229455dfe06",
+    "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk": "2c2710f4d0d2cf083b06b23116462554967969a1975ea02a672131d9ab255efd"
+  },
+  "instrumentation": {
+    "source_commit": "c85f5a3cbb78ab58e6207f770cd9f6df60fb818d",
+    "android_api": 35,
+    "android_version": "15",
+    "device": "AOSP x86_64 emulator, software emulation without KVM",
+    "webview": "com.android.webview 124.0.6367.219",
+    "command": "adb -s emulator-5554 shell am instrument -w -r net.lefil.fdroid.test/androidx.test.runner.AndroidJUnitRunner",
+    "result": "OK (1 test)",
+    "duration_seconds": 47.022,
+    "renderer_terminations": 2,
+    "method": "WebViewRenderProcess.terminate(), returned true for each termination",
+    "content": "local synthetic HTML, no accounts",
+    "asserted": [
+      "Activity remains running",
+      "native recovery view shown after both terminations",
+      "destroyed WebView removed",
+      "Retry creates a different WebView",
+      "Talk menu creates a new WebView after the second termination"
+    ],
+    "tested_artifacts_sha256": {
+      "app/build/outputs/apk/debug/app-debug.apk": "1d82596df9c83b724cd7492ed8110af077a94ccf39dd69a19bbfc638bbc72ce4",
+      "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk": "2c2710f4d0d2cf083b06b23116462554967969a1975ea02a672131d9ab255efd"
+    },
+    "phone_validation": false,
+    "remote_services_validated": false,
+    "notifications_validated": false
   },
   "fdroid": {
     "tool_version": "2.4.5",
     "readmeta": "passed",
     "lint": "passed",
-    "build_command": "fdroid build --test --scan-binary --no-tarball net.lefil.fdroid:2",
+    "build_command": "fdroid build --test --scan-binary --no-tarball net.lefil.fdroid:3",
     "build_result": "1 build succeeded",
-    "build_commit": "ae7cf28e5429ed9618b14040a1b24b0c038113b8",
-    "local_build_apk_sha256": "ffb25cd4a940465e79e1ca4d7a8b532545d1bd3adde1ef762c3f6db4da379910",
+    "build_commit": "c85f5a3cbb78ab58e6207f770cd9f6df60fb818d",
+    "source_scan": "passed",
+    "binary_scan": "passed with embedded scanner signatures",
+    "local_build_apk_sha256": "904364e593c3ee755d0da223cccd6669268fefb8237095666c957229455dfe06",
     "official_build_server": "not run",
     "submitted": false,
     "accepted": false
   },
-  "public_https_evidence": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/38964668550",
+  "public_https_evidence": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/38970827650",
   "limitations": [
-    "The 60 previous tests are preserved; a Talk fallback-route regression test was added.",
-    "Robolectric is simulation, not phone or Doze validation.",
-    "Anonymous HTTPS verifies response and login pages, not account sessions or message detection.",
-    "Pagination and identical message detection still require authorized accounts.",
-    "No main/PR2 merge, official release, F-Droid submission or acceptance."
+    "Same cause on the reporting phone has not been established; model, Android version and phone logs are unavailable.",
+    "Robolectric tests do not validate a physical phone, Doze or notification delivery.",
+    "The native emulator test passed for confirmed renderer termination; the earlier chrome://crash probe timed out and its failure is preserved.",
+    "Native test uses local HTML and no accounts; remote page rendering and authenticated communication are not validated.",
+    "Pagination and identical messages require authorized accounts; real notification reception and reboot recovery remain unvalidated.",
+    "Android 7 has no onRenderProcessGone API; only its startup is simulated.",
+    "No main/PR2 merge, server change, official release, F-Droid submission or acceptance."
   ],
   "github_actions": {
-    "run_id": 38964668550,
-    "url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/38964668550",
-    "source_commit": "ae7cf28e5429ed9618b14040a1b24b0c038113b8",
+    "run_id": 38970827650,
+    "url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/38970827650",
+    "source_commit": "c85f5a3cbb78ab58e6207f770cd9f6df60fb818d",
     "conclusion": "success",
     "jobs": [
       "public-https",
@@ -100,6 +150,6 @@
       "lefil-release-unsigned-candidate",
       "lefil-verification-reports"
     ],
-    "evidence": "Public run summary, annotations, job conclusions and artifact names; raw logs require GitHub sign-in."
+    "evidence": "Public run summary, job conclusions and artifact names; raw logs require GitHub sign-in. Native instrumentation executed locally, not by this workflow."
   }
 }

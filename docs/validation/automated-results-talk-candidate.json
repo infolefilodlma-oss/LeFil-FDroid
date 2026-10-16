@@ -1,0 +1,105 @@
+{
+  "source_commit": "ae7cf28e5429ed9618b14040a1b24b0c038113b8",
+  "command": "gradle --no-daemon --max-workers=2 :app:testDebugUnitTest :app:lintDebug :app:assembleDebug :app:assembleRelease",
+  "result": "BUILD SUCCESSFUL",
+  "counts": {
+    "tests": 61,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "suites": [
+    {
+      "name": "net.lefil.fdroid.AndroidNavigationTest",
+      "tests": "8",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "timestamp": "2026-10-16T20:46:02"
+    },
+    {
+      "name": "net.lefil.fdroid.AndroidNotificationsTest",
+      "tests": "20",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "timestamp": "2026-10-16T20:46:14"
+    },
+    {
+      "name": "net.lefil.fdroid.MessageLinksTest",
+      "tests": "2",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "timestamp": "2026-10-16T20:46:15"
+    },
+    {
+      "name": "net.lefil.fdroid.MessagePollerTest",
+      "tests": "9",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "timestamp": "2026-10-16T20:46:15"
+    },
+    {
+      "name": "net.lefil.fdroid.MessageSourcesTest",
+      "tests": "15",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "timestamp": "2026-10-16T20:46:15"
+    },
+    {
+      "name": "net.lefil.fdroid.UnreadParsersTest",
+      "tests": "7",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "timestamp": "2026-10-16T20:46:15"
+    }
+  ],
+  "lint": {
+    "Warning": 19
+  },
+  "artifacts": {
+    "app/build/outputs/apk/debug/app-debug.apk": "63ae4213f564416ab90e839508601696fff29bfb78ac91348f929997f5a6c0c5",
+    "app/build/outputs/apk/release/app-release-unsigned.apk": "44017eabf7c4b116e0767511a4946ef83e1c881279eb32f9f02fff3dd76f347c"
+  },
+  "fdroid": {
+    "tool_version": "2.4.5",
+    "readmeta": "passed",
+    "lint": "passed",
+    "build_command": "fdroid build --test --scan-binary --no-tarball net.lefil.fdroid:2",
+    "build_result": "1 build succeeded",
+    "build_commit": "ae7cf28e5429ed9618b14040a1b24b0c038113b8",
+    "local_build_apk_sha256": "ffb25cd4a940465e79e1ca4d7a8b532545d1bd3adde1ef762c3f6db4da379910",
+    "official_build_server": "not run",
+    "submitted": false,
+    "accepted": false
+  },
+  "public_https_evidence": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/38964668550",
+  "limitations": [
+    "The 60 previous tests are preserved; a Talk fallback-route regression test was added.",
+    "Robolectric is simulation, not phone or Doze validation.",
+    "Anonymous HTTPS verifies response and login pages, not account sessions or message detection.",
+    "Pagination and identical message detection still require authorized accounts.",
+    "No main/PR2 merge, official release, F-Droid submission or acceptance."
+  ],
+  "github_actions": {
+    "run_id": 38964668550,
+    "url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/38964668550",
+    "source_commit": "ae7cf28e5429ed9618b14040a1b24b0c038113b8",
+    "conclusion": "success",
+    "jobs": [
+      "public-https",
+      "build"
+    ],
+    "artifacts": [
+      "lefil-android-debug",
+      "lefil-public-https-report",
+      "lefil-release-unsigned-candidate",
+      "lefil-verification-reports"
+    ],
+    "evidence": "Public run summary, annotations, job conclusions and artifact names; raw logs require GitHub sign-in."
+  }
+}
