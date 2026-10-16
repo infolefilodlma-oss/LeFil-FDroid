@@ -40,6 +40,8 @@ jobs:
           test -d app/src/main
       - name: Tester les lecteurs de messages
         run: gradle --no-daemon :app:testDebugUnitTest
+      - name: Verifier Android Lint
+        run: gradle --no-daemon :app:lintDebug
       - name: Compiler la version de test
         run: gradle --no-daemon :app:assembleDebug
       - name: Conserver le resultat de compilation
