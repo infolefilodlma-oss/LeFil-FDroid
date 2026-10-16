@@ -12,6 +12,8 @@ import urllib.parse
 
 ENDPOINTS = [
     ("Agora", "https://social.le-fil.net/message"),
+    ("Le Fil home", "https://le-fil.net/"),
+    ("Le Fil home WebView", "https://le-fil.net/"),
     ("Agora NodeInfo", "https://social.le-fil.net/.well-known/nodeinfo"),
     ("Talk inbox", "https://team.le-fil.net/index.php?r=mail%2Fmail%2Findex"),
     ("Atrium home", "https://team.le-fil.net/"),
@@ -27,6 +29,9 @@ def annotation(value):
 
 
 def check(label, url):
+    user_agent = "LeFil-Public-CI/1.0"
+    if label == "Le Fil home WebView":
+        user_agent = "Mozilla/5.0 (Linux; Android 15; sdk_gphone64_x86_64 Build/AP3A; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/125.0.6422.165 Mobile Safari/537.36"
     with tempfile.TemporaryDirectory(prefix="lefil-public-") as directory:
         body = pathlib.Path(directory, "body")
         headers = pathlib.Path(directory, "headers")
@@ -34,7 +39,7 @@ def check(label, url):
             "curl", "--disable", "--silent", "--show-error", "--location", "--max-redirs", "5",
             "--proto", "=https", "--proto-redir", "=https", "--connect-timeout", "10",
             "--max-time", "30", "--max-filesize", "2097152",
-            "--user-agent", "LeFil-Public-CI/1.0", "--header", "Accept: text/html,application/json",
+            "--user-agent", user_agent, "--header", "Accept: text/html,application/json",
             "--dump-header", str(headers), "--output", str(body),
             "--write-out", "%{http_code}\\n%{url_effective}", url,
         ], capture_output=True, text=True, check=False)
@@ -51,6 +56,7 @@ def check(label, url):
             "label": label, "url": url, "curl_exit": result.returncode,
             "http_status": status, "http_chain": chain, "destination": safe_destination,
             "page_title": page_title,
+            "body_bytes": body.stat().st_size if body.exists() else 0,
             "server": re.findall(r"^server:\s*([^\r\n]+)", header_text, re.I | re.M)[-1:],
             "login_form": bool(re.search(r"(?:type|name)\s*=\s*['\"]password['\"]", contents, re.I)),
             "friendica_marker": "friendica" in contents.lower(),
@@ -74,7 +80,7 @@ def check(label, url):
         message = (f"curl_exit={record['curl_exit']}; HTTP={status}; chain={','.join(chain)}; "
                    f"destination={safe_destination}; login_form={record['login_form']}; "
                    f"Friendica={record['friendica_marker']}; HumHub={record['humhub_marker']}; "
-                   f"software={record.get('software', {})}; title={page_title}; server={record['server']}")
+                   f"software={record.get('software', {})}; title={page_title}; server={record['server']}; bytes={record['body_bytes']}")
         print(f"::notice title={label} HTTPS public::{annotation(message)}", flush=True)
         return record
 
@@ -103,6 +109,7 @@ def main():
         return record["tls_verified_response"] and record["http_status"] in {"200", "401", "403"}
     # The Android reader already supports both pretty URLs and index.php routing.
     return 0 if (available(records[0]) and
+                 all(record["http_status"] == "200" and record["body_bytes"] > 0 for record in records if record["label"].startswith("Le Fil home")) and
                  any(available(record) for record in records if record["label"] == "Talk inbox") and
                  any(available(record) for record in records if record["label"] in {"Talk list", "Talk list PHP"}) and
                  any(available(record) for record in records if record["label"] in {"Talk count", "Talk count PHP"})) else 1
