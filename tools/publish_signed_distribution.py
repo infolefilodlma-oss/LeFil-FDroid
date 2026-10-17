@@ -5,6 +5,7 @@ import json
 import os
 from pathlib import Path
 import subprocess
+import time
 import urllib.request
 
 from check_signed_distribution import CERTIFICATE, ROOT, SHA256, SOURCE
@@ -33,6 +34,20 @@ def fetch(url):
     digest = hashlib.sha256(data).hexdigest()
     assert digest == SHA256, "Downloaded APK differs from the tested signed APK"
     return {"url": url, "http_status": 200, "bytes": len(data), "sha256": digest}
+
+
+def release_metadata():
+    # Use gh's native lookup, which supports unpublished releases as well.
+    result = gh("release", "view", TAG, "--repo", REPOSITORY, "--json",
+                "tagName,isDraft,isPrerelease,assets,url", check=False)
+    if result.returncode:
+        if "release not found" in result.stderr.lower() or "HTTP 404" in result.stderr:
+            return None
+        raise RuntimeError(result.stderr.strip() or "Cannot read release metadata")
+    native = json.loads(result.stdout)
+    return {"tag_name": native["tagName"], "draft": native["isDraft"],
+            "prerelease": native["isPrerelease"], "assets": native["assets"],
+            "html_url": native["url"]}
 
 
 def main():
@@ -81,9 +96,7 @@ indépendante hors de cet environnement n'est pas encore vérifiée.
     was_published = False
     try:
         report["phase"] = "read_release_metadata"
-        # The list endpoint also returns drafts to this authorized repository token.
-        releases = json.loads(gh("api", f"repos/{REPOSITORY}/releases?per_page=100").stdout)
-        release = next((r for r in releases if r["tag_name"] == TAG), None)
+        release = release_metadata()
         if release is not None:
             # The resolved existing tag checked above determines the source.
             # target_commitish is ignored by GitHub when that tag already exists.
@@ -95,8 +108,12 @@ indépendante hors de cet environnement n'est pas encore vérifiée.
             assert tags, "The source tag must exist before creating a release"
             gh("release", "create", TAG, "--repo", REPOSITORY,
                "--verify-tag", "--draft", "--title", "Le Fil 0.2.1", "--notes-file", str(notes))
-            releases = json.loads(gh("api", f"repos/{REPOSITORY}/releases?per_page=100").stdout)
-            release = next(r for r in releases if r["tag_name"] == TAG)
+            for attempt in range(3):
+                release = release_metadata()
+                if release is not None:
+                    break
+                time.sleep(2)
+            assert release is not None, "Created draft cannot yet be read with GitHub CLI"
         assets = [apk, ROOT / "distribution/LeFil.apk.sha256",
                   ROOT / "docs/release/LeFil-signing-certificate.pem",
                   ROOT / "docs/validation/signed-distribution/result.json"]
@@ -119,7 +136,8 @@ indépendante hors de cet environnement n'est pas encore vérifiée.
             gh("release", "edit", TAG, "--repo", REPOSITORY, "--draft=false", "--latest")
         report["phase"] = "verify_anonymous_public_downloads"
         report["downloads"] = [fetch(VERSION_URL), fetch(LATEST_URL)]
-        final = json.loads(gh("api", f"repos/{REPOSITORY}/releases/tags/{TAG}").stdout)
+        final = release_metadata()
+        assert final is not None
         assert not final["draft"] and not final["prerelease"]
         final_tags = subprocess.check_output(["git", "ls-remote", "origin", f"refs/tags/{TAG}",
                                              f"refs/tags/{TAG}^{{}}"], text=True).splitlines()
@@ -130,7 +148,7 @@ indépendante hors de cet environnement n'est pas encore vérifiée.
                       direct_download_url=VERSION_URL, latest_download_url=LATEST_URL,
                       outcome="published_and_anonymously_download_verified", phase="verified")
     except Exception as error:
-        report.update(outcome="failed", failure=str(error))
+        report.update(outcome="failed", failure=type(error).__name__ + ": " + str(error))
         if not was_published:
             rollback = gh("release", "edit", TAG, "--repo", REPOSITORY, "--draft=true", check=False)
             report["rollback_to_draft_succeeded"] = rollback.returncode == 0
