@@ -1,0 +1,59 @@
+name: F-Droid - verify HumHub Mail upstream declaration
+
+on:
+  push:
+    branches: [codex/fdroid-submission-readiness]
+    paths: [.github/workflows/fdroid-mail-license.yml]
+
+permissions:
+  contents: write
+
+jobs:
+  source-declaration:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Read the official module entry without credentials
+        run: |
+          python3 - <<'PY'
+          from urllib.request import urlopen
+          from urllib.error import HTTPError
+          from html.parser import HTMLParser
+          from pathlib import Path
+          from datetime import datetime, timezone
+          import hashlib, json, re
+          class Text(HTMLParser):
+              def __init__(self): super().__init__(); self.parts=[]; self.links=[]; self.hide=0
+              def handle_starttag(self,t,a):
+                  if t in ('script','style'): self.hide+=1
+                  if t=='a':
+                      href=dict(a).get('href','')
+                      if 'github.com/' in href or 'licen' in href.lower(): self.links.append(href)
+              def handle_endtag(self,t):
+                  if t in ('script','style'): self.hide=max(0,self.hide-1)
+              def handle_data(self,d):
+                  if not self.hide and d.strip(): self.parts.append(d.strip())
+          records=[]
+          for url in ('https://marketplace.humhub.com/module/mail','https://marketplace.humhub.com/module/messenger'):
+              item={'url':url}
+              try:
+                  with urlopen(url,timeout=30) as response:
+                      data=response.read(2_000_000); item.update(http_status=response.status,sha256=hashlib.sha256(data).hexdigest())
+                  parser=Text(); parser.feed(data.decode(errors='replace'))
+                  item['source_or_license_links']=sorted(set(parser.links))
+                  item['public_text']='\n'.join(parser.parts)[:12000]
+              except HTTPError as error: item['http_status']=error.code
+              except Exception as error: item['error']=str(error)
+              records.append(item)
+          output=Path('docs/validation/fdroid-finalization'); output.mkdir(parents=True,exist_ok=True)
+          (output/'humhub-mail-upstream.json').write_text(json.dumps({'checked_at_utc':datetime.now(timezone.utc).isoformat(),'authenticated':False,'observations':records},indent=2)+'\n')
+          PY
+      - name: Preserve public source declaration evidence
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/validation/fdroid-finalization/humhub-mail-upstream.json
+          git commit -m 'Record the official HumHub Mail module source and license declaration'
+          git pull --rebase origin codex/fdroid-submission-readiness
+          git push origin HEAD:refs/heads/codex/fdroid-submission-readiness
