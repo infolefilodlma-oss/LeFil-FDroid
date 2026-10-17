@@ -1,0 +1,89 @@
+{
+  "retrieved_at_utc": "2026-10-17T13:48:05.419061+00:00",
+  "run_url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39038048812",
+  "private_signing_material_used": false,
+  "application_tests_rerun": false,
+  "sources": {
+    "android_app_signing": {
+      "url": "https://developer.android.com/studio/publish/app-signing",
+      "http_status": 200,
+      "document_sha256": "fdce84eb82db40592a787a46b704d9f87dfbf4c02a1425da437d36a895d58162",
+      "relevant_paragraphs": [
+        "Automate backup and restore tests",
+        "copy of your app's signing key and Google may retain a backup copy of the key",
+        "for disaster recovery purposes.",
+        "if your key is ever lost or compromised.",
+        "App Signing, if you lose your app’s signing key, you lose the ability to update your app.",
+        "Important: If you want to use the same signing key",
+        "own keys, where they are protected by Google’s Key Management Service. You can",
+        "When you use Play App Signing, if you lose your upload key, or if it",
+        "if you change upload keys. To learn more, read Reset a lost or compromised",
+        "should be the same as your keystore password. (Please refer to the known issue",
+        "app updates with the same key through the lifespan of your app.",
+        "To use the same key as another app on your developer account, select",
+        "Change app signing key > Use the same key as another app in this",
+        "to Reset a lost or compromised private upload key.",
+        "option to reset a lost or compromised private upload key.",
+        "reset a lost or compromised private upload key.",
+        "update is signed with the same signing key, it's difficult to change the signing",
+        "Reset a lost or compromised private upload key",
+        "If you lost your private upload key or your private key has been compromised,",
+        "and secure place. If you lose access to your app signing key or your key is",
+        "You should sign your app with the same certificate throughout its expected",
+        "App modularity: Android allows APKs signed by the same certificate to run",
+        "same certificate and using signature-based permissions checks, your apps can",
+        "lose or misplace your key, you will not be able to publish updates to your"
+      ]
+    },
+    "owasp_key_management": {
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/Key_Management_Cheat_Sheet.html",
+      "http_status": 200,
+      "document_sha256": "fc9ff3f356adf95c3a6d6efebd5e3da1f3062f04cd277fece0806f025d61eada",
+      "relevant_paragraphs": [
+        "Key Compromise and Recovery",
+        "Key compromise, recovery and zeroization",
+        "Symmetric-key algorithms (sometimes known as secret-key algorithms) transform data in a way that is fundamentally difficult to undo without knowledge of a secret key. The key is \"symmetric\" because the same key is used for a cryptographic operation and its inverse (e.g., encryption and decryption).",
+        "Symmetric keys are often known by more than one entity; however, the key shall not be disclosed to entities that are not authorized access to the data protected by that algorithm and key. Symmetric key algorithms are used, for example,",
+        "To provide data confidentiality (Section 4.2.2); the same key is used to encrypt and decrypt data.",
+        "To provide authentication and integrity services (Section 4.2.3) in the form of Message Authentication Codes (MACs); the same key is used to generate the MAC and to validate it. MACs normally employ either a symmetric key-encryption algorithm or a cryptographic hash function as their cryptographic primitive.",
+        "Loss or corruption of the memory media on which keys and/or certificates are stored, and recovery planning, according to NIST SP 800-57.",
+        "Plan for the recovery from possible corruption of the memory media necessary for key or certificate generation, registration, and/or distribution systems, subsystems, or components as recommended in NIST SP 800-57.",
+        "The use of the same key for two different cryptographic processes may weaken the security provided by one or both of the processes.",
+        "According to NIST SP 800-133, cryptographic modules are the set of hardware, software, and/or firmware that implements security functions (including cryptographic algorithms and key generation) and is contained within a cryptographic module boundary to provide protection of the keys.",
+        "Cryptographic keys, secrets, and API keys should never be committed to source code repositories or embedded in build artifacts (such as binaries, container images, or configuration files). Secrets and keys should be stored in a dedicated secrets-management solution or key vault (OWASP ASVS 5.0 §13.3.1).",
+        "A cryptoperiod is the time span during which a specific cryptographic key is authorized for use. Limiting cryptoperiods restricts the amount of data protected by a single key and reduces the window of exposure if a key is compromised (NIST SP 800-57 Part 1 Rev. 5 Section 5.3). For storage-level rotation fundamentals and criteria, see the Cryptographic Storage Cheat Sheet.",
+        "Data that has been encrypted with lost cryptographic keys will never be recovered. Therefore, it is essential that the application incorporate a secure key backup capability, especially for applications that support data at rest encryption for long-term data stores.",
+        "When backing up keys, ensure that the database that is used to store the keys is encrypted using at least a FIPS 140-2 or 140-3 validated module. It is sometimes useful to escrow key material for use in investigations and for re-provisioning of key material to users in the event that the key is lost or corrupted.",
+        "It is very useful in recovering from a detected key compromise to know where the key was used and what data or other keys were protected by the compromised key.",
+        "Identifying other keys that are protected by a symmetric or private key.",
+        "Key Compromise and Recovery¶",
+        "A compromise of the integrity of a key means that the key is incorrect - either that the key has been modified (either deliberately or accidentally), or that another key has been substituted; this includes a deletion (non-availability) of the key. The substitution or modification of a key used to provide integrity calls into question the integrity of all information protected by the key. This information could have been provided by, or changed by, an unauthorized entity that knows the key. The substitution of a public or secret key that will be used (at a later time) to encrypt data could allow an unauthorized entity (who knows the decryption key) to decrypt data that was encrypted using the encryption key.",
+        "A compromise of a key's usage or application association means that the key could be used for the wrong purpose (e.g., for key establishment instead of digital signatures) or for the wrong application, and could result in the compromise of information protected by the key.",
+        "A compromise of a key's association with other information means that there is no association at all, or the association is with the wrong \"information\". This could cause the cryptographic services to fail, information to be lost, or the security of the information to be compromised. Certain protective measures may be taken in order to minimize the likelihood or consequences of a key compromise. Similar effect as ransomware, except that you can't pay the ransom and get the key back.",
+        "Restricting plaintext symmetric and private keys to physically protected containers. This includes key generators, key-transport devices, key loaders, cryptographic modules, and key-storage devices.",
+        "Creating a compromise-recovery plan, especially in the case of a CA compromise.",
+        "A compromise-recovery plan is essential for restoring cryptographic security services in the event of a key compromise. A compromise-recovery plan shall be documented and easily accessible.",
+        "The compromise-recovery plan should contain:",
+        "The identification and contact info of the personnel to perform the recovery actions.",
+        "The education of all appropriate personnel on the recovery procedures.",
+        "An identification and contact info of all personnel needed to support the recovery procedures.",
+        "Any other recovery procedures, which may include:",
+        "Revoke compromised keys promptly and stop using them to protect new data. Retain only tightly controlled access needed for recovery or migration of previously protected data. Destroy all copies of secret and private keys, including backup, archived, escrowed, and memory copies, as soon as they are no longer needed for decryption or recovery and retention requirements are satisfied. Public verification keys may be retained to verify archived signatures (NIST SP 800-57 Part 1 Rev. 5 Sections 7.5 and 8.3.4–8.3.5).",
+        "Cryptographic Erasure: For encrypted key material at rest, consider cryptographic erasure only when all copies of the protecting keys can be destroyed and no recoverable plaintext copies of the target material remain (NIST SP 800-88 Rev. 2 Section 3.2). Destroying a wrapping key does not erase plaintext copies of the keys it protected."
+      ]
+    },
+    "fdroid_developer_signatures": {
+      "url": "https://f-droid.org/docs/Reproducible_Builds/",
+      "http_status": 200,
+      "document_sha256": "8362144727877e4db60056541ee1558068044a256ad1ee0aa4d26e96680aceae",
+      "relevant_paragraphs": [
+        "The gold standard in reproducible builds for countering Trusting Trust issues is Diverse Double-Compiling. The core idea is to use two entirely distinct sets of build tools to create the exact same binary. This is a difficult standard to achieve, although quite valuable. Some of the work to get there can be done incrementally. Towards that end, F-Droid can reproduce the APKs that the upstream developer built on their own setup. Often times, these are built with different toolchains or on different OSes. To see which apps have enabled this approach, please check its build metadata for the presence of build metadata fields Binaries: or binary:.",
+        "platforms (e.g. macOS versus Ubuntu), the resulting binaries will have",
+        "An application can be setup to publish the signed binaries from the upstream developer after verifying that they match the ones built using an fdroiddata build recipe. Publishing only takes place if there is a proper match. This means that F-Droid can verify that an app is free software while still using the original developer’s APK signatures. This procedure is implemented as part of fdroid publish. The reproducibility check at the publishing step follows this logic:",
+        "For this approach, everything in the metadata should be the same as normal, with the addition of the Binaries or Builds.binary directive to specify where to get the binaries (APKs) from, and AllowedAPKSigningKeys directive to ensure the expected signing key is used. In this case, F-Droid will never attempt to publish APKs signed by F-Droid. If fdroid publish can verify that the downloaded APK matches the one built from the fdroiddata recipe, the downloaded APK will be published. Otherwise F-Droid will skip publishing this version of the app.",
+        "Different toolchains may produce different binaries. A usual case is when more than one JDK version/distribution are used to build the APK. Sometimes even Gradle may mix",
+        "Different NDK versions also produce different binaries. Generally this can be recognized via the metadata, e.g. LLD version, in the native libs. However, since NDK r26d a weird behaviour is observed that sometimes only the .shstrtab sections in ELF of the native libs are changed when NDK is installed. The native libs may be built along with the app or fetched from maven repo. If AGP finds that the NDK is installed, it will use NDK to strip the native lib but in fact it only messes up the .shstrtab section of the native lib. The NDK setup needs to be checked carefully to ensure it matches upstream setup, including the NDK version and if it’s used by AGP."
+      ]
+    }
+  }
+}
