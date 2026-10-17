@@ -1,0 +1,1086 @@
+{
+  "authenticated": false,
+  "browser": "Playwright Chromium, fresh mobile-sized anonymous contexts",
+  "limitations": "Bounded public-page observation, 5 seconds after DOM load; no forms submitted. Non-read requests and media are recorded then blocked. Service workers blocked. Authenticated, radio playback and user-generated content may introduce other hosts. Not an Android WebView or phone acceptance test.",
+  "cookies_headers_tokens_or_bodies_stored": false,
+  "pages": [
+    {
+      "label": "Le Fil",
+      "input": "https://le-fil.net/",
+      "requests": [
+        {
+          "url": "https://le-fil.net/",
+          "query_keys": [],
+          "method": "GET",
+          "resource_type": "document",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://le-fil.net/wp-content/cache/lwsoptimize/cache-css/lnt3pa4t.min.css",
+          "query_keys": [],
+          "method": "GET",
+          "resource_type": "stylesheet",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://le-fil.net/wp-content/cache/lwsoptimize/cache-css/dgjms47o.min.css",
+          "query_keys": [],
+          "method": "GET",
+          "resource_type": "stylesheet",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.googleapis.com/css",
+          "query_keys": [
+            "display",
+            "family"
+          ],
+          "method": "GET",
+          "resource_type": "stylesheet",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://le-fil.net/wp-content/plugins/kubio/build/third-party-blocks/style.css",
+          "query_keys": [
+            "ver"
+          ],
+          "method": "GET",
+          "resource_type": "stylesheet",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://le-fil.net/wp-includes/js/jquery/jquery.min.js",
+          "query_keys": [
+            "ver"
+          ],
+          "method": "GET",
+          "resource_type": "script",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://le-fil.net/wp-includes/js/jquery/jquery-migrate.min.js",
+          "query_keys": [
+            "ver"
+          ],
+          "method": "GET",
+          "resource_type": "script",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://le-fil.net/wp-content/cache/lwsoptimize/cache-css/l8o5an9r.min.css",
+          "query_keys": [],
+          "method": "GET",
+          "resource_type": "stylesheet",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2",
+          "query_keys": [
+            "display",
+            "family"
+          ],
+          "method": "GET",
+          "resource_type": "stylesheet",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://le-fil.net/wp-content/uploads/2026/05/logo-fond-fonce-e1777870629579.png",
+          "query_keys": [],
+          "method": "GET",
+          "resource_type": "image",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://le-fil.net/wp-content/cache/lwsoptimize/cache-js/7udpufy5.min.js",
+          "query_keys": [],
+          "method": "GET",
+          "resource_type": "script",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://le-fil.net/wp-content/cache/lwsoptimize/cache-js/8w1javs3.min.js",
+          "query_keys": [],
+          "method": "GET",
+          "resource_type": "script",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://le-fil.net/wp-content/cache/lwsoptimize/cache-js/dhphzurm.min.js",
+          "query_keys": [],
+          "method": "GET",
+          "resource_type": "script",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://le-fil.net/wp-content/plugins/lws-optimize/js/lws_op_lazyload.js",
+          "query_keys": [
+            "ver"
+          ],
+          "method": "GET",
+          "resource_type": "script",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://le-fil.net/wp-content/cache/lwsoptimize/cache-js/1mznuz84.min.js",
+          "query_keys": [],
+          "method": "GET",
+          "resource_type": "script",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://le-fil.net/superpwa-manifest.json",
+          "query_keys": [],
+          "method": "GET",
+          "resource_type": "other",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://le-fil.net/wp-content/uploads/2026/05/rodion-kutsaiev-0VGG7cqTwCo-unsplash-scaled_lwsoptimized.webp",
+          "query_keys": [],
+          "method": "GET",
+          "resource_type": "image",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLDD4Z1xlFQ.woff2",
+          "query_keys": [],
+          "method": "GET",
+          "resource_type": "font",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://le-fil.net/wp-content/uploads/fonts/pxiByp8kv8JHgFVrLDz8V15vFP-KUEg.woff2",
+          "query_keys": [],
+          "method": "GET",
+          "resource_type": "font",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLEj6Z1xlFQ.woff2",
+          "query_keys": [],
+          "method": "GET",
+          "resource_type": "font",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLCz7Z1xlFQ.woff2",
+          "query_keys": [],
+          "method": "GET",
+          "resource_type": "font",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLGT9Z1xlFQ.woff2",
+          "query_keys": [],
+          "method": "GET",
+          "resource_type": "font",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://le-fil.net/wp-content/uploads/fonts/pxiByp8kv8JHgFVrLEj6V15vFP-KUEg.woff2",
+          "query_keys": [],
+          "method": "GET",
+          "resource_type": "font",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://le-fil.net/wp-content/uploads/fonts/pxiByp8kv8JHgFVrLCz7V15vFP-KUEg.woff2",
+          "query_keys": [],
+          "method": "GET",
+          "resource_type": "font",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://le-fil.net/wp-content/uploads/fonts/pxiByp8kv8JHgFVrLGT9V15vFP-KUEg.woff2",
+          "query_keys": [],
+          "method": "GET",
+          "resource_type": "font",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://le-fil.net/wp-content/uploads/2026/05/bright-blue-purple-pink-color-flare-light-background_943281-10620.jpg",
+          "query_keys": [],
+          "method": "GET",
+          "resource_type": "image",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://le-fil.net/wp-content/uploads/2026/05/photo-1673526759327-54f1f5b27322.avif",
+          "query_keys": [],
+          "method": "GET",
+          "resource_type": "image",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://le-fil.net/wp-includes/js/wp-emoji-release.min.js",
+          "query_keys": [
+            "ver"
+          ],
+          "method": "GET",
+          "resource_type": "script",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://s.w.org/images/core/emoji/17.0.2/svg/2764.svg",
+          "query_keys": [],
+          "method": "GET",
+          "resource_type": "image",
+          "blocked_by_observer": false,
+          "status": 200
+        }
+      ],
+      "final": {
+        "url": "https://le-fil.net/",
+        "query_keys": []
+      },
+      "http_status": 200,
+      "title": "Accueil - Le Fil",
+      "dom_sha256": "15164b0034476940a42df3ba64f728962abbc775f6966310c58c5914b9cdb814",
+      "forms": [],
+      "generator": [
+        "WordPress 7.1.3",
+        "Site Kit by Google 1.189.0"
+      ],
+      "observed_hosts": [
+        "fonts.googleapis.com",
+        "fonts.gstatic.com",
+        "le-fil.net",
+        "s.w.org"
+      ]
+    },
+    {
+      "label": "Agora",
+      "input": "https://social.le-fil.net/message",
+      "requests": [
+        {
+          "url": "https://social.le-fil.net/message",
+          "query_keys": [],
+          "method": "GET",
+          "resource_type": "document",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/global.css",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "stylesheet",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/asset/jquery-colorbox/example5/colorbox.css",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "stylesheet",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/asset/jgrowl/jquery.jgrowl.min.css",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "stylesheet",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/asset/jquery-datetimepicker/build/jquery.datetimepicker.min.css",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "stylesheet",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/asset/perfect-scrollbar/dist/css/perfect-scrollbar.min.css",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "stylesheet",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/theme/frio/frameworks/bootstrap/css/bootstrap.min.css",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "stylesheet",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/theme/frio/frameworks/bootstrap/css/bootstrap-theme.min.css",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "stylesheet",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/asset/fork-awesome/css/fork-awesome.min.css",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "stylesheet",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/theme/frio/frameworks/jasny/css/jasny-bootstrap.min.css",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "stylesheet",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/theme/frio/frameworks/bootstrap-select/css/bootstrap-select.min.css",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "stylesheet",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/theme/frio/frameworks/ekko-lightbox/ekko-lightbox.min.css",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "stylesheet",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/theme/frio/frameworks/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "stylesheet",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/theme/frio/frameworks/justifiedGallery/justifiedGallery.min.css",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "stylesheet",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/theme/frio/frameworks/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "stylesheet",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/theme/frio/frameworks/bootstrap-toggle/css/bootstrap-toggle.min.css",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "stylesheet",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/theme/frio/font/open_sans/open-sans.css",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "stylesheet",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/js/fancybox/jquery.fancybox.min.css",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "stylesheet",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/theme/frio/css/hovercard.css",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "stylesheet",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/theme/frio/css/font-awesome.custom.css",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "stylesheet",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/theme/frio/css/lefil-custom.css",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "stylesheet",
+          "blocked_by_observer": false
+        },
+        {
+          "url": "https://social.le-fil.net/view/theme/frio/style.pcss",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "stylesheet",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/js/modernizr.js",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "script",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/asset/jquery/dist/jquery.min.js",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "script",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/js/jquery.textinputs.js",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "script",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/asset/jquery-textcomplete/dist/jquery.textcomplete.min.js",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "script",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/js/autocomplete.js",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "script",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/asset/jquery-colorbox/jquery.colorbox-min.js",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "script",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/asset/jgrowl/jquery.jgrowl.min.js",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "script",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/asset/jquery-datetimepicker/build/jquery.datetimepicker.full.min.js",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "script",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/asset/perfect-scrollbar/dist/js/perfect-scrollbar.jquery.min.js",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "script",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/asset/imagesloaded/imagesloaded.pkgd.min.js",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "script",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/asset/base64/base64.min.js",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "script",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/asset/dompurify/dist/purify.min.js",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "script",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/js/main.js",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "script",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/theme/frio/frameworks/bootstrap/js/bootstrap.min.js",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "script",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/theme/frio/frameworks/jasny/js/jasny-bootstrap.custom.js",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "script",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/theme/frio/frameworks/bootstrap-select/js/bootstrap-select.min.js",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "script",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/theme/frio/frameworks/ekko-lightbox/ekko-lightbox.min.js",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "script",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/theme/frio/frameworks/justifiedGallery/jquery.justifiedGallery.min.js",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "script",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/theme/frio/frameworks/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "script",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/theme/frio/frameworks/flexMenu/flexmenu.custom.js",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "script",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/theme/frio/frameworks/jquery-scrollspy/jquery-scrollspy.js",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "script",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/theme/frio/frameworks/autosize/autosize.min.js",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "script",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/theme/frio/frameworks/sticky-kit/jquery.sticky-kit.min.js",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "script",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/theme/frio/js/theme.js",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "script",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/theme/frio/js/modal.js",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "script",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/theme/frio/js/hovercard.js",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "script",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/theme/frio/js/textedit.js",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "script",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/vendor/enyo/dropzone/dist/min/dropzone.min.js",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "script",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/js/dropzone-factory.js",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "script",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/js/fancybox/jquery.fancybox.min.js",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "script",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/js/fancybox/fancybox.config.js",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "script",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/js/vanillaEmojiPicker/vanillaEmojiPicker.min.js",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "script",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/theme/frio/css/lefil-custom.css",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "stylesheet",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/theme/frio/img/bandeau.png",
+          "query_keys": [],
+          "method": "GET",
+          "resource_type": "image",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/theme/frio/img/logo-lefil.png",
+          "query_keys": [],
+          "method": "GET",
+          "resource_type": "image",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/theme/frio/fonts/poppins/poppins-400.woff2",
+          "query_keys": [],
+          "method": "GET",
+          "resource_type": "font",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/view/asset/fork-awesome/fonts/forkawesome-webfont.woff2",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "font",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/ping",
+          "query_keys": [
+            "_"
+          ],
+          "method": "GET",
+          "resource_type": "xhr",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://social.le-fil.net/ping_network",
+          "query_keys": [
+            "_",
+            "ping"
+          ],
+          "method": "GET",
+          "resource_type": "xhr",
+          "blocked_by_observer": false,
+          "status": 200
+        }
+      ],
+      "final": {
+        "url": "https://social.le-fil.net/message",
+        "query_keys": []
+      },
+      "http_status": 200,
+      "title": "Messages | l'Agora du Fil",
+      "dom_sha256": "a4dbbecb1abf9082d8055ecb9953af6a898034d76b965c0f0d8c78bf63f3ab1e",
+      "forms": [
+        {
+          "method": "get",
+          "action": "https://social.le-fil.net/search",
+          "password_fields": 0,
+          "field_names": [
+            "q"
+          ]
+        },
+        {
+          "method": "post",
+          "action": "https://social.le-fil.net/login",
+          "password_fields": 1,
+          "field_names": [
+            "auth-params",
+            "username",
+            "password",
+            "remember",
+            "remember",
+            "return_path"
+          ]
+        }
+      ],
+      "generator": [
+        "Friendica 2026.05"
+      ],
+      "observed_hosts": [
+        "social.le-fil.net"
+      ]
+    },
+    {
+      "label": "Atrium Talk",
+      "input": "https://team.le-fil.net/index.php?r=mail%2Fmail%2Findex",
+      "requests": [
+        {
+          "url": "https://team.le-fil.net/index.php",
+          "query_keys": [
+            "r"
+          ],
+          "route": "mail/mail/index",
+          "method": "GET",
+          "resource_type": "document",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://team.le-fil.net/assets/37f7035c/resources/css/theme.css",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "stylesheet",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://team.le-fil.net/static/js/humhub-app.js",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "script",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://team.le-fil.net/static/css/humhub-app.css",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "stylesheet",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://team.le-fil.net/assets/logo/500x250.png",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "image",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://team.le-fil.net/assets/8f4d2030/locales/jquery.timeago.fr.js",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "script",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2",
+          "query_keys": [
+            "display",
+            "family"
+          ],
+          "method": "GET",
+          "resource_type": "stylesheet",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://team.le-fil.net/static/js/humhub-bundle.js",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "script",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://team.le-fil.net/assets/b1cc74e8/js/humhub.live.mercure.js",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "script",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLCz7Z1xlFQ.woff2",
+          "query_keys": [],
+          "method": "GET",
+          "resource_type": "font",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/poppins/v24/pxiEyp8kv8JHgFVrJJfecg.woff2",
+          "query_keys": [],
+          "method": "GET",
+          "resource_type": "font",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://team.le-fil.net/static/assets/87641cfd/fonts/fontawesome-webfont.woff2",
+          "query_keys": [
+            "v"
+          ],
+          "method": "GET",
+          "resource_type": "font",
+          "blocked_by_observer": false,
+          "status": 200
+        },
+        {
+          "url": "https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLEj6Z1xlFQ.woff2",
+          "query_keys": [],
+          "method": "GET",
+          "resource_type": "font",
+          "blocked_by_observer": false,
+          "status": 200
+        }
+      ],
+      "final": {
+        "url": "https://team.le-fil.net/index.php",
+        "query_keys": [
+          "r"
+        ],
+        "route": "user/auth/login"
+      },
+      "http_status": 200,
+      "title": "Identifiant - Le Fil Team",
+      "dom_sha256": "bcd2192414f123457b3671181593f234bf06a2d63913e2095922cdc3fb385457",
+      "forms": [
+        {
+          "method": "post",
+          "action": "https://team.le-fil.net/index.php",
+          "password_fields": 1,
+          "field_names": [
+            "_csrf",
+            "Login[username]",
+            "Login[password]",
+            "Login[rememberMe]",
+            "Login[rememberMe]"
+          ]
+        }
+      ],
+      "generator": [],
+      "observed_hosts": [
+        "fonts.googleapis.com",
+        "fonts.gstatic.com",
+        "team.le-fil.net"
+      ]
+    }
+  ]
+}

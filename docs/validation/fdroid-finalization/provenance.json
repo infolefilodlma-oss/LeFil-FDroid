@@ -1,0 +1,11 @@
+{
+  "checked_at_utc": "2026-10-17T07:23:51.296120+00:00",
+  "candidate_commit": "99789aa0f9c82d90cef020b33444698a05aafc47",
+  "observer_commit": "dbe836eddbcd8c1aece06f43b6a3b86ef99d36e5",
+  "application_tree": "586d7454d3c8fd6a68ccb09639ac00f8dfea6a76",
+  "run_url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39013402324",
+  "jvm_tests_rerun": false,
+  "native_tests_rerun": false,
+  "apk_rebuilt": false,
+  "authenticated_communications_validated": false
+}

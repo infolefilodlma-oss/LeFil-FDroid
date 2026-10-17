@@ -1,0 +1,227 @@
+{
+  "checked_at_utc": "2026-10-17T06:41:13.860777+00:00",
+  "authenticated": false,
+  "notification_delivery_validated": false,
+  "checks": [
+    {
+      "label": "Agora",
+      "url": "https://social.le-fil.net/message",
+      "curl_exit": 0,
+      "http_status": "200",
+      "http_chain": [
+        "200"
+      ],
+      "destination": "https://social.le-fil.net/message",
+      "page_title": "Messages | l'Agora du Fil",
+      "body_bytes": 17080,
+      "server": [
+        "nginx"
+      ],
+      "login_form": true,
+      "friendica_marker": true,
+      "humhub_marker": false,
+      "tls_verified_response": true
+    },
+    {
+      "label": "Le Fil home",
+      "url": "https://le-fil.net/",
+      "curl_exit": 0,
+      "http_status": "200",
+      "http_chain": [
+        "200"
+      ],
+      "destination": "https://le-fil.net/",
+      "page_title": "Accueil - Le Fil",
+      "body_bytes": 90815,
+      "server": [],
+      "login_form": true,
+      "friendica_marker": false,
+      "humhub_marker": false,
+      "tls_verified_response": true
+    },
+    {
+      "label": "Le Fil home WebView",
+      "url": "https://le-fil.net/",
+      "curl_exit": 0,
+      "http_status": "200",
+      "http_chain": [
+        "200"
+      ],
+      "destination": "https://le-fil.net/",
+      "page_title": "Accueil - Le Fil",
+      "body_bytes": 90815,
+      "server": [],
+      "login_form": true,
+      "friendica_marker": false,
+      "humhub_marker": false,
+      "tls_verified_response": true
+    },
+    {
+      "label": "Agora NodeInfo",
+      "url": "https://social.le-fil.net/.well-known/nodeinfo",
+      "curl_exit": 0,
+      "http_status": "200",
+      "http_chain": [
+        "200"
+      ],
+      "destination": "https://social.le-fil.net/.well-known/nodeinfo",
+      "page_title": "",
+      "body_bytes": 631,
+      "server": [
+        "nginx"
+      ],
+      "login_form": false,
+      "friendica_marker": false,
+      "humhub_marker": false,
+      "tls_verified_response": true,
+      "nodeinfo_links": [
+        "https://social.le-fil.net/nodeinfo/1.0",
+        "https://social.le-fil.net/nodeinfo/2.0",
+        "https://social.le-fil.net/nodeinfo/2.1",
+        "https://social.le-fil.net/nodeinfo/2.2"
+      ]
+    },
+    {
+      "label": "Talk inbox",
+      "url": "https://team.le-fil.net/index.php?r=mail%2Fmail%2Findex",
+      "curl_exit": 0,
+      "http_status": "200",
+      "http_chain": [
+        "302",
+        "200"
+      ],
+      "destination": "https://team.le-fil.net/index.php",
+      "page_title": "Identifiant - Le Fil Team",
+      "body_bytes": 27194,
+      "server": [
+        "nginx"
+      ],
+      "login_form": true,
+      "friendica_marker": false,
+      "humhub_marker": true,
+      "tls_verified_response": true
+    },
+    {
+      "label": "Atrium home",
+      "url": "https://team.le-fil.net/",
+      "curl_exit": 0,
+      "http_status": "200",
+      "http_chain": [
+        "302",
+        "200"
+      ],
+      "destination": "https://team.le-fil.net/index.php",
+      "page_title": "Accueil - Le Fil Team",
+      "body_bytes": 41813,
+      "server": [
+        "nginx"
+      ],
+      "login_form": false,
+      "friendica_marker": false,
+      "humhub_marker": true,
+      "tls_verified_response": true
+    },
+    {
+      "label": "Talk list PHP",
+      "url": "https://team.le-fil.net/index.php?r=mail%2Fmail%2Fnotification-list",
+      "curl_exit": 0,
+      "http_status": "200",
+      "http_chain": [
+        "302",
+        "200"
+      ],
+      "destination": "https://team.le-fil.net/index.php",
+      "page_title": "Identifiant - Le Fil Team",
+      "body_bytes": 27194,
+      "server": [
+        "nginx"
+      ],
+      "login_form": true,
+      "friendica_marker": false,
+      "humhub_marker": true,
+      "tls_verified_response": true
+    },
+    {
+      "label": "Talk count PHP",
+      "url": "https://team.le-fil.net/index.php?r=mail%2Fmail%2Fget-new-message-count-json",
+      "curl_exit": 0,
+      "http_status": "200",
+      "http_chain": [
+        "302",
+        "200"
+      ],
+      "destination": "https://team.le-fil.net/index.php",
+      "page_title": "Identifiant - Le Fil Team",
+      "body_bytes": 27194,
+      "server": [
+        "nginx"
+      ],
+      "login_form": true,
+      "friendica_marker": false,
+      "humhub_marker": true,
+      "tls_verified_response": true
+    },
+    {
+      "label": "Talk list",
+      "url": "https://team.le-fil.net/mail/mail/notification-list",
+      "curl_exit": 0,
+      "http_status": "404",
+      "http_chain": [
+        "404"
+      ],
+      "destination": "https://team.le-fil.net/mail/mail/notification-list",
+      "page_title": "404 Not Found",
+      "body_bytes": 146,
+      "server": [
+        "nginx"
+      ],
+      "login_form": false,
+      "friendica_marker": false,
+      "humhub_marker": false,
+      "tls_verified_response": true
+    },
+    {
+      "label": "Talk count",
+      "url": "https://team.le-fil.net/mail/mail/get-new-message-count-json",
+      "curl_exit": 0,
+      "http_status": "404",
+      "http_chain": [
+        "404"
+      ],
+      "destination": "https://team.le-fil.net/mail/mail/get-new-message-count-json",
+      "page_title": "404 Not Found",
+      "body_bytes": 146,
+      "server": [
+        "nginx"
+      ],
+      "login_form": false,
+      "friendica_marker": false,
+      "humhub_marker": false,
+      "tls_verified_response": true
+    },
+    {
+      "label": "Agora software",
+      "url": "https://social.le-fil.net/nodeinfo/1.0",
+      "curl_exit": 0,
+      "http_status": "200",
+      "http_chain": [
+        "200"
+      ],
+      "destination": "https://social.le-fil.net/nodeinfo/1.0",
+      "page_title": "",
+      "body_bytes": 892,
+      "server": [
+        "nginx"
+      ],
+      "login_form": false,
+      "friendica_marker": true,
+      "humhub_marker": false,
+      "tls_verified_response": true,
+      "software": {
+        "name": "friendica",
+        "version": "2026.05-1595"
+      },
+      "nodeinfo_links": []
+    }
+  ]
+}
