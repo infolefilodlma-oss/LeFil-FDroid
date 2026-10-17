@@ -7,6 +7,7 @@ from pathlib import Path
 import re
 import subprocess
 import time
+import traceback
 import xml.etree.ElementTree as ET
 
 OUTPUT = Path('docs/validation/branding')
@@ -55,13 +56,25 @@ def capture_app(mode):
 
 def capture_launcher():
     adb('shell', 'cmd', 'uimode', 'night', 'no')
-    adb('shell', 'input', 'keyevent', 'KEYCODE_HOME')
+    launcher = adb('shell', 'cmd', 'package', 'resolve-activity', '--brief',
+                   '-a', 'android.intent.action.MAIN', '-c', 'android.intent.category.HOME')
+    component = launcher.decode().splitlines()[-1].strip()
+    if not re.fullmatch(r'[\w.$]+/[\w.$]+', component):
+        raise RuntimeError('Could not resolve the emulator launcher: ' + component)
+    # ACTION_ALL_APPS is the documented action for listing available applications.
+    # Resolve the actual launcher and wait for its activity rather than swiping mid-transition.
+    adb('shell', 'am', 'start', '-W', '-n', component,
+        '-a', 'android.intent.action.ALL_APPS')
     dimensions = adb('shell', 'wm', 'size').decode()
     width, height = map(int, re.findall(r'(\d+)x(\d+)', dimensions)[-1])
-    adb('shell', 'input', 'swipe', str(width // 2), str(height * 9 // 10),
-        str(width // 2), str(height // 5), '500')
-    tree = hierarchy()
-    labels = [n for n in tree.iter('node') if n.get('text') == 'Le Fil']
+    labels = []
+    deadline = time.monotonic() + 15
+    while time.monotonic() < deadline:
+        tree = hierarchy()
+        labels = [n for n in tree.iter('node') if n.get('text') == 'Le Fil']
+        if labels:
+            break
+        time.sleep(1)
     if not labels:
         raise RuntimeError('Le Fil not found in the actual launcher app drawer')
     screenshot('launcher-drawer.png')
@@ -85,7 +98,8 @@ def main():
     for name in ('native-test.txt', 'light-hierarchy.xml', 'dark-hierarchy.xml',
                  'launcher-drawer-hierarchy.xml', 'launcher-home-hierarchy.xml',
                  'app-light.png', 'app-dark.png', 'launcher-drawer.png',
-                 'launcher-home.png', 'result.json'):
+                 'launcher-home.png', 'failure.png', 'failure-hierarchy.xml', 'failure.json',
+                 'result.json'):
         (OUTPUT / name).unlink(missing_ok=True)
     hardware = adb('shell', 'getprop', 'ro.hardware').decode().strip()
     api = adb('shell', 'getprop', 'ro.build.version.sdk').decode().strip()
@@ -102,13 +116,18 @@ def main():
     capture_app('dark')
     capture_launcher()
     files = {p.name: hashlib.sha256(p.read_bytes()).hexdigest()
-             for p in OUTPUT.iterdir() if p.name != 'result.json'}
+             for p in OUTPUT.iterdir() if p.is_file() and
+             (p.name in ('native-test.txt', 'light-hierarchy.xml', 'dark-hierarchy.xml')
+              or p.name.startswith('app-') or p.name.startswith('launcher-'))}
     result = {
         'source_commit': os.environ['GITHUB_SHA'],
+        'source_application_tree': subprocess.check_output(
+            ['git', 'rev-parse', os.environ['GITHUB_SHA'] + ':app'], text=True).strip(),
         'run_url': 'https://github.com/' + os.environ['GITHUB_REPOSITORY']
                    + '/actions/runs/' + os.environ['GITHUB_RUN_ID'],
         'android_api': int(api), 'hardware': hardware,
-        'native_renderer_regression': {'tests': 1, 'passed': 1, 'failed': 0},
+        'native_renderer_regression': {'tests': 1, 'passed': 1, 'failed': 0,
+                                       'time_seconds': float(re.search(rb'Time: ([\d.]+)', native).group(1))},
         'captures': ['app-light.png', 'app-dark.png', 'launcher-drawer.png', 'launcher-home.png'],
         'file_sha256': files,
         'visual_review': 'pending human or assistant inspection of actual captures',
@@ -120,4 +139,22 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except Exception as error:
+        OUTPUT.mkdir(parents=True, exist_ok=True)
+        failure = {'source_commit': os.environ.get('GITHUB_SHA'),
+                   'error': str(error), 'traceback': traceback.format_exc(),
+                   'notifications_validated': False}
+        if isinstance(error, subprocess.CalledProcessError):
+            failure['command_stdout'] = error.stdout.decode(errors='replace') if error.stdout else ''
+            failure['command_stderr'] = error.stderr.decode(errors='replace') if error.stderr else ''
+        try:
+            if adb('shell', 'getprop', 'ro.hardware').decode().strip() in ('ranchu', 'goldfish'):
+                screenshot('failure.png')
+                (OUTPUT / 'failure-hierarchy.xml').write_bytes(ET.tostring(hierarchy()))
+        except Exception as diagnostic_error:
+            failure['diagnostic_error'] = str(diagnostic_error)
+        (OUTPUT / 'failure.json').write_text(json.dumps(failure, indent=2) + '\n')
+        print('::error title=Android branding capture::' + str(error).replace('\n', '%0A'))
+        raise
