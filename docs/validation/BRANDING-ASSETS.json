@@ -1,6 +1,6 @@
 {
-  "checked_at_utc": "2026-10-17T06:40:46.837749+00:00",
-  "scope": "Source integrity and XML resource inspection; no raster edits, generated logo or runtime success inferred.",
+  "checked_at_utc": "2026-10-17T07:00:41.970060+00:00",
+  "scope": "Original byte integrity, source icon geometry, and actual light/dark Android 15 captures inspected; no raster edits or generated logos.",
   "official_sources": "../../branding/official/sources.json",
   "assets": [
     {
@@ -104,8 +104,8 @@
   "official_png_copies_byte_identical": true,
   "original_dark_variant_byte_identical": true,
   "notification_mask_byte_identical": true,
-  "android_home_screen_runtime_check": "pending new emulator captures",
-  "in_app_runtime_check": "pending new emulator light/dark captures",
+  "android_home_screen_runtime_check": "Passed visual inspection of actual Android 15 AOSP emulator home and drawer captures from run 39011609522; other launchers, themed icons and physical phone not checked.",
+  "in_app_runtime_check": "Passed visual inspection of actual Android 15 light/dark native toolbar and public homepage captures from run 39011609522; no authenticated communication acceptance inferred.",
   "fdroid_published_listing_check": "not performed; application not published",
   "previous_inspection": {
     "checked_at_utc": "2026-10-17T06:04:12.968611+00:00",
@@ -264,5 +264,43 @@
     "in_app_runtime_check": "not performed; native toolbar currently contains a title, site branding is remote content",
     "fdroid_published_listing_check": "not performed; application not published",
     "next_required_asset": "Official existing blue logo on white background, supplied without recreation or recoloring"
-  }
+  },
+  "adaptive_icon_source_geometry": {
+    "method": "Read colored source pixels with alpha >= 128 and channel spread >= 25; map the unchanged 512-square into central 72/108 adaptive units. No image rewritten.",
+    "colored_pixel_count": 31422,
+    "colored_bounds_in_original": [
+      76,
+      125,
+      375,
+      349
+    ],
+    "max_colored_distance_from_adaptive_center": 28.332535077986094,
+    "safe_circle_radius": 33,
+    "colored_source_within_66_unit_safe_circle": true,
+    "scope": "Source geometry only; launcher rendering requires actual Android captures."
+  },
+  "fdroid_icon_source_check": "512x512 PNG in en-US and fr-FR: byte-identical to the supplied official blue-on-white original; visually inspected.",
+  "runtime_evidence": {
+    "pinned_fdroid_source": "99789aa0f9c82d90cef020b33444698a05aafc47",
+    "application_tree": "586d7454d3c8fd6a68ccb09639ac00f8dfea6a76",
+    "capture_source_commit": "0209518364cb0aa22ca501fcfb0d49e18de1596a",
+    "capture_run_url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39011609522",
+    "capture_run_conclusion": "success",
+    "native_renderer_test": {
+      "tests": 1,
+      "passed": 1,
+      "failed": 0,
+      "time_seconds": 3.28
+    },
+    "visual_review": "branding/visual-review.json",
+    "capture_sha256": {
+      "app-light.png": "9ef2b901acfbe383f2aa1bf0a197a231a7ec66a4cdca64ca1fcae2ad8398c11a",
+      "app-dark.png": "b79d06ed0fadafa5ca617f382e8c5d77d8773948be3325a9373d51d825aacde9",
+      "launcher-drawer.png": "3db9ea335894c025b59a8efa776efb8d8a7cc21c3556f621e267b458bbee58e5",
+      "launcher-home.png": "c06e92020766a248fc3008f0181172ae91fd872d71585add5bdee29bf58b9773"
+    },
+    "initial_capture_failure_traceback": "branding/capture-failure.txt",
+    "initial_capture_failure_corrected": "Use documented ACTION_ALL_APPS and wait for the launcher application list; no production code change."
+  },
+  "fastlane_screenshot_provenance": "branding/fastlane-screenshots.json"
 }

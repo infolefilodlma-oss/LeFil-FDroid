@@ -1,17 +1,32 @@
 {
-  "checked_at_utc": "2026-10-17T05:55:17.854347+00:00",
+  "checked_at_utc": "2026-10-17T07:02:34.281467+00:00",
   "candidate": {
     "package": "net.lefil.fdroid",
     "versionName": "0.2.1",
     "versionCode": 3,
-    "build_source_commit": "ccb61022e84a242a5e5989b9a629ac7c90a47a56",
-    "previous_validated_source_commit": "c85f5a3cbb78ab58e6207f770cd9f6df60fb818d"
+    "build_source_commit": "99789aa0f9c82d90cef020b33444698a05aafc47",
+    "previous_validated_source_commit": "c85f5a3cbb78ab58e6207f770cd9f6df60fb818d",
+    "branding_application_commit": "4ffa07b85773f7e08b2e2e556c681c1106068443"
   },
-  "production_and_existing_test_inputs_identical": true,
+  "production_and_existing_test_inputs_identical": false,
+  "existing_java_kotlin_test_sources_and_gradle_declarations_identical": true,
+  "application_input_change": "Official logo resources, legacy/adaptive launcher packaging and native day/night toolbar logo only. No architecture, communication code or test-source change.",
   "git_object_ids": {
     "app": {
       "validated": "fc2d708fdf81b79ae636d9f9ece37b20970748cb",
-      "candidate": "fc2d708fdf81b79ae636d9f9ece37b20970748cb"
+      "candidate": "586d7454d3c8fd6a68ccb09639ac00f8dfea6a76"
+    },
+    "app/src/main/java": {
+      "validated": "d228edd36614d4e49fcc62a808d21ee892b684c7",
+      "candidate": "d228edd36614d4e49fcc62a808d21ee892b684c7"
+    },
+    "app/src/test": {
+      "validated": "5e457b4615a0d94c103ab94338a5e3f762d6f8c2",
+      "candidate": "5e457b4615a0d94c103ab94338a5e3f762d6f8c2"
+    },
+    "app/src/androidTest": {
+      "validated": "96db2dadb84fbd629767ca644783efda59e9fdd9",
+      "candidate": "96db2dadb84fbd629767ca644783efda59e9fdd9"
     },
     "build.gradle": {
       "validated": "9fa0b1b47b25ad054157c6ab7da2dade63793293",
@@ -30,47 +45,72 @@
       "candidate": "0e3c23a8f0b661b7b878a705394b432b4d3ddf88"
     }
   },
-  "previous_validation_preserved": {
+  "historical_validation_preserved": {
+    "source_commit": "c85f5a3cbb78ab58e6207f770cd9f6df60fb818d",
     "jvm_tests": 70,
-    "jvm_tests_rerun": false,
     "native_emulator_tests": 1,
-    "native_api": 35,
-    "native_test_rerun": false,
     "android_lint_errors": 0,
     "android_lint_warnings": 19,
     "evidence": "../validation/automated-results.json"
+  },
+  "current_android_validation": {
+    "jvm_tests": 70,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "jvm_tests_rerun": true,
+    "android_lint_errors": 0,
+    "android_lint_warnings": 14,
+    "android_run_url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39010816563",
+    "junit_and_lint_report": "../validation/branding/android-checks.json",
+    "debug_and_unsigned_release_build": "passed in Android workflow",
+    "native_tests": {
+      "tests": 1,
+      "passed": 1,
+      "failed": 0,
+      "time_seconds": 3.28
+    },
+    "native_api": 35,
+    "native_run_url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39011609522",
+    "native_source_commit": "0209518364cb0aa22ca501fcfb0d49e18de1596a",
+    "native_application_tree_matches_pinned_source": true,
+    "native_report": "../validation/branding/result.json",
+    "phone_or_notifications_validated": false
   },
   "current_metadata_validation": {
     "tool": "fdroidserver 2.4.5",
     "readmeta": "passed",
     "lint_format_check": "passed",
-    "local_scope": "metadata only; apksigner absent locally, so no local binary verification claimed",
-    "local_report_source_commit": "ccb61022e84a242a5e5989b9a629ac7c90a47a56"
+    "local_scope": "Metadata only locally; full build and scans executed in GitHub Actions",
+    "local_report_source_commit": "99789aa0f9c82d90cef020b33444698a05aafc47"
   },
   "current_build_and_scan": {
     "execution_environment": "GitHub Actions ubuntu-24.04, JDK 17, Gradle 8.7, SDK 35 / build-tools 34.0.0",
-    "run_id": 39007522257,
-    "url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39007522257",
-    "workflow_commit": "2e6c350",
-    "build_source_commit": "ccb61022e84a242a5e5989b9a629ac7c90a47a56",
+    "run_id": 39011672052,
+    "url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39011672052",
+    "workflow_commit": "96916de17f547aebca7be234f8a3fbed5ce0c0a1",
+    "build_source_commit": "99789aa0f9c82d90cef020b33444698a05aafc47",
     "conclusion": "success",
     "readmeta": "passed",
     "lint": "passed",
     "build_command": "fdroid build --test --scan-binary --no-tarball net.lefil.fdroid:3",
     "build_result": "passed; helper asserts 1 build succeeded, pinned HEAD and fresh APK",
-    "source_scan": "passed as part of build",
-    "binary_scan": "passed as part of build",
+    "source_scan": "passed",
+    "binary_scan": "passed",
     "scanner_database_freshness": "not independently established",
-    "artifact": "lefil-fdroid-submission-checks (logs and result.json only)",
-    "evidence_scope": "Public run summary and notice inspected; authenticated raw logs and artifact contents were not fetched.",
+    "apk_sha256": "51030d96696b4c77db54c42920ec87187b950351a3305a4a62fdead1ba5280e1",
+    "artifact": "lefil-fdroid-submission-checks (reports only)",
+    "original_result": "../validation/branding/fdroid/result.json",
+    "original_result_sha256": "2e67ab90b2d3e9b5bb02eca9765cbab6bc2802b7f44da53f198908a81bada879",
+    "evidence_scope": "Original result.json retrieved from the Actions artifact and inspected; public success and source notice also inspected. Detailed raw logs remain in the Actions artifact and were not retrieved locally.",
     "official_fdroid_gitlab_ci": "not run"
   },
   "contribution_files": {
     "metadata_target": "metadata/net.lefil.fdroid.yml",
-    "metadata_sha256": "4ff546089287846bebab44084fb30138449fac1c761f1db5ce765e2661d7a93c",
+    "metadata_sha256": "7d9fa608ba22de302024d34e53e8d223e09cd90ad79a348c268ea10890847f38",
     "patch_file": "submission/net.lefil.fdroid.patch",
-    "patch_sha256": "493c384f5b12edc73b68c70291a6f1b631fc11304264e7b28bad4bc4d51c95ca",
-    "patch_apply_check": "passed in empty directory",
+    "patch_sha256": "d36700e967d3c6c4dd93d4c8ad584d441ad9b101ff30f84e3efcf2af8132b6c0",
+    "patch_apply_check": "passed in a fresh empty directory",
     "patched_metadata_exact_match": true,
     "mr_title": "New app: Le Fil",
     "mr_body": "submission/MERGE_REQUEST.md"
@@ -80,7 +120,7 @@
     "age_or_documented_exception": "not established",
     "live_communications": "not validated",
     "physical_phone_installation_requested_from_project_representative": false,
-    "screenshots": "not provided; recommended",
+    "screenshots": "Two actual unedited Android 15 emulator screenshots in upstream en-US and fr-FR Fastlane; provenance recorded",
     "independent_binary_reproducibility": "not performed; recommended",
     "gitlab_authenticated_access": false,
     "reported_test_user_evidence": "Project representative reported a candidate closing or remaining blank; potential evidence for review of the user exception, with no user count or accepted exception invented."
@@ -102,15 +142,17 @@
     "runtime_authenticated": false
   },
   "visual_identity": {
-    "status": "blocked on missing official asset",
-    "required_asset": "Official existing blue logo on white background",
-    "transparent_colored_resource_present": true,
-    "graphics_modified": false,
+    "status": "Official source bytes integrated; actual Android 15 launcher and light/dark native toolbar captures inspected",
+    "blue_logo_on_white_available": true,
+    "originals_preserved_byte_for_byte": true,
     "invented_or_recolored_logo_created": false,
-    "android_launcher_runtime_check": "not performed",
-    "in_app_runtime_check": "not performed",
-    "published_fdroid_listing_check": "not performed",
+    "android_launcher_runtime_check": "passed on the tested Android 15 AOSP emulator; other launchers and themed modes untested",
+    "in_app_runtime_check": "passed light/dark native toolbar and public homepage inspection",
+    "published_fdroid_listing_check": "not performed; not published",
+    "phone_check": "not performed",
     "evidence": "../BRANDING.md",
-    "asset_hashes": "../validation/BRANDING-ASSETS.json"
+    "asset_hashes": "../validation/BRANDING-ASSETS.json",
+    "visual_review": "../validation/branding/visual-review.json",
+    "fastlane_screenshot_provenance": "../validation/branding/fastlane-screenshots.json"
   }
 }

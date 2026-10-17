@@ -1,9 +1,26 @@
-Observed public GitHub Actions summary
-https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39007522257
-Workflow commit: 2e6c350
-Status: Success
-Job: fdroid-candidate
-Artifact: lefil-fdroid-submission-checks
-Notice: source=ccb61022e84a242a5e5989b9a629ac7c90a47a56; readmeta=passed; lint=passed; build=passed; official_submission=false
+Verified Android and F-Droid candidate evidence, 17 October 2026
 
-Raw authenticated logs/artifacts were not retrieved. No official GitLab submission or acceptance is asserted.
+Pinned build source: 99789aa0f9c82d90cef020b33444698a05aafc47
+Application tree: 586d7454d3c8fd6a68ccb09639ac00f8dfea6a76
+
+Android JVM/Lint/debug/unsigned release: success
+https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39010816563
+Actual JUnit XML: 70 tests, 0 failures, 0 errors, 0 skipped.
+Actual Lint XML: 0 errors, 14 warnings.
+Reports: docs/validation/branding/android-checks.json, junit/*.xml, lint-results-debug.xml.
+
+Android 15 native renderer test and launcher/day/night captures: success
+https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39011609522
+Actual native result: OK (1 test), 3.28 seconds.
+Visual inspection recorded separately; the raw capture result retains its original pending-review value.
+The native capture source and Android JVM source have the same application tree as the pinned F-Droid source.
+
+F-Droid pinned build and scans: success
+https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39011672052
+Notice: source=99789aa0f9c82d90cef020b33444698a05aafc47; readmeta=passed; lint=passed; build=passed; official_submission=false
+Original result.json retrieved from the report artifact: docs/validation/branding/fdroid/result.json.
+Detailed raw logs remain in the Actions report artifact; no local log inspection claimed.
+APK SHA-256 recorded by the successful builder: 51030d96696b4c77db54c42920ec87187b950351a3305a4a62fdead1ba5280e1
+
+No authenticated message, background/Doze/reboot notification or physical-phone acceptance.
+No official fdroiddata GitLab CI, MR, admission or publication.

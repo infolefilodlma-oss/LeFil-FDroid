@@ -2,11 +2,11 @@
 
 Application : `net.lefil.fdroid`, version candidate `0.2.1` / `3`, minimum Android 7 (API 24), cible et compilation API 35. Licence déclarée du dépôt : MIT (`LICENSE`), ressources comprises sauf indication contraire. Aucun avis distinct restreignant le logo n'a été relevé dans les pièces examinées.
 
-La candidature officielle utilise [le dossier de soumission](SUBMISSION.md). Les 70 tests JVM et le test natif acquis sont conservés. Pour la finalisation des métadonnées, le code Android et les entrées Gradle restent identiques ; aucun nouvel essai sur téléphone ni réception réelle ne sont déduits de ces résultats.
+La candidature officielle utilise [le dossier de soumission](SUBMISSION.md). Les 70 tests JVM et le test natif acquis sont conservés. La finalisation ajoute les ressources officielles et le logo de la barre native. Les sources Java/Kotlin, les tests et les entrées Gradle restent identiques ; les 70 tests sont réexécutés, ainsi que le test natif Android 15. Aucun essai sur téléphone ni réception réelle ne sont déduits de ces résultats.
 
 ## Contrôler la recette de soumission
 
-Le commit de candidature `ccb61022e84a242a5e5989b9a629ac7c90a47a56` corrige les descriptions Fastlane. La recette y est épinglée pour que F-Droid récupère réellement ces textes. `TetheredNet` et `AuthorName` sont ajoutés dans les seules métadonnées officielles.
+Le commit de candidature `99789aa0f9c82d90cef020b33444698a05aafc47` contient les descriptions corrigées, les originaux graphiques officiels, les icônes et deux captures réelles dans Fastlane. La recette y est épinglée pour que F-Droid récupère ces fichiers. Le [bilan](CHECKS.json) relie les rapports JUnit, le contrôle natif, les images et le build F-Droid à cette même arborescence applicative. `TetheredNet` et `AuthorName` sont ajoutés dans les seules métadonnées officielles.
 
 Avec fdroidserver 2.4.5 dans un environnement virtuel Python, vérifier uniquement les métadonnées dans un répertoire de travail vide :
 

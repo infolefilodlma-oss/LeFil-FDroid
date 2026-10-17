@@ -4,21 +4,23 @@ Le Fil reste la même application Android `net.lefil.fdroid`, version candidate 
 
 ## État réel
 
-Les pièces techniques sont préparées : licence MIT, sources publiques, recette de build, descriptions `en-US` et `fr-FR`, changelogs, procédure de signature et de mises à jour, preuves existantes et contrôle de la nouvelle recette. La nouvelle source épinglée est `ccb61022e84a242a5e5989b9a629ac7c90a47a56` ; seul le texte Fastlane change par rapport au code Android validé.
+Les pièces techniques sont préparées : licence MIT, sources publiques, recette de build, descriptions `en-US` et `fr-FR`, changelogs, procédure de signature et de mises à jour, preuves existantes et contrôle de la nouvelle recette. La source épinglée est `99789aa0f9c82d90cef020b33444698a05aafc47` ; elle inclut les logos officiels et les captures réelles. Les sources Java/Kotlin et les tests sont conservés ; les ressources Android et la barre native affichent désormais les variantes appropriées.
 
-Les corrections du dossier sont limitées à trois écarts établis : suppression des promesses non validées de notifications, déclaration `TetheredNet` pour les instances fixes du Fil et ajout de l'auteur `infolefilodlma-oss`. Les descriptions sont dans le dépôt applicatif, conformément au modèle officiel de MR ; elles ne sont pas dupliquées dans `fdroiddata`.
+Les premières corrections du dossier répondent à trois écarts établis : suppression des promesses non validées de notifications, déclaration `TetheredNet` pour les instances fixes du Fil et ajout de l'auteur `infolefilodlma-oss`. Les descriptions sont dans le dépôt applicatif, conformément au modèle officiel de MR ; elles ne sont pas dupliquées dans `fdroiddata`.
 
 L'admissibilité complète reste à établir. La [vérification des critères](ADMISSIBILITY.md) sépare exigences, recommandations et résultats observés. Le [bilan des contrôles](CHECKS.json) distingue les tests acquis de ceux exécutés pour cette préparation.
 
+## Identité visuelle contrôlée
+
+**Identité visuelle demandée par le projet :** les deux originaux officiels fournis ont été récupérés avec HTTP 200. Le PNG bleu sur blanc est intégré sans réencodage dans Android et Fastlane ; la variante transparente existante est conservée pour la barre native sombre. Les [nouveaux rendus](../BRANDING.md) de l'accueil, de la liste des applications et des thèmes clair/sombre sont contrôlés sur émulateur Android 15 ; les deux captures Fastlane sont réelles et non retouchées. Aucune validation de la fiche publiée n'est annoncée.
+
 ## Points externes encore ouverts
 
-**Identité visuelle demandée par le projet :** les deux originaux officiels fournis ont été récupérés avec HTTP 200. Le PNG bleu sur blanc est intégré sans réencodage dans Android et Fastlane ; la variante transparente existante est conservée pour la barre native sombre. Les [nouveaux rendus](../BRANDING.md) restent à contrôler. Aucune validation de la fiche publiée n'est annoncée.
-
 1. **Ancienneté ou exception.** La politique officielle actuelle contient bien le critère de trois mois de développement actif, avec exceptions pour une application ayant des utilisateurs, un auteur maintenant d'autres applications F-Droid ou une application événementielle. L'historique public vérifié commence le 14 octobre 2026 ; aucun historique antérieur ou élément d'exception n'est reçu. Le texte exact et sa révision officielle figurent dans le bilan d'admissibilité.
-2. **Fonctionnement des communications.** Les 70 tests JVM et le test natif acquis ne valident pas les messages authentifiés, les alertes reçues, les textes identiques, la pagination ni la veille réelle. Les notifications sont désormais décrites comme expérimentales. La [recette préparée pour l'équipe technique](COMMUNICATION-ACCEPTANCE.md) peut commencer sur émulateur avec des comptes d'essai autorisés ; aucune installation manuelle n'est demandée au chef de projet.
+2. **Fonctionnement des communications.** Les 70 tests JVM et le test natif acquis ne valident pas, sur les serveurs réels, les messages authentifiés, les alertes reçues, les textes identiques, la pagination ni la veille. Les notifications sont désormais décrites comme expérimentales. La [recette préparée pour l'équipe technique](COMMUNICATION-ACCEPTANCE.md) peut commencer sur émulateur avec des comptes d'essai autorisés ; aucune installation manuelle n'est demandée au chef de projet.
 3. **Compte GitLab.** La lecture publique des documents et de `fdroiddata` fonctionne. L'API du compte répond HTTP 401 et aucun accès GitLab authentifié n'est actif. Le besoin de secret `GITLAB_TOKEN`, limité à `gitlab.com`, a été préparé dans les paramètres de l'environnement cloud ; l'outil indique que la configuration doit encore être publiée. Il faut y renseigner et activer un jeton de compte autorisé à créer le fork de contribution et la MR `fdroiddata`. Aucune valeur n'est demandée dans le chat. Ce prérequis de compte ne vaut pas levée des autres points de conformité.
 
-Les captures sont recommandées et demandées par le modèle de MR ; la documentation générale les rend facultatives pour l'admission. La comparaison binaire indépendante est également recommandée. Elles ne sont pas ajoutées comme obligations générales inventées. Le dépôt déclare MIT pour ses ressources ; aucun avis contradictoire n'a été relevé dans les pièces examinées.
+Deux captures d'émulateur sont maintenant fournies en amont dans Fastlane, avec leurs empreintes. Les captures sont recommandées et demandées par le modèle de MR ; la documentation générale les rend facultatives pour l'admission. La comparaison binaire indépendante est également recommandée. Elles ne sont pas ajoutées comme obligations générales inventées. Le dépôt déclare MIT pour ses ressources ; aucun avis contradictoire n'a été relevé dans les pièces examinées.
 
 ## Contribution prête à relire
 

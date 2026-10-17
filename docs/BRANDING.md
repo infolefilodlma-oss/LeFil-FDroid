@@ -27,6 +27,20 @@ La barre native ajoute une image de 40 × 40 dp sans changer la navigation. `dra
 
 Les empreintes et dimensions figurent dans [BRANDING-ASSETS.json](validation/BRANDING-ASSETS.json). Le contrôle des copies exactes et de l'absence de teinte est effectué avant compilation.
 
-Les nouveaux rendus du lanceur Android 15 et de l'application en thèmes clair/sombre sont **en attente des captures et de leur examen**. Les autres lanceurs et le téléphone physique restent non validés. L'icône Fastlane sera contrôlée à partir du PNG réellement fourni ; la fiche du catalogue officiel ne pourra être examinée qu'après publication.
+Les nouveaux rendus ont été capturés et examinés dans un émulateur Android 15 AOSP : [accueil](validation/branding/launcher-home.png), [liste des applications](validation/branding/launcher-drawer.png), [application claire](validation/branding/app-light.png) et [sombre](validation/branding/app-dark.png). Le logo est lisible et ses parties colorées ne sont pas découpées sur ce lanceur. La [revue visuelle](validation/branding/visual-review.json) consigne les empreintes et la portée exacte. Les autres lanceurs, formes, modes d'icônes thématiques et le téléphone physique ne sont pas validés.
 
-Les captures d'émulateur, si elles sont obtenues, ne valident ni les comptes réels, ni les notifications, ni leur comportement en veille ou après redémarrage. Aucune soumission ou acceptation F-Droid n'est annoncée.
+L'icône Fastlane de 512 × 512 est identique à l'original officiel. Deux captures réelles, non retouchées, sont fournies dans `en-US` et `fr-FR` ; leur [provenance](validation/branding/fastlane-screenshots.json) distingue le premier jeu de captures du second jeu de contrôle. La fiche du catalogue officiel ne pourra être examinée qu'après publication.
+
+Les captures d'émulateur ne valident ni les comptes réels, ni les notifications, ni leur comportement en veille ou après redémarrage. Aucune soumission ou acceptation F-Droid n'est annoncée.
+
+## Première rupture et correction
+
+Le premier essai a terminé le test natif et les deux captures de l'application, puis échoué à trouver « Le Fil » dans le lanceur après un glissement simulé. Le [diagnostic conservé](validation/branding/capture-failure.txt) établit cette première rupture de l'automatisation. La correction remplace ce geste par `Intent.ACTION_ALL_APPS`, attend la liste, puis place l'icône par glissement long. La [nouvelle exécution](https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39011609522) réussit, y compris le test natif existant. Aucune correction de communication ou de serveur n'est déduite de cet incident.
+
+Les rapports [JUnit/Lint](validation/branding/android-checks.json) attestent 70 tests JVM sans échec, erreur ni test ignoré, et zéro erreur Lint / 14 avertissements. Deux avertissements `MonochromeLauncherIcon` résultent du choix explicite de conserver le logo couleur ; `IconDuplicates` signale les copies exactes utilisées par les ressources du lanceur et de la barre native. Aucun contrôle n'est désactivé. Le masque de notifications existant reste intact.
+
+Références Android : [JavaDoc officielle de ACTION_ALL_APPS](https://github.com/aosp-mirror/platform_frameworks_base/blob/android-15.0.0_r1/core/java/android/content/Intent.java) et [AdaptiveIconDrawable, zone sûre 66/72](https://github.com/aosp-mirror/platform_frameworks_base/blob/android-15.0.0_r1/graphics/java/android/graphics/drawable/AdaptiveIconDrawable.java). Les sources Android 15 ont été consultées ; le calcul des marges est consigné dans le relevé des ressources.
+
+## Retour arrière
+
+Les originaux sont conservés et tous les changements sont isolés sur la branche de développement. Le dernier état avant intégration du logo est `efb8657b4597af1f9ee78ce28c41887e7b0356bc`, qui conserve déjà la correction du moteur 0.2.1 et les 70 tests. Si une régression de ressources est reproduite, un nouveau commit peut restaurer `app/src/main/res` depuis cet état, puis repasser les contrôles et réépingler la recette. Aucun retour arrière ni changement de `main` n'a été effectué.

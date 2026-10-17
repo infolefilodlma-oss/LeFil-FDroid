@@ -8,10 +8,10 @@ Le Fil 0.2.1 (versionCode 3, `net.lefil.fdroid`) provides an Android interface t
 
 Optional background message polling is present, disabled by default and explicitly experimental in the corrected upstream descriptions. Authenticated message detection, notification delivery and opening private conversations from actual alerts remain unvalidated on the live services. The application is tied to the Le Fil instances; `TetheredNet` is declared. The native application has no GMS/Firebase dependency.
 
-The intended value over browsing the sites is direct native service navigation and renderer recovery, plus an optional native communication layer whose actual behavior is still awaiting acceptance. These features and the usefulness of this website wrapper remain subject to F-Droid review. Screenshots are not provided in this draft; none have been fabricated.
+The intended value over browsing the sites is direct native service navigation and renderer recovery, plus an optional native communication layer whose actual behavior is still awaiting acceptance. These features and the usefulness of this website wrapper remain subject to F-Droid review. Two actual, unedited Android 15 emulator screenshots are now included in upstream Fastlane, with recorded provenance. They show the native light/dark toolbar and public homepage, without authenticated accounts.
 
 Sources: https://github.com/infolefilodlma-oss/LeFil-FDroid
-Build revision: `ccb61022e84a242a5e5989b9a629ac7c90a47a56`.
+Build revision: `99789aa0f9c82d90cef020b33444698a05aafc47`.
 Issue tracker/contact: https://github.com/infolefilodlma-oss/LeFil-FDroid/issues
 
 ## Checklist
@@ -49,10 +49,10 @@ Issue tracker/contact: https://github.com/infolefilodlma-oss/LeFil-FDroid/issues
 
 ## Evidence and open acceptance
 
-The already validated Android implementation is preserved: 70 JVM tests, one native Android 15 emulator test, Lint with zero errors, and prior F-Droid source/binary scans. The new source changes only Fastlane wording; the application and Gradle inputs are identical to validated revision `c85f5a3cbb78ab58e6207f770cd9f6df60fb818d`. Current recipe check results and official documentary references are maintained in the upstream `docs/fdroid/` directory on `codex/fdroid-submission-readiness`.
+The already validated Android implementation is preserved: 70 JVM tests, one native Android 15 emulator test, Lint with zero errors, and prior F-Droid source/binary scans. The new application resources use the official logo and select its light/dark variant in the native toolbar. Java/Kotlin production sources, test sources and Gradle declarations remain identical to validated revision `c85f5a3cbb78ab58e6207f770cd9f6df60fb818d`. The 70-test JVM suite and native test have passed again; the exact pinned F-Droid source was built and scanned successfully. Current recipe check results and official documentary references are maintained in the upstream `docs/fdroid/` directory on `codex/fdroid-submission-readiness`.
 
 The native test used local HTML and is not evidence of live account sessions or notifications. A separate acceptance recipe is prepared for authorized test accounts and an Android emulator; the project representative is not asked to install a manual APK. Identical messages, pagination, actual alert routing, background delivery and restart recovery remain unvalidated.
 
-The official blue-on-white PNG supplied by the project is now included byte-for-byte in the Android launcher resources and Fastlane icons. The existing transparent light-lettered variant is preserved for the dark native toolbar. Launcher and day/night appearance checks are pending; the published listing cannot be checked before publication. No logo has been recreated or recolored.
+The official blue-on-white PNG supplied by the project is now included byte-for-byte in the Android launcher resources and Fastlane icons. The existing transparent light-lettered variant is preserved for the dark native toolbar. Actual Android 15 home, app drawer and native light/dark captures have been inspected. Other launchers and themed icon modes are untested; the published listing cannot be checked before publication. No logo has been recreated or recolored.
 
-No claim is made that GitLab CI, inclusion, publication, screenshots or phone notification acceptance have passed. Resolve the policy and functionality items before marking the inclusion checklist complete or posting this as an eligible submission.
+No claim is made that GitLab CI, inclusion, publication or phone notification acceptance have passed. Resolve the policy and functionality items before marking the inclusion checklist complete or posting this as an eligible submission.
