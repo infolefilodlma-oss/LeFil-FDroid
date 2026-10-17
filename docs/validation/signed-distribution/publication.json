@@ -6,9 +6,25 @@
   "installation_checks": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39035916585",
   "private_key_uploaded": false,
   "external_durable_key_retention_verified": false,
-  "published": false,
-  "outcome": "failed",
-  "phase": "create_draft_from_existing_tag",
-  "failure": "",
-  "rollback_to_draft_succeeded": true
+  "published": true,
+  "outcome": "published_and_anonymously_download_verified",
+  "phase": "verified",
+  "draft_asset_download_sha256_verified": true,
+  "downloads": [
+    {
+      "url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/releases/download/v0.2.1/LeFil.apk",
+      "http_status": 200,
+      "bytes": 4919502,
+      "sha256": "b0141391fad9fe1cfea638fd33a69d4fee1839f14747320820856577f57d4cb2"
+    },
+    {
+      "url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/releases/latest/download/LeFil.apk",
+      "http_status": 200,
+      "bytes": 4919502,
+      "sha256": "b0141391fad9fe1cfea638fd33a69d4fee1839f14747320820856577f57d4cb2"
+    }
+  ],
+  "release_url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/releases/tag/v0.2.1",
+  "direct_download_url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/releases/download/v0.2.1/LeFil.apk",
+  "latest_download_url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/releases/latest/download/LeFil.apk"
 }
