@@ -1,0 +1,21 @@
+{
+  "retrieved_at_utc": "2026-10-17T06:35:16.558585+00:00",
+  "files": [
+    {
+      "url": "https://le-fil.net/wp-content/uploads/2026/06/Logo-512-1.png",
+      "path": "branding/official/Logo-512-1.png",
+      "http_status": 200,
+      "bytes": 88195,
+      "sha256": "fd35eca1befbbd41aac57b0497846bd9de3b89d23422b16b175ec1c137a5083d",
+      "content_type": "image/png"
+    },
+    {
+      "url": "https://le-fil.net/wp-content/uploads/2026/05/logo-fond-clair_lwsoptimized.webp",
+      "path": "branding/official/logo-fond-clair_lwsoptimized.webp",
+      "http_status": 200,
+      "bytes": 20382,
+      "sha256": "3fbbcc1570440bfdf5c2256faf2b4b4d307f0d112b95ee58587979d9a73024cf",
+      "content_type": "image/webp"
+    }
+  ]
+}
