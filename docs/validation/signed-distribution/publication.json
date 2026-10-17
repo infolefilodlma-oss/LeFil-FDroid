@@ -9,6 +9,6 @@
   "published": false,
   "outcome": "failed",
   "phase": "create_draft_from_existing_tag",
-  "failure": "HTTP 403: Resource not accessible by integration (https://api.github.com/repos/infolefilodlma-oss/LeFil-FDroid/releases)",
-  "rollback_to_draft_succeeded": false
+  "failure": "",
+  "rollback_to_draft_succeeded": true
 }
