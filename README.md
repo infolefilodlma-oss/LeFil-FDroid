@@ -9,6 +9,7 @@ Le menu natif ouvre Agora, Atrium et Talk et permet d'activer/désactiver la sur
 - [Recette sur téléphone et comptes réels](docs/PHONE-ACCEPTANCE.md)
 - [État de candidature F-Droid](docs/fdroid/SUBMISSION.md)
 - [Critères officiels vérifiés et écarts restants](docs/fdroid/ADMISSIBILITY.md)
+- [Logos officiels et contrôle de l'identité visuelle](docs/BRANDING.md)
 
 L'APK de débogage sert uniquement aux essais. Aucun résultat de compilation ou test simulé ne prouve une réception sur téléphone, ni une admission au catalogue F-Droid.
 

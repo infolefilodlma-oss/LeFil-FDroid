@@ -100,5 +100,17 @@
     "requires_publish": true,
     "credential_value_received": false,
     "runtime_authenticated": false
+  },
+  "visual_identity": {
+    "status": "blocked on missing official asset",
+    "required_asset": "Official existing blue logo on white background",
+    "transparent_colored_resource_present": true,
+    "graphics_modified": false,
+    "invented_or_recolored_logo_created": false,
+    "android_launcher_runtime_check": "not performed",
+    "in_app_runtime_check": "not performed",
+    "published_fdroid_listing_check": "not performed",
+    "evidence": "../BRANDING.md",
+    "asset_hashes": "../validation/BRANDING-ASSETS.json"
   }
 }
