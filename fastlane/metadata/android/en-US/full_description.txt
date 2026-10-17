@@ -2,8 +2,12 @@ Access Le Fil’s Agora (Friendica), Atrium (HumHub) and Talk, the messaging mod
 
 Services run in a WebView using your existing accounts. The native menu provides direct access to each service.
 
-Optional native message polling uses the WebView’s signed-in sessions without Firebase or Google Play Services. An ongoing notification indicates that polling is enabled. Message notifications open the matching conversation.
+On Android 8 or newer, a native recovery panel can reload the last page or switch services from the menu if the web renderer exits.
 
-Polling runs approximately once per minute when Android permits it. This is not push messaging. Doze, battery restrictions, expired sessions and force-stop can delay or interrupt checks. Reopen the app after force-stop. Polling can be disabled from the menu.
+Optional message polling is experimental and disabled by default. Authenticated message detection, notification delivery and opening private conversations from alerts have not yet been validated end to end on the live services. This candidate must not be relied on for message alerts.
+
+The polling mechanism uses signed-in WebView sessions without Firebase or Google Play Services. It is designed to check approximately once per minute when Android permits it. This is not push messaging. Doze, battery restrictions, expired sessions and force-stop can delay or interrupt checks. Polling can be disabled from the menu.
 
 Internet access and service accounts are required for messaging. Immediate or exhaustive delivery is not guaranteed: server lists are paginated and detection depends on their response format.
+
+The app is limited to le-fil.net, social.le-fil.net and team.le-fil.net. Other server instances cannot be configured.
