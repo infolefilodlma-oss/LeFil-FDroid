@@ -1,0 +1,36 @@
+name: F-Droid - observed Google font fallback
+
+on:
+  push:
+    branches: [codex/fdroid-submission-readiness]
+    paths:
+      - .github/workflows/fdroid-font-fallback.yml
+      - tools/check_google_fonts_fallback.py
+
+permissions:
+  contents: write
+
+jobs:
+  public-font-fallback:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install an isolated public-page observer
+        run: |
+          python3 -m venv "$RUNNER_TEMP/font-observer"
+          "$RUNNER_TEMP/font-observer/bin/pip" install playwright==1.56.0
+          "$RUNNER_TEMP/font-observer/bin/playwright" install --with-deps chromium
+      - name: Check only the newly observed remote font dependency
+        run: '"$RUNNER_TEMP/font-observer/bin/python" tools/check_google_fonts_fallback.py'
+      - name: Preserve the result including any failed assertion
+        if: always()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/validation/fdroid-finalization
+          if ! git diff --cached --quiet; then
+            git commit -m 'Record public controls with Google font requests blocked (${{ job.status }})'
+            git pull --rebase origin codex/fdroid-submission-readiness
+            git push origin HEAD:refs/heads/codex/fdroid-submission-readiness
+          fi
