@@ -1,0 +1,21 @@
+{
+  "checked_at_utc": "2026-10-17T07:21:00.732028+00:00",
+  "authenticated": false,
+  "observations": [
+    {
+      "url": "https://marketplace.humhub.com/module/mail",
+      "http_status": 200,
+      "sha256": "2d32ce50a64872b29d3dabc2e344d32941716507ec07500ef4fb2b7a4d8ff6fa",
+      "source_or_license_links": [
+        "/module/mail/licence",
+        "https://github.com/humhub",
+        "https://github.com/humhub/mail"
+      ],
+      "public_text": "Messenger - HumHub Marketplace\nMarketplace\nBrowse\nBack to marketplace\nMessenger\nEngage in private conversations with colleagues and teams through secure messaging.\nDescription\nScreenshots\nDownloads\nLicence\nDeveloper\nChangelog\nEngage in private conversations with your colleagues and teams with the Messenger Module, a secure way to communicate, collaborate, and share ideas. Exchange messages, share files, and use formatting options to ensure clear and engaging discussions without cluttering spaces.\nKey Features:\nFile Sharing:\nAttach images, documents, and other files directly in conversations.\nText Editor:\nFormat messages with bold, italics, lists, and more for better readability.\nTags:\nAdd tags to conversations for easy searching and quick access to important discussions.\nPinned Conversations:\nPin important discussions to keep them easily accessible at all times.\nModule Information\nPrice:\nFree\nLatest version release:\n3.4.6 - October 4, 2026\nPublisher:\nHumHub GmbH & Co. KG\nAuthor(s):\nAndreas Strobel\nLucas Bartholemy\nJulian Harrer\nWebsite:\nGithub\nCompatibility:\nHumHub 0.5 - 1.19\nEditions\nProfessional Edition\nCreate free Demo\nCommunity Edition\nPricing\nMarketplace\nAbout\nFAQ\nNewsletter\nContact\nJobs\nResources\nDocumentation\nHumHub Community\nNews\nGitHub\nLegal\nPrivacy Policy\nCookie Richtlinie\nTerms of Service\nImprint\nSocial\nCommunity\nLinkedIn\nTwitter\nHumHub GmbH & Co. KG\nJohann-Clanze-Stra\u00dfe 28c\n81369 Munich\nGermany\nCopyright \u00a9 2026 HumHub GmbH & Co. KG"
+    },
+    {
+      "url": "https://marketplace.humhub.com/module/messenger",
+      "http_status": 404
+    }
+  ]
+}
