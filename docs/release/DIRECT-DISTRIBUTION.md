@@ -25,8 +25,22 @@ reconstruit le même commit dans deux répertoires propres, compare les APK non
 signés octet par octet et vérifie l’identifiant, la version, l’absence du mode
 débogage et l’alignement ZIP. Une clé temporaire valable deux jours est utilisée
 uniquement pour les contrôles d’installation et de démarrage dans l’émulateur
-Android 15. Les résultats effectifs figurent dans
-`docs/validation/direct-release/release-checks.json` lorsqu’ils sont produits.
+Android 15. Les [résultats récupérés](../validation/direct-release/release-checks.json)
+confirment deux APK non signés strictement identiques, une installation, une
+réinstallation avec la même signature temporaire et deux démarrages réussis de
+l’application dans cet émulateur. Le tampon de crash enregistré est vide.
+
+Empreinte des deux APK non signés :
+`40b13feceb592df21e4b2e9374e4b0e3adac734fed5bbe7c207f4de13ed59d63`.
+Elle correspond aussi au build F-Droid local déjà conservé dans le run
+`39014443718`, sans valider le serveur officiel F-Droid.
+
+Le premier run a terminé en échec uniquement lors de l’enregistrement Git des
+rapports : les fichiers `.log` sont ignorés par le dépôt. L’ajout explicite de
+ces rapports a été corrigé et leur artefact original récupéré sans reconstruire
+ou réinstaller l’application. Le [contrôle de récupération réussi](https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39029541592)
+et sa [provenance](../validation/direct-release/evidence-provenance.json)
+conservent les conclusions réelles de chaque étape et les empreintes des fichiers.
 
 Ni cet APK d’essai, ni sa clé temporaire ne sont publiés. Cette clé est supprimée
 du runner. Seuls les rapports et les captures réelles sont conservés. Ces
@@ -73,6 +87,14 @@ vérification reproductible, une URL `Binaries` ou `Builds.binary` et l’emprei
 `AllowedAPKSigningKeys`. Ces champs ne sont pas ajoutés à la candidature par ce
 contrôle. Aucune compatibilité de mise à jour intercanaux n’est annoncée comme
 validée.
+
+Une [proposition séparée](net.lefil.fdroid.developer-signed.yml) prépare ces deux
+champs avec l’empreinte réelle du certificat et l’URL de la future Release.
+`fdroidserver 2.4.5 readmeta` et `lint -f` ont réussi sur cette proposition après
+formatage canonique ; les autres champs restent identiques à la candidature.
+Le [rapport](../validation/direct-release/developer-signature-metadata.json)
+précise que le binaire public n’existe pas et que cette proposition n’est ni
+activée dans la MR !52965 ni vérifiée par le serveur F-Droid.
 
 Après la conservation vérifiée de la clé, contrôler l’APK signé avec ce même
 certificat et préparer cette configuration F-Droid avant toute publication.

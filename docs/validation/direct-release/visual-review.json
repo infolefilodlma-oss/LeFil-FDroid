@@ -1,0 +1,17 @@
+{
+  "checked_at_utc": "2026-10-17T11:44:50.411089+00:00",
+  "first_start_capture": "release-first-start.png",
+  "first_start_observation": "Official native toolbar logo and the public Le Fil homepage are visible; the page is not blank.",
+  "second_start_capture": "release-second-start.png",
+  "second_start_observation": "Homepage content is visible with an intermediate grey background; this capture does not establish a settled final layout.",
+  "graphics_modified": false,
+  "physical_phone_validated": false,
+  "authenticated_services_validated": false,
+  "real_notifications_validated": false,
+  "production_signature_validated": false,
+  "same_unsigned_apk_as_preserved_fdroid_local_build": true,
+  "screenshot_sha256": {
+    "release-first-start.png": "cb7dbb6f4a277a43a5d2b56e184bdadf04ca3b73c12c3c4c09ad8692b78212bd",
+    "release-second-start.png": "5878bd5261082e155f42d3f395d9028988a4289f285305ddc13465edd00f48f2"
+  }
+}

@@ -1,0 +1,54 @@
+AntiFeatures:
+  TetheredNet:
+    en-US: Only the Le Fil services can be used; server instances cannot be changed
+      in the app.
+    fr-FR: Seuls les services du Fil sont accessibles ; leurs instances ne sont pas
+      configurables.
+Categories:
+  - Internet
+License: MIT
+AuthorName: infolefilodlma-oss
+WebSite: https://le-fil.net
+SourceCode: https://github.com/infolefilodlma-oss/LeFil-FDroid
+IssueTracker: https://github.com/infolefilodlma-oss/LeFil-FDroid/issues
+
+AutoName: Le Fil
+
+RepoType: git
+Repo: https://github.com/infolefilodlma-oss/LeFil-FDroid.git
+Binaries: https://github.com/infolefilodlma-oss/LeFil-FDroid/releases/download/v%v/LeFil.apk
+
+Builds:
+  - versionName: 0.2.1
+    versionCode: 3
+    commit: 25189d316d8345a601b4dae2fa9987d286831d1e
+    subdir: app
+    gradle:
+      - yes
+
+AllowedAPKSigningKeys: d0755310dbd84319bbd0cb658475168cb9234cd1b60f9893a092afa19c31b902
+
+MaintainerNotes: |-
+  Candidate 0.2.1, versionCode 3. The build source includes corrected
+  Fastlane descriptions and the official logo assets, not a stable release tag.
+  Message polling is experimental and actual delivery is not validated.
+  Native recovery was tested in an Android 15 emulator using local HTML;
+  this did not test authenticated services or actual message delivery.
+  Web pages automatically load Google Fonts (fonts.googleapis.com and
+  fonts.gstatic.com); the homepage also loads WordPress emoji from s.w.org.
+  Third-party cookies are enabled. These web requests are now disclosed
+  upstream. Google font blocking left the observed public controls visible;
+  authenticated pages and tracking behavior remain unaudited. A Site Kit
+  generator marker was present without an analytics request observed.
+  Please review any additional Anti-Feature classification using the
+  recorded requests; absence of GMS/Firebase is a native dependency claim.
+  Review of the Quality Control user exception is requested: public history
+  starts on 2026-10-14, and the project representative reported a candidate
+  trial on a phone. No user count or accepted exception is claimed.
+  Live message acceptance is disclosed as pending during inclusion review;
+  the proposal does not claim validated notification delivery.
+
+AutoUpdateMode: Version
+UpdateCheckMode: Tags v[0-9].*
+CurrentVersion: 0.2.1
+CurrentVersionCode: 3

@@ -1,0 +1,26 @@
+{
+  "checked_at_utc": "2026-10-17T11:43:51.920889+00:00",
+  "tool": "fdroidserver 2.4.5",
+  "proposal": "docs/release/net.lefil.fdroid.developer-signed.yml",
+  "proposal_sha256": "766fdcf47922ffdf0c626b70c354439a4f1e7939f97ba9e43a5ecd5d1a65a2e1",
+  "source_commit": "25189d316d8345a601b4dae2fa9987d286831d1e",
+  "versionName": "0.2.1",
+  "versionCode": 3,
+  "readmeta": "passed",
+  "lint_format_check": "passed",
+  "canonical_formatting": "Corrected with fdroid rewritemeta, then official readmeta and lint -f exited successfully. AllowedAPKSigningKeys is serialized in canonical scalar form for this single key.",
+  "new_fields_only": [
+    "Binaries",
+    "AllowedAPKSigningKeys"
+  ],
+  "certificate_sha256_matches_public_certificate": true,
+  "existing_metadata_fields_identical": true,
+  "public_production_binary_available": false,
+  "production_key_prepared_privately": true,
+  "production_signing_key_durably_stored_by_owner": false,
+  "production_signature_validated": false,
+  "official_fdroid_rebuild_or_acceptance_verified": false,
+  "official_mr_modified": false,
+  "metadata_only_validation": true,
+  "apk_verification_scope": "Local metadata checks did not verify or sign APKs. Test-only APK signature verification is recorded separately in release-checks.json."
+}
