@@ -79,6 +79,7 @@ indépendante hors de cet environnement n'est pas encore vérifiée.
               "published": False, "outcome": "not_completed"}
     was_published = False
     try:
+        report["phase"] = "read_release_metadata"
         # The list endpoint also returns drafts to this authorized repository token.
         releases = json.loads(gh("api", f"repos/{REPOSITORY}/releases?per_page=100").stdout)
         release = next((r for r in releases if r["tag_name"] == TAG), None)
@@ -87,8 +88,9 @@ indépendante hors de cet environnement n'est pas encore vérifiée.
             assert not release["prerelease"], "Refuse to alter another release configuration"
             was_published = not release["draft"]
         else:
+            report["phase"] = "create_draft_from_existing_tag"
             gh("release", "create", TAG, "--repo", REPOSITORY, "--target", SOURCE,
-               "--draft", "--title", "Le Fil 0.2.1", "--notes-file", str(notes))
+               "--verify-tag", "--draft", "--title", "Le Fil 0.2.1", "--notes-file", str(notes))
             releases = json.loads(gh("api", f"repos/{REPOSITORY}/releases?per_page=100").stdout)
             release = next(r for r in releases if r["tag_name"] == TAG)
         assets = [apk, ROOT / "distribution/LeFil.apk.sha256",
@@ -99,23 +101,30 @@ indépendante hors de cet environnement n'est pas encore vérifiée.
         missing = [str(p) for p in assets if p.name not in existing_names]
         if missing:
             assert release["draft"], "Never alter assets of an already published release"
+            report["phase"] = "upload_signed_assets_to_draft"
             gh("release", "upload", TAG, *missing, "--repo", REPOSITORY)
         downloaded = Path(os.environ["RUNNER_TEMP"]) / "lefil-draft-asset"
         downloaded.mkdir(exist_ok=False)
+        report["phase"] = "download_and_verify_draft_asset"
         gh("release", "download", TAG, "--repo", REPOSITORY, "--pattern", "LeFil.apk",
            "--dir", str(downloaded))
         assert hashlib.sha256((downloaded / "LeFil.apk").read_bytes()).hexdigest() == SHA256
         report["draft_asset_download_sha256_verified"] = True
         if release["draft"]:
+            report["phase"] = "publish_verified_release"
             gh("release", "edit", TAG, "--repo", REPOSITORY, "--draft=false", "--latest")
+        report["phase"] = "verify_anonymous_public_downloads"
         report["downloads"] = [fetch(VERSION_URL), fetch(LATEST_URL)]
         final = json.loads(gh("api", f"repos/{REPOSITORY}/releases/tags/{TAG}").stdout)
         assert not final["draft"] and not final["prerelease"]
-        final_tags = subprocess.check_output(["git", "ls-remote", "origin", f"refs/tags/{TAG}"], text=True)
-        assert final_tags.split()[0] == SOURCE, "Published tag does not match the built commit"
+        final_tags = subprocess.check_output(["git", "ls-remote", "origin", f"refs/tags/{TAG}",
+                                             f"refs/tags/{TAG}^{{}}"], text=True).splitlines()
+        resolved = next((line.split()[0] for line in final_tags if line.endswith("^{}")),
+                        final_tags[0].split()[0])
+        assert resolved == SOURCE, "Published tag does not match the built commit"
         report.update(published=True, release_url=final["html_url"],
                       direct_download_url=VERSION_URL, latest_download_url=LATEST_URL,
-                      outcome="published_and_anonymously_download_verified")
+                      outcome="published_and_anonymously_download_verified", phase="verified")
     except Exception as error:
         report.update(outcome="failed", failure=str(error))
         if not was_published:
