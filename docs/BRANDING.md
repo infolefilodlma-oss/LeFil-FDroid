@@ -1,30 +1,32 @@
 # Identité visuelle officielle Le Fil
 
-Consigne du projet : réutiliser les fichiers officiels déjà validés, sans recréer, recolorer ni déformer le logo.
+Consigne du projet : réutiliser les fichiers officiels sans recréer, recolorer ni déformer le logo.
 
-| Usage | Fichier à utiliser |
+## Originaux reçus
+
+Les deux URL fournies par le responsable du projet ont été récupérées par GitHub Actions avec HTTPS vérifié : [exécution d'import](https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39010458906). Les fichiers sont conservés à l'identique dans [branding/official](../branding/official/README.md) ; [sources.json](../branding/official/sources.json) consigne les réponses HTTP 200 et les empreintes SHA-256.
+
+| Usage | Source officielle |
 |---|---|
-| Fond foncé | Variante officielle transparente prévue pour ce fond |
-| Fond clair | Logo officiel bleu avec son fond blanc |
-| Icône Android, classique et adaptative | Privilégier le logo officiel bleu avec son fond blanc |
-| Icône et présentation F-Droid | Privilégier le même fichier officiel bleu sur fond blanc |
+| Android et présentation F-Droid | `Logo-512-1.png`, 512 × 512, lettres bleues sur disque blanc |
+| Barre native sur fond clair | Le même PNG, sans teinte ni réencodage |
+| Barre native sur fond foncé | Ancienne variante transparente à lettres claires, conservée sans modification |
+| Autre original fourni, conservé | `logo-fond-clair_lwsoptimized.webp`, 664 × 545, lettres bleues sur fond transparent |
 
-Conserver les proportions et les marges du dessin. Aucun filtre de couleur, suppression de fond ou dessin de remplacement ne doit servir à fabriquer un fichier officiel manquant. Les masques appliqués par les lanceurs Android doivent conserver le logo lisible.
+## Intégration
 
-## État des fichiers examinés
+Le PNG officiel est copié octet pour octet dans `mipmap-nodpi/ic_launcher.png`, `drawable-nodpi/le_fil_logo_light.png` et les deux icônes Fastlane `en-US/images/icon.png` et `fr-FR/images/icon.png`. Aucune image n'est générée ou réencodée. Android effectue lui-même la mise à l'échelle proportionnelle du carré original.
 
-Les ressources introduites par `e27d5547210dd4b9e0bc18dc1641538cde1392d1` contiennent un logo à lettres claires, motif doré et feuille verte. La ressource couleur transparente est `app/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png` (432 × 432). Les images classiques `ic_launcher.png` et `ic_launcher_round.png` placent ce dessin sur blanc, en cinq densités. L'examen visuel montre une perte de contraste des lettres sur ce fond.
+Les anciennes icônes à lettres claires sur blanc, de contraste insuffisant, sont remplacées. L'icône adaptative garde un arrière-plan blanc et une marge de 1/6 autour du carré original, pour le placer dans les 72 unités centrales du calque de 108 unités. Le dessin coloré conserve aussi les marges présentes dans l'original. Les masques des lanceurs restent sous le contrôle d'Android.
 
-**Le fichier officiel bleu sur fond blanc est absent du dépôt examiné.** Il doit être fourni avant de remplacer les icônes Android ou d'ajouter l'image de publication F-Droid. Aucun des fichiers présents n'est recoloré pour le fabriquer.
+La référence facultative `<monochrome>` du lanceur est retirée pour privilégier le logo couleur demandé. Le masque existant `drawable/ic_launcher_monochrome.png`, utilisé pour les petites icônes de notifications Android, reste strictement inchangé. Ce retrait ne valide ni ne modifie la réception des notifications.
 
-`drawable/ic_launcher_monochrome.png` est un masque monochrome existant, également utilisé pour les petites icônes de notifications Android. Il ne remplace ni le logo couleur transparent ni le logo bleu sur blanc. Les références `<monochrome>` des icônes adaptatives exposent ce masque aux icônes thématiques Android : cet usage devra être revu avec le fichier officiel, afin de conserver l'identité couleur demandée. Aucun changement des notifications n'est effectué pour contourner les règles d'affichage du système.
+La barre native ajoute une image de 40 × 40 dp sans changer la navigation. `drawable-night/le_fil_toolbar_logo.xml` sélectionne l'ancienne variante transparente pour le thème sombre ; la variante bleue sur blanc est utilisée en thème clair. Les images des pages web restent fournies par les sites, sans recoloration injectée ni modification du VPS.
 
-Les dimensions, transparences et empreintes de toutes les images présentes figurent dans [BRANDING-ASSETS.json](validation/BRANDING-ASSETS.json). Les fichiers graphiques sont conservés à l'identique.
+## Contrôles
 
-## Emplacements à contrôler après réception du fichier
+Les empreintes et dimensions figurent dans [BRANDING-ASSETS.json](validation/BRANDING-ASSETS.json). Le contrôle des copies exactes et de l'absence de teinte est effectué avant compilation.
 
-1. **Écran d'accueil Android :** icône classique et icône adaptative, formes ronde et carrée, fonds clairs et foncés, icônes thématiques activées et désactivées. Vérifier les marges, le contraste, la lisibilité du nom et l'absence de découpe. Un examen des PNG ne valide pas un rendu réel du lanceur.
-2. **Dans l'application :** démarrage et thème clair/foncé. La barre native actuelle affiche le titre « Le Fil » sans image ; les logos des pages proviennent du site. Vérifier le choix des variantes dans le contenu réellement affiché, sans modifier le VPS ni injecter une recoloration dans le WebView.
-3. **Présentation F-Droid :** réutiliser le fichier bleu sur blanc dans les images Fastlane de publication, vérifier ses proportions et les limites des aperçus. Les captures doivent représenter l'application réelle avec les bons fichiers. La fiche publiée ne pourra être vérifiée qu'après publication effective.
+Les nouveaux rendus du lanceur Android 15 et de l'application en thèmes clair/sombre sont **en attente des captures et de leur examen**. Les autres lanceurs et le téléphone physique restent non validés. L'icône Fastlane sera contrôlée à partir du PNG réellement fourni ; la fiche du catalogue officiel ne pourra être examinée qu'après publication.
 
-État : inspection des ressources effectuée ; intégration du logo bleu et contrôles de rendu Android/application/F-Droid **en attente du fichier officiel manquant**. Aucun résultat sur téléphone, émulateur ou catalogue publié n'est annoncé.
+Les captures d'émulateur, si elles sont obtenues, ne valident ni les comptes réels, ni les notifications, ni leur comportement en veille ou après redémarrage. Aucune soumission ou acceptation F-Droid n'est annoncée.

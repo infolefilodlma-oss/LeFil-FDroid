@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Fit the unchanged square original into the central 72 of the 108 icon units. -->
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:inset="16.666667%">
+    <bitmap android:src="@drawable/le_fil_logo_light"
+        android:gravity="fill" android:filter="true" />
+</inset>

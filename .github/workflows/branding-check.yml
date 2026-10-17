@@ -1,0 +1,63 @@
+name: Android - official branding evidence
+
+on:
+  push:
+    branches:
+      - codex/fdroid-submission-readiness
+    paths:
+      - app/src/main/res/**
+      - tools/capture_branding.py
+      - .github/workflows/branding-check.yml
+
+permissions:
+  contents: read
+
+jobs:
+  branding:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+        with:
+          packages: 'platform-tools platforms;android-35 build-tools;34.0.0'
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.7'
+      - name: Compile the application and the existing native regression test
+        run: gradle --no-daemon :app:assembleDebug :app:assembleDebugAndroidTest
+      - name: Enable KVM in the disposable CI runner
+        run: sudo chmod 666 /dev/kvm
+      - name: Check native recovery and capture Android 15 branding without accounts
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: default
+          arch: x86_64
+          profile: pixel_2
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -camera-back none
+          script: python3 tools/capture_branding.py
+      - name: Retain evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lefil-branding-evidence
+          path: docs/validation/branding/**
+          if-no-files-found: warn
+      - name: Preserve successful evidence on the development branch
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/validation/branding
+          if ! git diff --cached --quiet; then
+            git commit -m 'Record Android 15 branding captures and native regression results'
+            git pull --rebase origin codex/fdroid-submission-readiness
+            git push origin HEAD:refs/heads/codex/fdroid-submission-readiness
+          fi

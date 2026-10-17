@@ -1,7 +1,7 @@
 {
-  "checked_at_utc": "2026-10-17T06:04:12.968611+00:00",
-  "scope": "Existing repository graphics inspected; no image edited or generated. No phone, emulator or published F-Droid screenshot is claimed.",
-  "source_commit_for_existing_graphics": "e27d5547210dd4b9e0bc18dc1641538cde1392d1",
+  "checked_at_utc": "2026-10-17T06:40:46.837749+00:00",
+  "scope": "Source integrity and XML resource inspection; no raster edits, generated logo or runtime success inferred.",
+  "official_sources": "../../branding/official/sources.json",
   "assets": [
     {
       "path": "app/src/main/res/drawable/ic_launcher_monochrome.png",
@@ -16,115 +16,7 @@
       "sha256": "b8a29bc2494548bea5a9c209ceff2d19411eea05cebc08a129a3d2f13334674e"
     },
     {
-      "path": "app/src/main/res/mipmap-hdpi/ic_launcher.png",
-      "size": [
-        72,
-        72
-      ],
-      "alpha_range": [
-        255,
-        255
-      ],
-      "sha256": "a869abef2e044d55e6ff1a529333adaf8085f67decd08cc579961201ce15e630"
-    },
-    {
-      "path": "app/src/main/res/mipmap-hdpi/ic_launcher_round.png",
-      "size": [
-        72,
-        72
-      ],
-      "alpha_range": [
-        255,
-        255
-      ],
-      "sha256": "a869abef2e044d55e6ff1a529333adaf8085f67decd08cc579961201ce15e630"
-    },
-    {
-      "path": "app/src/main/res/mipmap-mdpi/ic_launcher.png",
-      "size": [
-        48,
-        48
-      ],
-      "alpha_range": [
-        255,
-        255
-      ],
-      "sha256": "74086a45365cd1536603a80a9b4010a8db41b0053e16d6ec7ceef712925cc2d2"
-    },
-    {
-      "path": "app/src/main/res/mipmap-mdpi/ic_launcher_round.png",
-      "size": [
-        48,
-        48
-      ],
-      "alpha_range": [
-        255,
-        255
-      ],
-      "sha256": "74086a45365cd1536603a80a9b4010a8db41b0053e16d6ec7ceef712925cc2d2"
-    },
-    {
-      "path": "app/src/main/res/mipmap-xhdpi/ic_launcher.png",
-      "size": [
-        96,
-        96
-      ],
-      "alpha_range": [
-        255,
-        255
-      ],
-      "sha256": "c77981e15d2776e7a597d8a8e6779333957012613c50326a140b239cadc59201"
-    },
-    {
-      "path": "app/src/main/res/mipmap-xhdpi/ic_launcher_round.png",
-      "size": [
-        96,
-        96
-      ],
-      "alpha_range": [
-        255,
-        255
-      ],
-      "sha256": "c77981e15d2776e7a597d8a8e6779333957012613c50326a140b239cadc59201"
-    },
-    {
-      "path": "app/src/main/res/mipmap-xxhdpi/ic_launcher.png",
-      "size": [
-        144,
-        144
-      ],
-      "alpha_range": [
-        255,
-        255
-      ],
-      "sha256": "2cf6c2d3303f7aca0a136ffb87b1e9fbc31aace42a8e746a44dc18e2d6686051"
-    },
-    {
-      "path": "app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png",
-      "size": [
-        144,
-        144
-      ],
-      "alpha_range": [
-        255,
-        255
-      ],
-      "sha256": "2cf6c2d3303f7aca0a136ffb87b1e9fbc31aace42a8e746a44dc18e2d6686051"
-    },
-    {
-      "path": "app/src/main/res/mipmap-xxxhdpi/ic_launcher.png",
-      "size": [
-        192,
-        192
-      ],
-      "alpha_range": [
-        255,
-        255
-      ],
-      "sha256": "d6b6d5abea4e9c5c7d802020f7f69f425d9764b2670eebe06fc638f2a69e8576"
-    },
-    {
-      "path": "app/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png",
+      "path": "app/src/main/res/drawable-nodpi/le_fil_logo_dark.png",
       "size": [
         432,
         432
@@ -136,23 +28,241 @@
       "sha256": "2526c829c1da1c3325b93318ecece0941a7ac4c67bd5a075225babd2d0533fdb"
     },
     {
-      "path": "app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png",
+      "path": "app/src/main/res/drawable-nodpi/le_fil_logo_light.png",
       "size": [
-        192,
-        192
+        512,
+        512
       ],
       "alpha_range": [
-        255,
+        0,
         255
       ],
-      "sha256": "d6b6d5abea4e9c5c7d802020f7f69f425d9764b2670eebe06fc638f2a69e8576"
+      "sha256": "fd35eca1befbbd41aac57b0497846bd9de3b89d23422b16b175ec1c137a5083d"
+    },
+    {
+      "path": "app/src/main/res/mipmap-nodpi/ic_launcher.png",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "sha256": "fd35eca1befbbd41aac57b0497846bd9de3b89d23422b16b175ec1c137a5083d"
+    },
+    {
+      "path": "branding/official/Logo-512-1.png",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "sha256": "fd35eca1befbbd41aac57b0497846bd9de3b89d23422b16b175ec1c137a5083d"
+    },
+    {
+      "path": "branding/official/logo-fond-clair_lwsoptimized.webp",
+      "size": [
+        664,
+        545
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "sha256": "3fbbcc1570440bfdf5c2256faf2b4b4d307f0d112b95ee58587979d9a73024cf"
+    },
+    {
+      "path": "fastlane/metadata/android/en-US/images/icon.png",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "sha256": "fd35eca1befbbd41aac57b0497846bd9de3b89d23422b16b175ec1c137a5083d"
+    },
+    {
+      "path": "fastlane/metadata/android/fr-FR/images/icon.png",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "sha256": "fd35eca1befbbd41aac57b0497846bd9de3b89d23422b16b175ec1c137a5083d"
     }
   ],
-  "blue_logo_on_white_available": false,
-  "colored_transparent_resource": "app/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png",
-  "current_launcher_composition": "light lettering and gold motif on an opaque white background",
-  "android_home_screen_runtime_check": "not performed",
-  "in_app_runtime_check": "not performed; native toolbar currently contains a title, site branding is remote content",
+  "blue_logo_on_white_available": true,
+  "official_png_copies_byte_identical": true,
+  "original_dark_variant_byte_identical": true,
+  "notification_mask_byte_identical": true,
+  "android_home_screen_runtime_check": "pending new emulator captures",
+  "in_app_runtime_check": "pending new emulator light/dark captures",
   "fdroid_published_listing_check": "not performed; application not published",
-  "next_required_asset": "Official existing blue logo on white background, supplied without recreation or recoloring"
+  "previous_inspection": {
+    "checked_at_utc": "2026-10-17T06:04:12.968611+00:00",
+    "scope": "Existing repository graphics inspected; no image edited or generated. No phone, emulator or published F-Droid screenshot is claimed.",
+    "source_commit_for_existing_graphics": "e27d5547210dd4b9e0bc18dc1641538cde1392d1",
+    "assets": [
+      {
+        "path": "app/src/main/res/drawable/ic_launcher_monochrome.png",
+        "size": [
+          432,
+          432
+        ],
+        "alpha_range": [
+          0,
+          255
+        ],
+        "sha256": "b8a29bc2494548bea5a9c209ceff2d19411eea05cebc08a129a3d2f13334674e"
+      },
+      {
+        "path": "app/src/main/res/mipmap-hdpi/ic_launcher.png",
+        "size": [
+          72,
+          72
+        ],
+        "alpha_range": [
+          255,
+          255
+        ],
+        "sha256": "a869abef2e044d55e6ff1a529333adaf8085f67decd08cc579961201ce15e630"
+      },
+      {
+        "path": "app/src/main/res/mipmap-hdpi/ic_launcher_round.png",
+        "size": [
+          72,
+          72
+        ],
+        "alpha_range": [
+          255,
+          255
+        ],
+        "sha256": "a869abef2e044d55e6ff1a529333adaf8085f67decd08cc579961201ce15e630"
+      },
+      {
+        "path": "app/src/main/res/mipmap-mdpi/ic_launcher.png",
+        "size": [
+          48,
+          48
+        ],
+        "alpha_range": [
+          255,
+          255
+        ],
+        "sha256": "74086a45365cd1536603a80a9b4010a8db41b0053e16d6ec7ceef712925cc2d2"
+      },
+      {
+        "path": "app/src/main/res/mipmap-mdpi/ic_launcher_round.png",
+        "size": [
+          48,
+          48
+        ],
+        "alpha_range": [
+          255,
+          255
+        ],
+        "sha256": "74086a45365cd1536603a80a9b4010a8db41b0053e16d6ec7ceef712925cc2d2"
+      },
+      {
+        "path": "app/src/main/res/mipmap-xhdpi/ic_launcher.png",
+        "size": [
+          96,
+          96
+        ],
+        "alpha_range": [
+          255,
+          255
+        ],
+        "sha256": "c77981e15d2776e7a597d8a8e6779333957012613c50326a140b239cadc59201"
+      },
+      {
+        "path": "app/src/main/res/mipmap-xhdpi/ic_launcher_round.png",
+        "size": [
+          96,
+          96
+        ],
+        "alpha_range": [
+          255,
+          255
+        ],
+        "sha256": "c77981e15d2776e7a597d8a8e6779333957012613c50326a140b239cadc59201"
+      },
+      {
+        "path": "app/src/main/res/mipmap-xxhdpi/ic_launcher.png",
+        "size": [
+          144,
+          144
+        ],
+        "alpha_range": [
+          255,
+          255
+        ],
+        "sha256": "2cf6c2d3303f7aca0a136ffb87b1e9fbc31aace42a8e746a44dc18e2d6686051"
+      },
+      {
+        "path": "app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png",
+        "size": [
+          144,
+          144
+        ],
+        "alpha_range": [
+          255,
+          255
+        ],
+        "sha256": "2cf6c2d3303f7aca0a136ffb87b1e9fbc31aace42a8e746a44dc18e2d6686051"
+      },
+      {
+        "path": "app/src/main/res/mipmap-xxxhdpi/ic_launcher.png",
+        "size": [
+          192,
+          192
+        ],
+        "alpha_range": [
+          255,
+          255
+        ],
+        "sha256": "d6b6d5abea4e9c5c7d802020f7f69f425d9764b2670eebe06fc638f2a69e8576"
+      },
+      {
+        "path": "app/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png",
+        "size": [
+          432,
+          432
+        ],
+        "alpha_range": [
+          0,
+          255
+        ],
+        "sha256": "2526c829c1da1c3325b93318ecece0941a7ac4c67bd5a075225babd2d0533fdb"
+      },
+      {
+        "path": "app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png",
+        "size": [
+          192,
+          192
+        ],
+        "alpha_range": [
+          255,
+          255
+        ],
+        "sha256": "d6b6d5abea4e9c5c7d802020f7f69f425d9764b2670eebe06fc638f2a69e8576"
+      }
+    ],
+    "blue_logo_on_white_available": false,
+    "colored_transparent_resource": "app/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png",
+    "current_launcher_composition": "light lettering and gold motif on an opaque white background",
+    "android_home_screen_runtime_check": "not performed",
+    "in_app_runtime_check": "not performed; native toolbar currently contains a title, site branding is remote content",
+    "fdroid_published_listing_check": "not performed; application not published",
+    "next_required_asset": "Official existing blue logo on white background, supplied without recreation or recoloring"
+  }
 }

@@ -53,6 +53,6 @@ The already validated Android implementation is preserved: 70 JVM tests, one nat
 
 The native test used local HTML and is not evidence of live account sessions or notifications. A separate acceptance recipe is prepared for authorized test accounts and an Android emulator; the project representative is not asked to install a manual APK. Identical messages, pagination, actual alert routing, background delivery and restart recovery remain unvalidated.
 
-The project's visual identity review also remains open: the official blue logo on white requested for Android and F-Droid is missing from the available source assets. Current launcher graphics place light lettering on white. The original graphics have not been recolored or replaced with an invented logo. Final launcher, in-app and listing appearance must be checked after the official file is supplied.
+The official blue-on-white PNG supplied by the project is now included byte-for-byte in the Android launcher resources and Fastlane icons. The existing transparent light-lettered variant is preserved for the dark native toolbar. Launcher and day/night appearance checks are pending; the published listing cannot be checked before publication. No logo has been recreated or recolored.
 
 No claim is made that GitLab CI, inclusion, publication, screenshots or phone notification acceptance have passed. Resolve the policy and functionality items before marking the inclusion checklist complete or posting this as an eligible submission.
