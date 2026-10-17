@@ -1,0 +1,50 @@
+[
+  {
+    "coordinate": "androidx.core:core-ktx:1.13.1",
+    "url": "https://dl.google.com/dl/android/maven2/androidx/core/core-ktx/1.13.1/core-ktx-1.13.1.pom",
+    "sha256": "31cc345b8c6cdd2046dcf67872df8a8cb4f44ea0cade4df80002caa7e3b71809",
+    "licenses": [
+      {
+        "name": "The Apache Software License, Version 2.0",
+        "url": "http://www.apache.org/licenses/LICENSE-2.0.txt",
+        "distribution": "repo"
+      }
+    ]
+  },
+  {
+    "coordinate": "androidx.appcompat:appcompat:1.7.0",
+    "url": "https://dl.google.com/dl/android/maven2/androidx/appcompat/appcompat/1.7.0/appcompat-1.7.0.pom",
+    "sha256": "a57b428f428a9337d7b483a2162a570d4e672bceff411a6465e53e8747506ac3",
+    "licenses": [
+      {
+        "name": "The Apache Software License, Version 2.0",
+        "url": "http://www.apache.org/licenses/LICENSE-2.0.txt",
+        "distribution": "repo"
+      }
+    ]
+  },
+  {
+    "coordinate": "androidx.fragment:fragment-ktx:1.8.2",
+    "url": "https://dl.google.com/dl/android/maven2/androidx/fragment/fragment-ktx/1.8.2/fragment-ktx-1.8.2.pom",
+    "sha256": "290427e4221c0036d5c36d301daad9c6457b5873f9c20e6187f2fb438c2c986e",
+    "licenses": [
+      {
+        "name": "The Apache Software License, Version 2.0",
+        "url": "http://www.apache.org/licenses/LICENSE-2.0.txt",
+        "distribution": "repo"
+      }
+    ]
+  },
+  {
+    "coordinate": "com.google.android.material:material:1.12.0",
+    "url": "https://dl.google.com/dl/android/maven2/com/google/android/material/material/1.12.0/material-1.12.0.pom",
+    "sha256": "53693b7e8191e9707f1cc0f2788217a6c4d9de0ebcf548151af69ffa7e12b1d4",
+    "licenses": [
+      {
+        "name": "The Apache Software License, Version 2.0",
+        "url": "http://www.apache.org/licenses/LICENSE-2.0.txt",
+        "distribution": "repo"
+      }
+    ]
+  }
+]

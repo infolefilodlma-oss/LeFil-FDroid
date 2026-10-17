@@ -1,6 +1,22 @@
 # Compilation et mises à jour F-Droid
 
-Application : `net.lefil.fdroid`, version candidate `0.2.1` / `3`, minimum Android 7 (API 24), cible et compilation API 35. Licence du dépôt : MIT (`LICENSE`). Les ressources du dépôt sont couvertes par cette licence sauf indication contraire ; la provenance et les droits du logo officiel doivent être confirmés pour le dossier d'admission.
+Application : `net.lefil.fdroid`, version candidate `0.2.1` / `3`, minimum Android 7 (API 24), cible et compilation API 35. Licence déclarée du dépôt : MIT (`LICENSE`), ressources comprises sauf indication contraire. Aucun avis distinct restreignant le logo n'a été relevé dans les pièces examinées.
+
+La candidature officielle utilise [le dossier de soumission](SUBMISSION.md). Les 70 tests JVM et le test natif acquis sont conservés. Pour la finalisation des métadonnées, le code Android et les entrées Gradle restent identiques ; aucun nouvel essai sur téléphone ni réception réelle ne sont déduits de ces résultats.
+
+## Contrôler la recette de soumission
+
+Le commit de candidature `ccb61022e84a242a5e5989b9a629ac7c90a47a56` corrige les descriptions Fastlane. La recette y est épinglée pour que F-Droid récupère réellement ces textes. `TetheredNet` et `AuthorName` sont ajoutés dans les seules métadonnées officielles.
+
+Avec fdroidserver 2.4.5 dans un environnement virtuel Python, vérifier uniquement les métadonnées dans un répertoire de travail vide :
+
+```sh
+python tools/check_fdroid_submission.py --work-dir /tmp/lefil-fdroid-metadata
+```
+
+Pour construire cette recette précise et scanner ses sources et son APK, ajouter `--build` avec JDK 17, Gradle 8.7 et le SDK requis. Le workflow `.github/workflows/fdroid-submission.yml` prépare cet environnement, exécute `readmeta`, `lint -f` et `build --test --scan-binary --no-tarball`, puis conserve seulement les rapports. Il ne publie pas de paquet et ne relance pas les tests Android inchangés.
+
+Le script vérifie le commit réellement construit, l'existence du nouvel artefact et le résultat `1 build succeeded` : le code de sortie de fdroidserver seul ne suffit pas. Ses logs et `result.json` rendent les contrôles vérifiables. Les résultats sont distincts de la CI de la future MR GitLab et d'une admission F-Droid.
 
 ## Reproduire les contrôles
 
@@ -12,7 +28,7 @@ cd LeFil-FDroid
 gradle --no-daemon --max-workers=2 :app:testDebugUnitTest :app:lintDebug :app:assembleDebug :app:assembleRelease
 ```
 
-Dans l'environnement cloud préparé, commencer par `source /workspace/.cloud-setup/env.sh`. Les paramètres locaux du proxy et de confiance TLS se trouvent hors du dépôt. Ne jamais désactiver TLS ni incorporer des secrets dans Gradle.
+Le workflow de candidature installe ces outils avec leurs versions explicites. Les paramètres locaux du proxy et de confiance TLS restent hors du dépôt. Ne jamais désactiver TLS ni incorporer des secrets dans Gradle.
 
 Résultats :
 
@@ -48,9 +64,9 @@ Dépôts : Google Maven, Maven Central et portail des plugins Gradle, définis d
 
 ## Publication et signature
 
-Après validation sur téléphone et comptes réels, intégrer les changements contrôlés, puis créer une version/tag stable et unique correspondant à `versionName`. Ne pas réutiliser un `versionCode` déjà distribué. Aucun tag de publication n'a été créé par cette mission.
+Après acceptation fonctionnelle de la version retenue, intégrer les changements contrôlés, puis créer une version/tag stable et unique correspondant à `versionName`. Les essais de communication sont préparés pour une équipe technique ; l'absence d'essai sur téléphone physique n'est pas présentée comme une interdiction générale F-Droid. Ne pas réutiliser un `versionCode` déjà distribué. Aucun tag de publication n'a été créé par cette mission.
 
-La recette `net.lefil.fdroid.yml` épingle un commit de candidature. Avant soumission, remplacer ce commit par celui de la version validée, maintenir `CurrentVersion`/`CurrentVersionCode`, puis exécuter `fdroid lint`, `fdroid readmeta`, `fdroid build --server net.lefil.fdroid:3` dans un environnement F-Droid approprié et le scanner. Un build Gradle local ne remplace pas ces contrôles.
+La recette `net.lefil.fdroid.yml` épingle un commit de candidature. Maintenir `CurrentVersion`/`CurrentVersionCode`, contrôler les métadonnées et la compilation de cette recette, puis suivre la CI de contribution et la revue officielles. Un build serveur F-Droid n'a pas été exécuté dans cette mission ; il n'est pas annoncé comme une condition déjà satisfaite. La comparaison binaire reproductible indépendante reste recommandée par le guide officiel, sans être un préalable universel d'admission.
 
 Le dépôt officiel compile les sources et gère sa signature. Le premier paquet accepté fixe l'identité de signature pour les mises à jour ; conserver le même identifiant et augmenter les codes de version. Aucun mécanisme d'auto-installation/auto-mise à jour n'est ajouté à l'application. Les mises à jour seront disponibles via le client F-Droid seulement après admission et publication effectives.
 

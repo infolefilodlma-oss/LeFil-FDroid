@@ -1,0 +1,95 @@
+{
+  "checked_at_utc": "2026-10-17T05:55:17.854347+00:00",
+  "candidate": {
+    "package": "net.lefil.fdroid",
+    "versionName": "0.2.1",
+    "versionCode": 3,
+    "build_source_commit": "ccb61022e84a242a5e5989b9a629ac7c90a47a56",
+    "previous_validated_source_commit": "c85f5a3cbb78ab58e6207f770cd9f6df60fb818d"
+  },
+  "production_and_existing_test_inputs_identical": true,
+  "git_object_ids": {
+    "app": {
+      "validated": "fc2d708fdf81b79ae636d9f9ece37b20970748cb",
+      "candidate": "fc2d708fdf81b79ae636d9f9ece37b20970748cb"
+    },
+    "build.gradle": {
+      "validated": "9fa0b1b47b25ad054157c6ab7da2dade63793293",
+      "candidate": "9fa0b1b47b25ad054157c6ab7da2dade63793293"
+    },
+    "settings.gradle": {
+      "validated": "1712de36c564f97e32af4c558342b512cad1b02d",
+      "candidate": "1712de36c564f97e32af4c558342b512cad1b02d"
+    },
+    "gradle.properties": {
+      "validated": "5bac8ac504623a676070370da81ec518639e4829",
+      "candidate": "5bac8ac504623a676070370da81ec518639e4829"
+    },
+    ".github/workflows/android.yml": {
+      "validated": "0e3c23a8f0b661b7b878a705394b432b4d3ddf88",
+      "candidate": "0e3c23a8f0b661b7b878a705394b432b4d3ddf88"
+    }
+  },
+  "previous_validation_preserved": {
+    "jvm_tests": 70,
+    "jvm_tests_rerun": false,
+    "native_emulator_tests": 1,
+    "native_api": 35,
+    "native_test_rerun": false,
+    "android_lint_errors": 0,
+    "android_lint_warnings": 19,
+    "evidence": "../validation/automated-results.json"
+  },
+  "current_metadata_validation": {
+    "tool": "fdroidserver 2.4.5",
+    "readmeta": "passed",
+    "lint_format_check": "passed",
+    "local_scope": "metadata only; apksigner absent locally, so no local binary verification claimed",
+    "local_report_source_commit": "ccb61022e84a242a5e5989b9a629ac7c90a47a56"
+  },
+  "current_build_and_scan": {
+    "execution_environment": "GitHub Actions ubuntu-24.04, JDK 17, Gradle 8.7, SDK 35 / build-tools 34.0.0",
+    "run_id": 39007522257,
+    "url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39007522257",
+    "workflow_commit": "2e6c350",
+    "build_source_commit": "ccb61022e84a242a5e5989b9a629ac7c90a47a56",
+    "conclusion": "success",
+    "readmeta": "passed",
+    "lint": "passed",
+    "build_command": "fdroid build --test --scan-binary --no-tarball net.lefil.fdroid:3",
+    "build_result": "passed; helper asserts 1 build succeeded, pinned HEAD and fresh APK",
+    "source_scan": "passed as part of build",
+    "binary_scan": "passed as part of build",
+    "scanner_database_freshness": "not independently established",
+    "artifact": "lefil-fdroid-submission-checks (logs and result.json only)",
+    "evidence_scope": "Public run summary and notice inspected; authenticated raw logs and artifact contents were not fetched.",
+    "official_fdroid_gitlab_ci": "not run"
+  },
+  "contribution_files": {
+    "metadata_target": "metadata/net.lefil.fdroid.yml",
+    "metadata_sha256": "4ff546089287846bebab44084fb30138449fac1c761f1db5ce765e2661d7a93c",
+    "patch_file": "submission/net.lefil.fdroid.patch",
+    "patch_sha256": "493c384f5b12edc73b68c70291a6f1b631fc11304264e7b28bad4bc4d51c95ca",
+    "patch_apply_check": "passed in empty directory",
+    "patched_metadata_exact_match": true,
+    "mr_title": "New app: Le Fil",
+    "mr_body": "submission/MERGE_REQUEST.md"
+  },
+  "eligibility": {
+    "overall": "not fully demonstrated",
+    "age_or_documented_exception": "not established",
+    "live_communications": "not validated",
+    "physical_phone_installation_requested_from_project_representative": false,
+    "screenshots": "not provided; recommended",
+    "independent_binary_reproducibility": "not performed; recommended",
+    "gitlab_authenticated_access": false
+  },
+  "submission": {
+    "prepared": true,
+    "ready_to_assert_full_compliance": false,
+    "submitted": false,
+    "official_mr_url": null,
+    "accepted": false,
+    "published": false
+  }
+}

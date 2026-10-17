@@ -1,0 +1,73 @@
+{
+  "checked_at_utc": "2026-10-17T05:55:17.854347+00:00",
+  "sources": [
+    {
+      "topic": "inclusion_policy",
+      "url": "https://gitlab.com/fdroid/fdroid-website/-/blob/a9c6e1c591bfa4a36d4da0ce9ad15d1b7463c244/_docs/Inclusion_Policy.md",
+      "http_status": 200,
+      "content_sha256": "b675086815139c322b95b0e4dc139886a4d068955ef62b0aba70025c34f361a3"
+    },
+    {
+      "topic": "quick_start",
+      "url": "https://gitlab.com/fdroid/fdroid-website/-/blob/master/_docs/Submitting_to_F-Droid_Quick_Start_Guide.md",
+      "http_status": 200,
+      "content_sha256": "db2288a0a4ffdc74d7154d2062264aab419b5d9b0bfccdb7c5561e1e732c2831"
+    },
+    {
+      "topic": "contributing",
+      "url": "https://gitlab.com/fdroid/fdroiddata/-/blob/master/CONTRIBUTING.md",
+      "http_status": 200,
+      "content_sha256": "c7dd8b99260d051e0751a7923f76ad7fb70080879244ae5743c880c628ac35cb"
+    },
+    {
+      "topic": "app_inclusion_template",
+      "url": "https://gitlab.com/fdroid/fdroiddata/-/blob/master/.gitlab/merge_request_templates/App%20inclusion.md",
+      "http_status": 200,
+      "content_sha256": "3b280c4cc11721b1ed61767e77e653652e86dc5223de094539e1cb4bc964fd80"
+    },
+    {
+      "topic": "graphics",
+      "url": "https://gitlab.com/fdroid/fdroid-website/-/blob/master/_docs/All_About_Descriptions_Graphics_and_Screenshots.md",
+      "http_status": 200,
+      "content_sha256": "8c63ee867b02e8828c810e956ff862521a0e75a6eef8a4bfb4c9bae65cb321b6"
+    },
+    {
+      "topic": "anti_features",
+      "url": "https://gitlab.com/fdroid/fdroid-website/-/blob/master/_docs/Anti-Features.md",
+      "http_status": 200,
+      "content_sha256": "56721476282fcd7de94893e8db22d2857d99c01e06096dc1e3cad2f0ed27badc"
+    },
+    {
+      "topic": "build_metadata",
+      "url": "https://gitlab.com/fdroid/fdroid-website/-/blob/master/_docs/Build_Metadata_Reference.md",
+      "http_status": 200,
+      "content_sha256": "5b88192b5ef032545490b0bd9d507e4217859ab24b6e58a1707ec59ce952b67b"
+    }
+  ],
+  "official_policy_commit": "a9c6e1c591bfa4a36d4da0ce9ad15d1b7463c244",
+  "policy_current_master_matches_pinned_revision": true,
+  "access_checks": {
+    "documentation_site": {
+      "url": "https://f-droid.org/docs/Inclusion_Policy/",
+      "result": "CONNECT 403; used official GitLab source successfully"
+    },
+    "gitlab_account": {
+      "url": "https://gitlab.com/api/v4/user",
+      "http_status": 401,
+      "authenticated": false
+    },
+    "existing_package_metadata": {
+      "url": "https://gitlab.com/api/v4/projects/fdroid%2Ffdroiddata/repository/files/metadata%2Fnet.lefil.fdroid.yml?ref=master",
+      "http_status": 404
+    },
+    "exact_package_mr_search_results": 0,
+    "exact_package_rfp_search_results": 0,
+    "stable_tags_in_upstream": []
+  },
+  "search_scope_note": "Exact package ID checks only; no exhaustive claim for name-based issue searches.",
+  "project_authorization_reference": {
+    "url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/issues/1",
+    "author": "infolefilodlma-oss",
+    "observed": "Public request to publish the same Android app in the official F-Droid catalog, opened 2026-10-15"
+  }
+}

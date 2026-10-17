@@ -1,0 +1,35 @@
+{
+  "template": true,
+  "overall_status": "not_run",
+  "source_commit": "ccb61022e84a242a5e5989b9a629ac7c90a47a56",
+  "versionName": "0.2.1",
+  "versionCode": 3,
+  "account_authorization_reference": null,
+  "operator": null,
+  "environment": {
+    "device_kind": null,
+    "android_api": null,
+    "webview_version": null,
+    "battery_settings": null,
+    "friendica_version": null,
+    "humhub_version": null,
+    "humhub_mail_version": null
+  },
+  "checks": {
+    "authenticated_sessions": "not_run",
+    "first_message_agora": "not_run",
+    "first_message_talk": "not_run",
+    "already_unread_conversation": "not_run",
+    "identical_messages": "not_run",
+    "pagination": "not_run",
+    "notification_conversation_cold_and_warm": "not_run",
+    "read_elsewhere": "not_run",
+    "expired_session_and_network_recovery": "not_run",
+    "background": "not_run",
+    "simulated_doze": "not_run",
+    "reboot": "not_run",
+    "disabled_or_denied_notifications": "not_run"
+  },
+  "observations_without_private_content": [],
+  "anonymized_evidence_references": []
+}
