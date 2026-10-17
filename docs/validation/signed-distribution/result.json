@@ -2,9 +2,9 @@
   "source_commit": "25189d316d8345a601b4dae2fa9987d286831d1e",
   "version_name": "0.2.1",
   "version_code": 3,
-  "run_url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39035620775",
-  "workflow_commit": "2009345408586c291425f67003f74404c4dab561",
-  "outcome": "failed",
+  "run_url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39035916585",
+  "workflow_commit": "0df74eba1538db46eca91089f8781a84a9b6e5d5",
+  "outcome": "final_signed_apk_installation_checks_passed",
   "production_private_key_available_to_ci": false,
   "previous_70_jvm_tests_rerun": false,
   "application_rebuilt_in_ci": false,
@@ -19,6 +19,10 @@
   "debuggable": false,
   "alignment": "passed",
   "fresh_install": "passed",
+  "ui_export_exit_codes": {
+    "first": 0,
+    "second": 0
+  },
   "first_start": {
     "status": "passed",
     "native_logo_and_webview_visible": true,
@@ -26,6 +30,14 @@
     "authenticated_services_validated": false
   },
   "same_certificate_reinstall": "passed",
-  "failure_phase": "install",
-  "failure": "second-dump failed with exit code 137"
+  "second_start": {
+    "status": "passed",
+    "native_logo_and_webview_visible": true,
+    "stable_process": true,
+    "authenticated_services_validated": false
+  },
+  "installed_apk_sha256": "b0141391fad9fe1cfea638fd33a69d4fee1839f14747320820856577f57d4cb2",
+  "android_api": 35,
+  "hardware": "ranchu",
+  "application_crash_detected": false
 }
