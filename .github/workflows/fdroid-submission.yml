@@ -1,0 +1,50 @@
+name: F-Droid - submission checks
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - codex/fdroid-submission-readiness
+    paths:
+      - docs/fdroid/net.lefil.fdroid.yml
+      - tools/check_fdroid_submission.py
+      - .github/workflows/fdroid-submission.yml
+
+permissions:
+  contents: read
+
+jobs:
+  fdroid-candidate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      GRADLE_OPTS: -Dorg.gradle.workers.max=2 -Dorg.gradle.daemon=false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+        with:
+          packages: 'platform-tools platforms;android-35 build-tools;34.0.0'
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.7'
+      - name: Install official F-Droid tools in an isolated environment
+        run: |
+          python3 -m venv "$RUNNER_TEMP/fdroid-venv"
+          "$RUNNER_TEMP/fdroid-venv/bin/pip" install fdroidserver==2.4.5
+      - name: Check metadata and build the pinned source with source and binary scans
+        run: >-
+          "$RUNNER_TEMP/fdroid-venv/bin/python" tools/check_fdroid_submission.py
+          --work-dir "$RUNNER_TEMP/fdroid-review" --build
+      - name: Retain reports only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lefil-fdroid-submission-checks
+          path: |
+            ${{ runner.temp }}/fdroid-review/*.log
+            ${{ runner.temp }}/fdroid-review/result.json
+          if-no-files-found: error

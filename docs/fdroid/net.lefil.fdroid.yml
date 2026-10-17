@@ -1,6 +1,13 @@
+AntiFeatures:
+  TetheredNet:
+    en-US: Only the Le Fil services can be used; server instances cannot be changed
+      in the app.
+    fr-FR: Seuls les services du Fil sont accessibles ; leurs instances ne sont pas
+      configurables.
 Categories:
   - Internet
 License: MIT
+AuthorName: infolefilodlma-oss
 WebSite: https://le-fil.net
 SourceCode: https://github.com/infolefilodlma-oss/LeFil-FDroid
 IssueTracker: https://github.com/infolefilodlma-oss/LeFil-FDroid/issues
@@ -13,10 +20,19 @@ Repo: https://github.com/infolefilodlma-oss/LeFil-FDroid.git
 Builds:
   - versionName: 0.2.1
     versionCode: 3
-    commit: c85f5a3cbb78ab58e6207f770cd9f6df60fb818d
+    commit: ccb61022e84a242a5e5989b9a629ac7c90a47a56
     subdir: app
     gradle:
       - yes
+
+MaintainerNotes: |-
+  Candidate 0.2.1, versionCode 3. The build source is the already checked
+  application with corrected Fastlane descriptions, not a stable release tag.
+  Message polling is experimental and actual delivery is not validated.
+  Native recovery was tested in an Android 15 emulator using local HTML;
+  this did not test authenticated services or actual message delivery.
+  Eligibility, including the three-month rule or an evidenced exception,
+  and functional acceptance remain for review before submission.
 
 AutoUpdateMode: Version
 UpdateCheckMode: Tags v[0-9].*
