@@ -1,0 +1,31 @@
+{
+  "source_commit": "25189d316d8345a601b4dae2fa9987d286831d1e",
+  "version_name": "0.2.1",
+  "version_code": 3,
+  "run_url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39035620775",
+  "workflow_commit": "2009345408586c291425f67003f74404c4dab561",
+  "outcome": "failed",
+  "production_private_key_available_to_ci": false,
+  "previous_70_jvm_tests_rerun": false,
+  "application_rebuilt_in_ci": false,
+  "physical_phone_validated": false,
+  "real_notifications_validated": false,
+  "authenticated_services_validated": false,
+  "official_fdroid_signature_compatibility_validated": false,
+  "external_durable_key_retention_verified": false,
+  "signature_verification": "passed",
+  "certificate_sha256": "d0755310dbd84319bbd0cb658475168cb9234cd1b60f9893a092afa19c31b902",
+  "sha256": "b0141391fad9fe1cfea638fd33a69d4fee1839f14747320820856577f57d4cb2",
+  "debuggable": false,
+  "alignment": "passed",
+  "fresh_install": "passed",
+  "first_start": {
+    "status": "passed",
+    "native_logo_and_webview_visible": true,
+    "stable_process": true,
+    "authenticated_services_validated": false
+  },
+  "same_certificate_reinstall": "passed",
+  "failure_phase": "install",
+  "failure": "second-dump failed with exit code 137"
+}

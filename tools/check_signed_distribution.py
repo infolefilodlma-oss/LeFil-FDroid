@@ -55,16 +55,33 @@ def verify(report):
                   sha256=SHA256, debuggable=False, alignment="passed")
 
 
-def start(label):
+def hierarchy(label, report):
+    # Some Android 15 dumps finish writing XML before their app_process exits 137.
+    # Remove the previous file so no stale dump can satisfy the UI assertions.
+    destination = "/sdcard/lefil-signed.xml"
+    adb("shell", "rm", "-f", destination, name=label + "-remove-old-hierarchy")
+    result = subprocess.run(["adb", "shell", "uiautomator", "dump", destination],
+                            capture_output=True, timeout=45)
+    (OUTPUT / (label + "-dump.log")).write_bytes(result.stdout + result.stderr)
+    report.setdefault("ui_export_exit_codes", {})[label] = result.returncode
+    if result.returncode not in (0, 137):
+        raise RuntimeError(f"{label} UI export failed with exit code {result.returncode}")
+    if result.returncode == 137:
+        assert b"UI hierchary dumped to:" in result.stdout
+        adb("logcat", "-d", "-b", "crash", name=label + "-export-crash-diagnostic")
+        adb("shell", "dumpsys", "meminfo", PACKAGE, name=label + "-export-memory-diagnostic")
+    xml = adb("exec-out", "cat", destination, name=label + "-hierarchy")
+    return ET.fromstring(xml)
+
+
+def start(label, report):
     adb("shell", "am", "force-stop", PACKAGE, name=label + "-stop")
     launch = adb("shell", "am", "start", "-W", "-n", PACKAGE + "/.MainActivity",
                  name=label + "-start")
     assert "Status: ok" in launch
     deadline = time.monotonic() + 60
     while time.monotonic() < deadline:
-        adb("shell", "uiautomator", "dump", "/sdcard/lefil-signed.xml", name=label + "-dump")
-        hierarchy = adb("exec-out", "cat", "/sdcard/lefil-signed.xml", name=label + "-hierarchy")
-        nodes = list(ET.fromstring(hierarchy).iter("node"))
+        nodes = list(hierarchy(label, report).iter("node"))
         native_logo = any(n.get("class") == "android.widget.ImageView"
                           and n.get("content-desc") == "Le Fil" for n in nodes)
         webview = any(n.get("class") == "android.webkit.WebView" for n in nodes)
@@ -91,10 +108,10 @@ def install(report):
     adb("logcat", "-c", name="clear-logcat")
     assert "Success" in adb("install", APK, name="fresh-install")
     report["fresh_install"] = "passed"
-    report["first_start"] = start("first")
+    report["first_start"] = start("first", report)
     assert "Success" in adb("install", "-r", APK, name="same-certificate-reinstall")
     report["same_certificate_reinstall"] = "passed"
-    report["second_start"] = start("second")
+    report["second_start"] = start("second", report)
     installed = adb("shell", "pm", "path", PACKAGE, name="installed-path").strip()
     assert installed.startswith("package:") and "\n" not in installed
     installed_apk = Path(os.environ["RUNNER_TEMP"]) / "lefil-installed.apk"
