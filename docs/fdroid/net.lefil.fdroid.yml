@@ -20,7 +20,7 @@ Repo: https://github.com/infolefilodlma-oss/LeFil-FDroid.git
 Builds:
   - versionName: 0.2.1
     versionCode: 3
-    commit: 99789aa0f9c82d90cef020b33444698a05aafc47
+    commit: 25189d316d8345a601b4dae2fa9987d286831d1e
     subdir: app
     gradle:
       - yes
@@ -31,6 +31,14 @@ MaintainerNotes: |-
   Message polling is experimental and actual delivery is not validated.
   Native recovery was tested in an Android 15 emulator using local HTML;
   this did not test authenticated services or actual message delivery.
+  Web pages automatically load Google Fonts (fonts.googleapis.com and
+  fonts.gstatic.com); the homepage also loads WordPress emoji from s.w.org.
+  Third-party cookies are enabled. These web requests are now disclosed
+  upstream. Google font blocking left the observed public controls visible;
+  authenticated pages and tracking behavior remain unaudited. A Site Kit
+  generator marker was present without an analytics request observed.
+  Please review any additional Anti-Feature classification using the
+  recorded requests; absence of GMS/Firebase is a native dependency claim.
   Eligibility, including the three-month rule or an evidenced exception,
   and functional acceptance remain for review before submission.
 

@@ -2,11 +2,11 @@
 
 Application : `net.lefil.fdroid`, version candidate `0.2.1` / `3`, minimum Android 7 (API 24), cible et compilation API 35. Licence déclarée du dépôt : MIT (`LICENSE`), ressources comprises sauf indication contraire. Aucun avis distinct restreignant le logo n'a été relevé dans les pièces examinées.
 
-La candidature officielle utilise [le dossier de soumission](SUBMISSION.md). Les 70 tests JVM et le test natif acquis sont conservés. La finalisation ajoute les ressources officielles et le logo de la barre native. Les sources Java/Kotlin, les tests et les entrées Gradle restent identiques ; les 70 tests sont réexécutés, ainsi que le test natif Android 15. Aucun essai sur téléphone ni réception réelle ne sont déduits de ces résultats.
+La candidature officielle utilise [le dossier de soumission](SUBMISSION.md). Les 70 tests JVM et le test natif acquis sont conservés. Les ressources officielles et le logo de la barre native ont déjà été intégrés et contrôlés. Cette reprise corrige seulement les déclarations et pièces de candidature : l'arbre `app`, les tests et les entrées Gradle restent identiques, donc les tests Android ne sont pas recommencés. Aucun essai sur téléphone ni réception réelle ne sont déduits de ces résultats.
 
 ## Contrôler la recette de soumission
 
-Le commit de candidature `99789aa0f9c82d90cef020b33444698a05aafc47` contient les descriptions corrigées, les originaux graphiques officiels, les icônes et deux captures réelles dans Fastlane. La recette y est épinglée pour que F-Droid récupère ces fichiers. Le [bilan](CHECKS.json) relie les rapports JUnit, le contrôle natif, les images et le build F-Droid à cette même arborescence applicative. `TetheredNet` et `AuthorName` sont ajoutés dans les seules métadonnées officielles.
+Le commit de candidature `25189d316d8345a601b4dae2fa9987d286831d1e` contient les descriptions réseau corrigées, les originaux graphiques officiels, les icônes et deux captures réelles dans Fastlane. La recette y est épinglée pour que F-Droid récupère ces fichiers. Le [bilan](CHECKS.json) relie les rapports JUnit, le contrôle natif, les images et le build F-Droid à cette même arborescence applicative. `TetheredNet`, `AuthorName` et les notes sur les ressources Web tierces figurent dans les métadonnées officielles.
 
 Avec fdroidserver 2.4.5 dans un environnement virtuel Python, vérifier uniquement les métadonnées dans un répertoire de travail vide :
 
@@ -42,6 +42,8 @@ La signature de débogage peut empêcher le remplacement par un paquet F-Droid d
 ## Dépendances
 
 Production : AndroidX Core 1.13.1, AppCompat 1.7.0, Fragment 1.8.2, Material Components 1.12.0 et leurs dépendances transitives. Kotlin 1.9.24 et Android Gradle Plugin 8.6.1 pour la compilation. AndroidX / Material / outils Android sont sous licences libres ; consulter leurs fichiers LICENSE/NOTICE et l'arbre transitif avant soumission. Aucun ajout de Firebase, GMS, publicité ou SDK de télémétrie dans le code natif.
+
+Le [relevé Gradle réel](../validation/fdroid-finalization/runtime-dependencies.json) comprend 68 modules sélectionnés de production, leurs versions, les empreintes des artefacts et les POM officiels : tous déclarent Apache 2.0, zéro déclaration manquante. [NETWORK-DEPENDENCIES.md](NETWORK-DEPENDENCIES.md) distingue ces bibliothèques embarquées des ressources Web Google Fonts/WordPress et des sessions réseau. Ces relevés n'impliquent pas un audit de chaque contenu distant.
 
 Tests uniquement : JUnit 4.13.2, JSON-java 20240303, Robolectric 4.14.1 et AndroidX Test (runner 1.6.2, core 1.6.1, ext-junit 1.2.1). Robolectric télécharge ses images Android de test depuis Maven ; elles ne sont pas intégrées à l'APK. Les tests Robolectric simulent les API Android et ne prouvent pas le comportement d'un téléphone.
 

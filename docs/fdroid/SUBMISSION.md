@@ -4,9 +4,11 @@ Le Fil reste la même application Android `net.lefil.fdroid`, version candidate 
 
 ## État réel
 
-Les pièces techniques sont préparées : licence MIT, sources publiques, recette de build, descriptions `en-US` et `fr-FR`, changelogs, procédure de signature et de mises à jour, preuves existantes et contrôle de la nouvelle recette. La source épinglée est `99789aa0f9c82d90cef020b33444698a05aafc47` ; elle inclut les logos officiels et les captures réelles. Les sources Java/Kotlin et les tests sont conservés ; les ressources Android et la barre native affichent désormais les variantes appropriées.
+Les pièces techniques sont préparées : licence MIT, sources publiques, recette de build, descriptions `en-US` et `fr-FR`, changelogs, procédure de signature et de mises à jour, preuves existantes et contrôle de la nouvelle recette. La source épinglée est `25189d316d8345a601b4dae2fa9987d286831d1e` ; elle inclut les déclarations réseau corrigées, les logos officiels et les captures réelles. L'arbre applicatif complet, les tests, Gradle et les fichiers graphiques sont identiques à la candidature déjà contrôlée. Les tests Android concluants ne sont pas recommencés.
 
 Les premières corrections du dossier répondent à trois écarts établis : suppression des promesses non validées de notifications, déclaration `TetheredNet` pour les instances fixes du Fil et ajout de l'auteur `infolefilodlma-oss`. Les descriptions sont dans le dépôt applicatif, conformément au modèle officiel de MR ; elles ne sont pas dupliquées dans `fdroiddata`.
+
+Cette reprise termine le relevé des **68 modules de production** et de leurs licences POM, ainsi que la [déclaration des communications](NETWORK-DEPENDENCIES.md). Google Fonts et des emoji WordPress sont effectivement chargés depuis des domaines tiers ; les descriptions et notes de maintenance le déclarent désormais. Les contrôles publics restent visibles lorsque Google Fonts est bloqué. Ce test n'authentifie personne et ne valide pas les messages. Les [preuves complémentaires](../validation/fdroid-finalization/README.md) séparent ces observations des résultats Android acquis.
 
 L'admissibilité complète reste à établir. La [vérification des critères](ADMISSIBILITY.md) sépare exigences, recommandations et résultats observés. Le [bilan des contrôles](CHECKS.json) distingue les tests acquis de ceux exécutés pour cette préparation.
 

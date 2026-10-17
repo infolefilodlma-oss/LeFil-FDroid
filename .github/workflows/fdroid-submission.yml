@@ -11,7 +11,7 @@ on:
       - .github/workflows/fdroid-submission.yml
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   fdroid-candidate:
@@ -21,6 +21,8 @@ jobs:
       GRADLE_OPTS: -Dorg.gradle.workers.max=2 -Dorg.gradle.daemon=false
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -48,3 +50,31 @@ jobs:
             ${{ runner.temp }}/fdroid-review/*.log
             ${{ runner.temp }}/fdroid-review/result.json
           if-no-files-found: error
+      - name: Preserve the exact candidate result and its provenance
+        if: always() && github.ref == 'refs/heads/codex/fdroid-submission-readiness'
+        run: |
+          python3 - <<'PY'
+          from datetime import datetime, timezone
+          import json, os
+          from pathlib import Path
+          import shutil
+          source = Path(os.environ['RUNNER_TEMP']) / 'fdroid-review' / 'result.json'
+          if source.is_file():
+              target = Path('docs/validation/fdroid-finalization')
+              target.mkdir(parents=True, exist_ok=True)
+              shutil.copyfile(source, target / 'fdroid-result.json')
+              (target / 'fdroid-provenance.json').write_text(json.dumps({
+                  'recorded_at_utc': datetime.now(timezone.utc).isoformat(),
+                  'workflow_commit': os.environ['GITHUB_SHA'],
+                  'run_url': 'https://github.com/' + os.environ['GITHUB_REPOSITORY'] + '/actions/runs/' + os.environ['GITHUB_RUN_ID'],
+                  'jvm_tests_rerun': False, 'native_tests_rerun': False,
+                  'official_gitlab_ci': False, 'apk_published': False
+              }, indent=2) + '\n')
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/validation/fdroid-finalization/fdroid-*.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Record the exact F-Droid candidate metadata, build and scan results'
+          git pull --rebase origin codex/fdroid-submission-readiness
+          git push origin HEAD:refs/heads/codex/fdroid-submission-readiness

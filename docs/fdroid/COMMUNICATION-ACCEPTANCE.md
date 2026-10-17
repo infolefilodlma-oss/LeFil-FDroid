@@ -11,6 +11,21 @@
 
 Ne pas utiliser les comptes personnels d'un utilisateur pour remplacer ces préconditions.
 
+## Contrôles publics déjà acquis
+
+Le [rapport HTTPS d'origine](../validation/fdroid-finalization/public-https-report.json) a été récupéré, sans répéter son exécution. L'[observation anonyme](../validation/fdroid-finalization/public-network.json) confirme les formulaires, sans envoyer de requête de connexion.
+
+| Route | Réponse sans compte | Ce qui reste à établir avec les comptes d'essai |
+|---|---|---|
+| Agora `/message` | HTTP 200 avec formulaire Friendica ; NodeInfo public accessible | Soumission de la connexion avec session/jeton exigés par le formulaire, persistance des cookies, liste de messages et pagination. |
+| Atrium `index.php?r=mail%2Fmail%2Findex` | Redirection vers la connexion, puis HTTP 200 avec champ mot de passe et champ CSRF | Connexion HumHub en conservant le CSRF et les cookies ; accès effectif à Mail/Talk. |
+| Talk `/mail/mail/notification-list` et `notification-count` | HTTP 404 sur les routes « propres » | Le lecteur possède déjà un repli vers les routes `index.php?r=...` ; ne pas diagnostiquer à tort un échec de connexion sur ce seul 404. |
+| Talk `index.php?r=mail%2Fmail%2Fnotification-list` et `notification-count` | Redirection vers la connexion, puis HTTP 200 | Format authentifié réel, identifiants stables des messages, nombre d'éléments par page et éventuel chemin de pagination. |
+
+Le transport natif ne suit pas ces redirections : il doit signaler une session requise. Une page de connexion obtenue avec un navigateur suivant les redirections n'est pas une réponse de messagerie. Les formulaires n'ont pas été soumis et aucun mot de passe ou CSRF n'a été conservé dans les preuves.
+
+Les essais de connexion, lecture, textes identiques, pagination et réception réelle peuvent commencer sur émulateur avec autorisation des comptes. Les restrictions propres au matériel/constructeur et la veille réelle restent à contrôler ensuite sur un téléphone de recette. Ni un test JVM ni cette observation Chromium ne les remplacent.
+
 ## Séquence et critères
 
 | Contrôle | Opération de l'équipe de recette | Preuve attendue |
