@@ -1,0 +1,10 @@
+{
+  "restored_pkcs12_opens": true,
+  "private_key_sign_and_verify": true,
+  "certificate_sha256": "d0755310dbd84319bbd0cb658475168cb9234cd1b60f9893a092afa19c31b902",
+  "new_key_generated": false,
+  "checked_at_utc": "2026-10-17T13:44:49.916789+00:00",
+  "scope": "Local read-only backup restored to a fresh private temporary directory on the same workspace volume",
+  "independent_external_backup_verified": false,
+  "secrets_disclosed": false
+}

@@ -1,0 +1,96 @@
+{
+  "checked_at_utc": "2026-10-17T13:47:28.812344+00:00",
+  "runtime_secret_bindings_ready": 0,
+  "runtime_outbound_identities_ready": 0,
+  "test_account_credentials_available": false,
+  "authorized_independent_secret_store_available": false,
+  "github_secret_write_permission_evidence": "docs/validation/direct-release/final-signing-authorization.json: repository secret metadata and encryption key APIs returned HTTP 403; no changed authorization observed",
+  "existing_jvm_reports": [
+    {
+      "file": "docs/validation/branding/junit/TEST-net.lefil.fdroid.AndroidLegacyStartupTest.xml",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "executed_in_this_audit": false
+    },
+    {
+      "file": "docs/validation/branding/junit/TEST-net.lefil.fdroid.AndroidNavigationTest.xml",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "executed_in_this_audit": false
+    },
+    {
+      "file": "docs/validation/branding/junit/TEST-net.lefil.fdroid.AndroidNotificationsTest.xml",
+      "tests": 20,
+      "failures": 0,
+      "errors": 0,
+      "executed_in_this_audit": false
+    },
+    {
+      "file": "docs/validation/branding/junit/TEST-net.lefil.fdroid.AndroidRendererRecoveryTest.xml",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "executed_in_this_audit": false
+    },
+    {
+      "file": "docs/validation/branding/junit/TEST-net.lefil.fdroid.MessageLinksTest.xml",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "executed_in_this_audit": false
+    },
+    {
+      "file": "docs/validation/branding/junit/TEST-net.lefil.fdroid.MessagePollerTest.xml",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "executed_in_this_audit": false
+    },
+    {
+      "file": "docs/validation/branding/junit/TEST-net.lefil.fdroid.MessageSourcesTest.xml",
+      "tests": 15,
+      "failures": 0,
+      "errors": 0,
+      "executed_in_this_audit": false
+    },
+    {
+      "file": "docs/validation/branding/junit/TEST-net.lefil.fdroid.UnreadParsersTest.xml",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "executed_in_this_audit": false
+    }
+  ],
+  "existing_jvm_test_total": 70,
+  "new_application_tests_executed": false,
+  "real_authenticated_notification_tests_executed": false,
+  "real_message_delivery_validated": false,
+  "existing_emulator_validation_scope": "APK install, same-certificate reinstall, native logo/WebView startup only; not authenticated communication",
+  "local_android_device_access": {
+    "status": "unavailable",
+    "adb_start_failed": true,
+    "diagnostic": "Cannot mkdir /home/agent/.android: Read-only file system",
+    "physical_device_presence_verified": false
+  },
+  "confirmed_source_limits": [
+    "AgoraSource requests /message only and marks the result incomplete; no next-page traversal.",
+    "AtriumSource reads notification preview plus count; it does not fetch all conversations beyond the server preview limit.",
+    "Talk message version is derived from last-entry preview text, so identical previews do not establish distinct server messages."
+  ],
+  "requires_authorized_test_accounts": [
+    "Cookie session authentication and persistence on both services",
+    "New messages and identical-text messages with observed server IDs",
+    "Pagination beyond one Agora page and five Talk conversations",
+    "Delivery and routing from a real service response in an emulator",
+    "Simulated Doze/reboot with actual server messages"
+  ],
+  "requires_physical_acceptance": [
+    "Manufacturer battery restrictions and extended locked-screen periods",
+    "Physical reboot, unlock and measured delivery latency"
+  ],
+  "existing_operator_recipe": "docs/fdroid/COMMUNICATION-ACCEPTANCE.md",
+  "fdroid_candidate_files_modified": false,
+  "signing_key_rotated": false
+}

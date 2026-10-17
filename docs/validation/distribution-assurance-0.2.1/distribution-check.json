@@ -1,0 +1,11 @@
+{
+  "checked_at_utc": "2026-10-17T13:45:57.696352+00:00",
+  "url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/releases/download/v0.2.1/LeFil.apk",
+  "http_status": 200,
+  "sha256": "b0141391fad9fe1cfea638fd33a69d4fee1839f14747320820856577f57d4cb2",
+  "certificate_sha256": "d0755310dbd84319bbd0cb658475168cb9234cd1b60f9893a092afa19c31b902",
+  "published_apk_unchanged": true,
+  "downloaded_signature_valid": true,
+  "installation_tests_repeated": false,
+  "installation_evidence": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39035916585"
+}
