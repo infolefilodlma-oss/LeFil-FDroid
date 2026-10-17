@@ -24,7 +24,9 @@ jobs:
       - name: Check release prerequisites without exposing or creating signing keys
         env:
           GH_TOKEN: ${{ github.token }}
-          LEFIL_SECRET_CONTEXT: ${{ toJSON(secrets) }}
+          LEFIL_KEYSTORE_CONFIGURED: ${{ secrets.LEFIL_SIGNING_KEYSTORE_BASE64 != '' }}
+          LEFIL_STORE_PASSWORD_CONFIGURED: ${{ secrets.LEFIL_SIGNING_STORE_PASSWORD != '' }}
+          LEFIL_KEY_PASSWORD_CONFIGURED: ${{ secrets.LEFIL_SIGNING_KEY_PASSWORD != '' }}
         run: python3 tools/direct_release_preflight.py
       - name: Retain public evidence only
         if: always()

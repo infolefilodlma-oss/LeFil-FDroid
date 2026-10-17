@@ -85,11 +85,12 @@ def git(*args):
 def main():
     assert os.environ.get("GITHUB_REPOSITORY") == REPOSITORY
     assert os.environ.get("GITHUB_REF") == "refs/heads/codex/direct-release-0.2.1"
-    # The official Actions context contains available binding names. Do not log,
-    # hash, retain, or pass their values to subprocesses or documentation requests.
-    context = json.loads(os.environ.pop("LEFIL_SECRET_CONTEXT", "{}"))
-    secret_names = sorted(name for name in context if name != "GITHUB_TOKEN")
-    del context
+    # Actions evaluates only presence. No signing secret value enters this job.
+    bindings = {
+        "LEFIL_SIGNING_KEYSTORE_BASE64": os.environ.pop("LEFIL_KEYSTORE_CONFIGURED") == "true",
+        "LEFIL_SIGNING_STORE_PASSWORD": os.environ.pop("LEFIL_STORE_PASSWORD_CONFIGURED") == "true",
+        "LEFIL_SIGNING_KEY_PASSWORD": os.environ.pop("LEFIL_KEY_PASSWORD_CONFIGURED") == "true",
+    }
     app_inputs = ["app", "build.gradle", "settings.gradle", "gradle.properties"]
     same_inputs = all(git("rev-parse", f"HEAD:{p}") == git("rev-parse", f"{SOURCE}:{p}")
                       for p in app_inputs)
@@ -100,7 +101,7 @@ def main():
         "build_source_commit": SOURCE,
         "applicationId": "net.lefil.fdroid", "versionName": "0.2.1", "versionCode": 3,
         "app_build_inputs_unchanged": same_inputs,
-        "available_repository_or_organization_secret_names": secret_names,
+        "expected_signing_bindings_present": bindings,
         "production_signing_key_created": False,
         "production_signature_validated": False,
         "production_release_published": False,
@@ -142,8 +143,11 @@ def main():
         "AllowedAPKSigningKeys": bool(re.search(r"^AllowedAPKSigningKeys:", recipe, re.M)),
         "cross_channel_updates_validated": False,
     }
-    report["state"] = ("requires_signing_configuration" if secret_names
-                       else "no_repository_or_organization_signing_secret_available")
+    report["state"] = ("requires_signing_validation" if all(bindings.values())
+                       else "expected_signing_bindings_not_configured")
+    report["other_secret_names"] = (
+        "Only metadata returned by the official secrets API can establish other binding names; "
+        "this workflow does not enumerate the Actions secrets context.")
     report["github_actions_token_limit"] = (
         "A release-capable workflow token does not establish permission to store repository secrets.")
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
