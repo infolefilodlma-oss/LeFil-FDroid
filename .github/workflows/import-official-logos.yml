@@ -1,0 +1,68 @@
+name: Import official Le Fil logos
+
+on:
+  push:
+    branches:
+      - codex/fdroid-submission-readiness
+    paths:
+      - .github/workflows/import-official-logos.yml
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Retrieve only the two official files supplied by the project
+        run: |
+          python3 - <<'PY'
+          import hashlib
+          import json
+          from datetime import datetime, timezone
+          from pathlib import Path
+          from urllib.request import urlopen
+
+          sources = [
+              'https://le-fil.net/wp-content/uploads/2026/06/Logo-512-1.png',
+              'https://le-fil.net/wp-content/uploads/2026/05/logo-fond-clair_lwsoptimized.webp',
+          ]
+          destination = Path('branding/official')
+          destination.mkdir(parents=True, exist_ok=True)
+          receipt = {'retrieved_at_utc': datetime.now(timezone.utc).isoformat(), 'files': []}
+          for url in sources:
+              with urlopen(url, timeout=30) as response:
+                  if response.status != 200 or not response.url.startswith('https://le-fil.net/'):
+                      raise RuntimeError('Unexpected response or redirect: ' + url)
+                  data = response.read(10_000_001)
+                  if len(data) > 10_000_000:
+                      raise RuntimeError('Image exceeds size limit: ' + url)
+                  if url.endswith('.png'):
+                      valid = data.startswith(b'\x89PNG\r\n\x1a\n')
+                  else:
+                      valid = data[:4] == b'RIFF' and data[8:12] == b'WEBP'
+                  if not valid:
+                      raise RuntimeError('Unexpected image format: ' + url)
+                  target = destination / url.rsplit('/', 1)[1]
+                  if target.exists() and target.read_bytes() != data:
+                      raise RuntimeError('Refusing to overwrite an existing original: ' + str(target))
+                  target.write_bytes(data)
+                  receipt['files'].append({
+                      'url': url, 'path': str(target), 'http_status': response.status,
+                      'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest(),
+                      'content_type': response.headers.get('Content-Type'),
+                  })
+          (destination / 'sources.json').write_text(json.dumps(receipt, indent=2) + '\n')
+          print(json.dumps(receipt, indent=2))
+          PY
+      - name: Preserve the exact source bytes on the existing development branch
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add branding/official
+          if ! git diff --cached --quiet; then
+            git commit -m 'Import the official logo files supplied by the project'
+            git push origin HEAD:refs/heads/codex/fdroid-submission-readiness
+          fi
