@@ -1,0 +1,25 @@
+{
+  "checked_at_utc": "2026-10-17T13:51:42.514527+00:00",
+  "protected_source_objects": {
+    "app": "586d7454d3c8fd6a68ccb09639ac00f8dfea6a76",
+    "branding": "cd36fc936ed28c1777eed3c3a4eabb658c343455",
+    "docs/fdroid": "b38e9b989ecb186e92261f05c2fc74a15bb39253",
+    "build.gradle": "9fa0b1b47b25ad054157c6ab7da2dade63793293",
+    "settings.gradle": "1712de36c564f97e32af4c558342b512cad1b02d",
+    "gradle.properties": "5bac8ac504623a676070370da81ec518639e4829"
+  },
+  "protected_refs": {
+    "refs/heads/main": "89f73297a3ee807eb79bd17f76b24d154a51e287",
+    "refs/pull/2/head": "f3770bfc54d98b68d046bc4aa2dbd7318da88422",
+    "refs/tags/v0.2.1^{}": "25189d316d8345a601b4dae2fa9987d286831d1e"
+  },
+  "private_signing_files_tracked": false,
+  "published_apk_replaced": false,
+  "new_version_required": false,
+  "reason_no_new_version": "No application code, dependencies, resources or packaged bytes changed.",
+  "fdroid_mr_modified": false,
+  "cross_channel_update_guaranteed": false,
+  "fdroid_developer_signature_proposal": "docs/release/net.lefil.fdroid.developer-signed.yml",
+  "external_backup_status": "blocked: no authorized independent secret store or ready storage identity configured",
+  "real_notification_validation_status": "blocked: no designated authenticated test accounts provided"
+}
