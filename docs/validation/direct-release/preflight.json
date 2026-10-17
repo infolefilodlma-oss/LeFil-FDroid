@@ -1,7 +1,7 @@
 {
-  "checked_at_utc": "2026-10-17T11:22:38.453743+00:00",
-  "run_url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39028454881",
-  "workflow_commit": "aecd0e644078e2ab8658c853795c5fad4f8d9994",
+  "checked_at_utc": "2026-10-17T11:28:58.159270+00:00",
+  "run_url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39028853518",
+  "workflow_commit": "3c629f6adea9a9043f3a516892b15e2af1b96d05",
   "build_source_commit": "25189d316d8345a601b4dae2fa9987d286831d1e",
   "applicationId": "net.lefil.fdroid",
   "versionName": "0.2.1",
@@ -23,7 +23,7 @@
       "url": "https://developer.android.com/studio/publish/app-signing",
       "http_status": 200,
       "resolved_url": "https://developer.android.com/studio/publish/app-signing",
-      "sha256": "20bf13fbe9d370d2c6919d80706d2d289a5bda474efd3984c264ae4a32dbd56f",
+      "sha256": "bdd84c131b860971bd5a42f0f67a5ce14c7e379d5317ee91dc97d8731a1d1197",
       "relevant_passages": [
         "Safeguard users against threats and ensure a secure Android experience.",
         "Learn how to engage users, monitize, and secure your app.",
@@ -51,7 +51,7 @@
       "url": "https://developer.android.com/distribute/marketing-tools/alternative-distribution",
       "http_status": 200,
       "resolved_url": "https://developer.android.com/distribute/marketing-tools/alternative-distribution",
-      "sha256": "472eaf9ff68af6bef59d9bea6064cff9e3f55ddaf1c116158442db555c8ea1ca",
+      "sha256": "9a88c5a8914af9ee43b35587eddc4c0af365ee1d1a51726f11b1c78db5a9e27b",
       "relevant_passages": [
         "Safeguard users against threats and ensure a secure Android experience.",
         "Learn how to engage users, monitize, and secure your app.",
