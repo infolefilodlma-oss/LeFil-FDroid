@@ -60,7 +60,8 @@ Téléchargement Android 7.0 et versions suivantes : **LeFil.apk** ci-dessous.
 APK de diffusion non débogable, signé avec le certificat de diffusion Le Fil.
 Le fichier exact a passé les contrôles de signature, l'installation, la réinstallation
 et deux démarrages dans un émulateur Android 15. Le contenu avant signature correspond
-exactement aux deux compilations déjà contrôlées. Les 70 tests JVM antérieurs sont conservés.
+exactement aux deux compilations déjà contrôlées. Les 70 tests JVM antérieurs sont conservés ;
+la création du tag a également déclenché la CI standard existante.
 
 Limites déclarées : notifications réelles Agora/Talk, comportement en veille/après
 redémarrage et téléphone physique non validés. La candidature F-Droid !52965 reste
@@ -84,12 +85,15 @@ indépendante hors de cet environnement n'est pas encore vérifiée.
         releases = json.loads(gh("api", f"repos/{REPOSITORY}/releases?per_page=100").stdout)
         release = next((r for r in releases if r["tag_name"] == TAG), None)
         if release is not None:
-            assert release["target_commitish"] == SOURCE, "Existing release uses different sources"
+            # The resolved existing tag checked above determines the source.
+            # target_commitish is ignored by GitHub when that tag already exists.
+            assert tags, "Existing release has no verified source tag"
             assert not release["prerelease"], "Refuse to alter another release configuration"
             was_published = not release["draft"]
         else:
             report["phase"] = "create_draft_from_existing_tag"
-            gh("release", "create", TAG, "--repo", REPOSITORY, "--target", SOURCE,
+            assert tags, "The source tag must exist before creating a release"
+            gh("release", "create", TAG, "--repo", REPOSITORY,
                "--verify-tag", "--draft", "--title", "Le Fil 0.2.1", "--notes-file", str(notes))
             releases = json.loads(gh("api", f"repos/{REPOSITORY}/releases?per_page=100").stdout)
             release = next(r for r in releases if r["tag_name"] == TAG)
