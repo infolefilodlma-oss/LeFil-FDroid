@@ -1,0 +1,32 @@
+name: Recover existing branding evidence
+
+on:
+  push:
+    branches:
+      - codex/fdroid-submission-readiness
+    paths:
+      - .github/workflows/recover-branding-evidence.yml
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  recover:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: lefil-branding-evidence
+          run-id: 39010816613
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: docs/validation/branding
+      - name: Preserve the existing capture and native test evidence
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/validation/branding
+          git commit -m 'Preserve existing emulator captures for targeted launcher diagnosis'
+          git push origin HEAD:refs/heads/codex/fdroid-submission-readiness
