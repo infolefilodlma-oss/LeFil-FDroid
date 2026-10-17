@@ -1,0 +1,34 @@
+{
+  "checked_at_utc": "2026-10-17T07:30:00.440447+00:00",
+  "run_url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39013809801",
+  "method": "Anonymous Chromium; block Google hosts at request level; no CSS injection, form submission or account. Observe existing public controls.",
+  "checks": [
+    {
+      "label": "Le Fil",
+      "input_url": "https://le-fil.net/",
+      "http_status": 200,
+      "google_hosts_blocked": [
+        "fonts.googleapis.com"
+      ],
+      "visible_controls": {
+        "AGORA": false,
+        "ATRIUM": false,
+        "TALK": false
+      },
+      "public_controls_remain_visible": false
+    },
+    {
+      "label": "Atrium Talk login",
+      "input_url": "https://team.le-fil.net/index.php?r=mail%2Fmail%2Findex",
+      "http_status": 200,
+      "google_hosts_blocked": [
+        "fonts.googleapis.com"
+      ],
+      "visible_controls": {
+        "password_input_visible": true
+      },
+      "public_controls_remain_visible": true
+    }
+  ],
+  "limits": "Public home and login appearance only. Does not validate authenticated sessions, challenge/2FA providers, messages, Android notifications or phone behavior."
+}

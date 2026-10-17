@@ -1,0 +1,52 @@
+[
+  {
+    "name": "policy-rendered",
+    "url": "https://f-droid.org/docs/Inclusion_Policy/",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+    "checked_at_utc": "2026-10-17T07:19:33.517286+00:00"
+  },
+  {
+    "name": "quick-start-rendered",
+    "url": "https://f-droid.org/docs/Submitting_to_F-Droid_Quick_Start_Guide/",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+    "checked_at_utc": "2026-10-17T07:19:33.517293+00:00"
+  },
+  {
+    "name": "policy",
+    "url": "https://gitlab.com/fdroid/fdroid-website/-/raw/master/_docs/Inclusion_Policy.md",
+    "status": 200,
+    "sha256": "b675086815139c322b95b0e4dc139886a4d068955ef62b0aba70025c34f361a3",
+    "bytes": 9723,
+    "checked_at_utc": "2026-10-17T07:19:33.517295+00:00"
+  },
+  {
+    "name": "quick-start",
+    "url": "https://gitlab.com/fdroid/fdroid-website/-/raw/master/_docs/Submitting_to_F-Droid_Quick_Start_Guide.md",
+    "status": 200,
+    "sha256": "db2288a0a4ffdc74d7154d2062264aab419b5d9b0bfccdb7c5561e1e732c2831",
+    "bytes": 20660,
+    "checked_at_utc": "2026-10-17T07:19:33.517296+00:00"
+  },
+  {
+    "name": "antifeatures",
+    "url": "https://gitlab.com/fdroid/fdroid-website/-/raw/master/_docs/Anti-Features.md",
+    "status": 200,
+    "sha256": "56721476282fcd7de94893e8db22d2857d99c01e06096dc1e3cad2f0ed27badc",
+    "bytes": 8746,
+    "checked_at_utc": "2026-10-17T07:19:33.517297+00:00"
+  },
+  {
+    "name": "fdroid-contributing",
+    "url": "https://gitlab.com/fdroid/fdroiddata/-/raw/master/CONTRIBUTING.md",
+    "status": 200,
+    "sha256": "c7dd8b99260d051e0751a7923f76ad7fb70080879244ae5743c880c628ac35cb",
+    "bytes": 8788,
+    "checked_at_utc": "2026-10-17T07:19:33.517298+00:00"
+  },
+  {
+    "name": "gitlab-user",
+    "url": "https://gitlab.com/api/v4/user",
+    "status": 401,
+    "checked_at_utc": "2026-10-17T07:19:33.517298+00:00"
+  }
+]

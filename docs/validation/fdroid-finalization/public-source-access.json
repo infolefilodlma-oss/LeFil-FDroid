@@ -1,0 +1,22 @@
+[
+  {
+    "name": "repository",
+    "url": "https://github.com/infolefilodlma-oss/LeFil-FDroid",
+    "http_status": 200,
+    "sha256": "5cf20ce5fd1ddd95bca9fb953aac917916bce0aeefbdfe2d79c51529e207e59a",
+    "public_visibility_label": true,
+    "private_visibility_label": false
+  },
+  {
+    "name": "candidate",
+    "url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/commit/99789aa0f9c82d90cef020b33444698a05aafc47",
+    "http_status": 200,
+    "sha256": "da450e176b048e58a0825a8e29db745e651d7bbd52c528fd38a32302af29d3a5"
+  },
+  {
+    "name": "mr-template",
+    "url": "https://gitlab.com/fdroid/fdroiddata/-/raw/master/.gitlab/merge_request_templates/App%20inclusion.md",
+    "http_status": 200,
+    "sha256": "3b280c4cc11721b1ed61767e77e653652e86dc5223de094539e1cb4bc964fd80"
+  }
+]

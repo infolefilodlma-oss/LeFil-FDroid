@@ -10,4 +10,4 @@ Cette surveillance réutilise les sessions de connexion du WebView, sans Firebas
 
 Une connexion Internet et un compte sur chaque service sont nécessaires pour la messagerie. La réception immédiate et exhaustive n’est pas garantie : les listes serveur sont paginées et l’identification des messages dépend de leur format.
 
-L’application est limitée aux services le-fil.net, social.le-fil.net et team.le-fil.net. Leurs instances ne sont pas configurables.
+Les accès préconfigurés sont le-fil.net, social.le-fil.net et team.le-fil.net. Leurs instances ne sont pas configurables. Les pages Web peuvent charger des ressources d’autres domaines : Google Fonts (fonts.googleapis.com et fonts.gstatic.com) sur l’accueil et la connexion Atrium, et des emoji WordPress (s.w.org) sur l’accueil ont été observés. Ces requêtes sont distinctes des dépendances de l’application Android ; leur contenu peut évoluer avec les sites. Les cookies, y compris les cookies tiers, sont autorisés dans le WebView pour les sessions des services.

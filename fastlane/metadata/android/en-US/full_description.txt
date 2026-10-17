@@ -10,4 +10,4 @@ The polling mechanism uses signed-in WebView sessions without Firebase or Google
 
 Internet access and service accounts are required for messaging. Immediate or exhaustive delivery is not guaranteed: server lists are paginated and detection depends on their response format.
 
-The app is limited to le-fil.net, social.le-fil.net and team.le-fil.net. Other server instances cannot be configured.
+The configured services are le-fil.net, social.le-fil.net and team.le-fil.net. Other server instances cannot be configured. Web pages can load resources from other domains: Google Fonts (fonts.googleapis.com and fonts.gstatic.com) on the homepage and Atrium login, and WordPress emoji (s.w.org) on the homepage were observed. These requests are separate from the Android application's dependencies; website content can change. Cookies, including third-party cookies, are enabled in the WebView for service sessions.

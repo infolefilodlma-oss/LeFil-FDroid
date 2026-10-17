@@ -1,0 +1,43 @@
+{
+  "recorded_at_utc": "2026-10-17T07:37:33.614662+00:00",
+  "scope": "Official upstream license texts only; deployed versions, themes and add-ons not audited. HumHub/Mail deployed versions unknown.",
+  "sources": [
+    {
+      "software": "WordPress",
+      "url": "https://raw.githubusercontent.com/WordPress/WordPress/master/license.txt",
+      "http_status": 200,
+      "sha256": "49e97f629ce763abb2f8f1f13da74cb5a8a9a72a0e72a7477d1540c98cef5141",
+      "declared_license": "GPL-2.0-or-later"
+    },
+    {
+      "software": "Friendica",
+      "url": "https://raw.githubusercontent.com/friendica/friendica/develop/LICENSE",
+      "http_status": 200,
+      "sha256": "0d96a4ff68ad6d4b6f1f30f713b18d5184912ba8dd389f86aa7710db079abcb0",
+      "declared_license": "AGPL-3.0"
+    },
+    {
+      "software": "HumHub",
+      "url": "https://raw.githubusercontent.com/humhub/humhub/master/LICENSE",
+      "http_status": 200,
+      "sha256": "88d5ad78cd4410716bfe18bb98e11b57847e2dd1db2b6e877acb545ab3faf9ee",
+      "declared_license": "AGPL-3.0-only OR proprietary; free option available"
+    },
+    {
+      "software": "HumHub AGPL text",
+      "url": "https://raw.githubusercontent.com/humhub/humhub/master/LICENSE.AGPL-3.0-only",
+      "http_status": 200,
+      "sha256": "e9df4c4e4e64b8168a71c3c67668dcffabbe8fca11d4ac4a7d5482562cd1679c",
+      "declared_license": "AGPL-3.0-only"
+    },
+    {
+      "software": "HumHub Mail / Messenger",
+      "url": "https://marketplace.humhub.com/module/mail/licence",
+      "http_status": 200,
+      "sha256": "bbcb426e10a4822f863bdd9b8db0020abe18e1a30386d2254333a674853f5585",
+      "declared_license": "AGPL-3.0",
+      "evidence": "humhub-mail-license.json",
+      "run_url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39013402328"
+    }
+  ]
+}
