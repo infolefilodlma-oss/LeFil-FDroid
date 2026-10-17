@@ -20,14 +20,14 @@ Repo: https://github.com/infolefilodlma-oss/LeFil-FDroid.git
 Builds:
   - versionName: 0.2.1
     versionCode: 3
-    commit: ccb61022e84a242a5e5989b9a629ac7c90a47a56
+    commit: 4ffa07b85773f7e08b2e2e556c681c1106068443
     subdir: app
     gradle:
       - yes
 
 MaintainerNotes: |-
-  Candidate 0.2.1, versionCode 3. The build source is the already checked
-  application with corrected Fastlane descriptions, not a stable release tag.
+  Candidate 0.2.1, versionCode 3. The build source includes corrected
+  Fastlane descriptions and the official logo assets, not a stable release tag.
   Message polling is experimental and actual delivery is not validated.
   Native recovery was tested in an Android 15 emulator using local HTML;
   this did not test authenticated services or actual message delivery.
