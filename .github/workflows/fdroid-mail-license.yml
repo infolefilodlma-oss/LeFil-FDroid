@@ -35,7 +35,7 @@ jobs:
               def handle_data(self,d):
                   if not self.hide and d.strip(): self.parts.append(d.strip())
           records=[]
-          for url in ('https://marketplace.humhub.com/module/mail','https://marketplace.humhub.com/module/messenger'):
+          for url in ('https://marketplace.humhub.com/module/mail/licence',):
               item={'url':url}
               try:
                   with urlopen(url,timeout=30) as response:
@@ -47,13 +47,13 @@ jobs:
               except Exception as error: item['error']=str(error)
               records.append(item)
           output=Path('docs/validation/fdroid-finalization'); output.mkdir(parents=True,exist_ok=True)
-          (output/'humhub-mail-upstream.json').write_text(json.dumps({'checked_at_utc':datetime.now(timezone.utc).isoformat(),'authenticated':False,'observations':records},indent=2)+'\n')
+          (output/'humhub-mail-license.json').write_text(json.dumps({'checked_at_utc':datetime.now(timezone.utc).isoformat(),'authenticated':False,'observations':records},indent=2)+'\n')
           PY
       - name: Preserve public source declaration evidence
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add docs/validation/fdroid-finalization/humhub-mail-upstream.json
+          git add docs/validation/fdroid-finalization/humhub-mail-license.json
           git commit -m 'Record the official HumHub Mail module source and license declaration'
           git pull --rebase origin codex/fdroid-submission-readiness
           git push origin HEAD:refs/heads/codex/fdroid-submission-readiness

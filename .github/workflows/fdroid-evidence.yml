@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     env:
-      LEFIL_RUNTIME_REPORT: ${{ runner.temp }}/runtime-dependencies.json
+      LEFIL_RUNTIME_REPORT: /tmp/lefil-runtime-dependencies.json
     steps:
       - uses: actions/checkout@v4
         with:
