@@ -1,6 +1,6 @@
 {
-  "checked_at_utc": "2026-10-17T07:30:00.440447+00:00",
-  "run_url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39013809801",
+  "checked_at_utc": "2026-10-17T07:34:04.948180+00:00",
+  "run_url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39014068125",
   "method": "Anonymous Chromium; block Google hosts at request level; no CSS injection, form submission or account. Observe existing public controls.",
   "checks": [
     {
@@ -11,11 +11,31 @@
         "fonts.googleapis.com"
       ],
       "visible_controls": {
-        "AGORA": false,
-        "ATRIUM": false,
-        "TALK": false
+        "AGORA": true,
+        "ATRIUM": true,
+        "TALK": true
       },
-      "public_controls_remain_visible": false
+      "public_controls_remain_visible": true,
+      "service_link_matches": {
+        "AGORA": [
+          {
+            "visible": true,
+            "host": "social.le-fil.net"
+          }
+        ],
+        "ATRIUM": [
+          {
+            "visible": true,
+            "host": "team.le-fil.net"
+          }
+        ],
+        "TALK": [
+          {
+            "visible": true,
+            "host": "team.le-fil.net"
+          }
+        ]
+      }
     },
     {
       "label": "Atrium Talk login",
@@ -27,7 +47,8 @@
       "visible_controls": {
         "password_input_visible": true
       },
-      "public_controls_remain_visible": true
+      "public_controls_remain_visible": true,
+      "service_link_matches": {}
     }
   ],
   "limits": "Public home and login appearance only. Does not validate authenticated sessions, challenge/2FA providers, messages, Android notifications or phone behavior."
