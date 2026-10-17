@@ -21,7 +21,7 @@
   "signature_verified_for_android_sdk_24_through_35": true,
   "zip_alignment_verified": true,
   "previous_70_jvm_tests_rerun": false,
-  "final_certificate_emulator_installation": "pending",
+  "final_certificate_emulator_installation": "passed",
   "physical_phone_validated": false,
   "authenticated_services_validated": false,
   "real_notifications_validated": false,
@@ -29,5 +29,8 @@
   "private_key_uploaded": false,
   "private_key_location": "Private encrypted PKCS12 outside Git and outside Actions; permissions 0600/0700",
   "external_durable_key_retention_verified": false,
-  "public_download_verified": false
+  "public_download_verified": true,
+  "emulator_validation_run_url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39035916585",
+  "private_local_read_only_backup_verified": true,
+  "verified_immutable_download_url": "https://raw.githubusercontent.com/infolefilodlma-oss/LeFil-FDroid/2009345408586c291425f67003f74404c4dab561/distribution/LeFil.apk"
 }

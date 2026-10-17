@@ -1,0 +1,46 @@
+name: Android - publish verified signed APK
+
+on:
+  push:
+    branches:
+      - codex/direct-release-0.2.1
+    paths:
+      - .github/workflows/publish-signed-distribution.yml
+      - tools/publish_signed_distribution.py
+
+permissions:
+  contents: write
+
+concurrency:
+  group: lefil-release-publication
+  cancel-in-progress: false
+
+jobs:
+  publish-verified-apk:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Publish only the exact signed APK that passed installation checks
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/publish_signed_distribution.py
+      - name: Retain publication verification report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lefil-signed-publication-verification
+          path: docs/validation/signed-distribution/publication.json
+          if-no-files-found: error
+      - name: Preserve publication status
+        if: always()
+        run: |
+          test -f docs/validation/signed-distribution/publication.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/validation/signed-distribution/publication.json
+          git commit -m 'Record signed APK publication and actual downloads [skip ci]'
+          git pull --rebase origin codex/direct-release-0.2.1
+          git push origin HEAD:refs/heads/codex/direct-release-0.2.1

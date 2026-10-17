@@ -1,0 +1,13 @@
+{
+  "checked_at_utc": "2026-10-17T13:20:19.906986+00:00",
+  "run_url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39035916585",
+  "official_graphics_changed": false,
+  "first_and_second_start_reviewed": true,
+  "observation": "Both captures show the official blue native logo on white and rendered public Le Fil homepage content.",
+  "authenticated_services_validated": false,
+  "physical_phone_validated": false,
+  "screenshots_sha256": {
+    "first.png": "25eb7b0b44a9f3843e7b60a13b678021e5f4c031262fca5fc26c1df073429b30",
+    "second.png": "866c21af28b049d18244160e88d55ef3d32838cfd1c253ff6ab38b7cca2a95fd"
+  }
+}

@@ -51,6 +51,36 @@ sont pas réexécutés pour des sources inchangées.
 La comparaison de deux builds sur un runner commun ne constitue pas la
 vérification par le serveur officiel F-Droid.
 
+## APK signé avec la clé de diffusion
+
+L'APK a ensuite été produit localement avec Gradle 8.7 et les outils Android
+officiels, depuis le même commit. Son empreinte avant signature est strictement
+identique à celle des builds précédents. La clé de diffusion existante est
+utilisée localement ; aucun enregistrement de secrets GitHub n'est nécessaire
+pour cette signature et aucun fichier privé n'entre dans GitHub Actions.
+
+APK signé SHA-256 :
+`b0141391fad9fe1cfea638fd33a69d4fee1839f14747320820856577f57d4cb2`.
+
+Le [contrôle avec le certificat de diffusion](https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39035916585)
+a réussi : signature Android API 24 à 35, version, absence du mode débogage,
+alignement ZIP, installation et réinstallation du fichier exact, deux démarrages
+avec interface native et page publique affichées. L'APK relu depuis l'émulateur
+Android 15 a la même empreinte. Le tampon de crash est vide. Le
+[rapport](../validation/signed-distribution/result.json) et les captures sont
+conservés. Les 70 tests JVM ne sont pas relancés.
+
+Le premier essai s'est arrêté lors de l'export de l'interface après un code 137
+de `uiautomator`. Son [résultat initial](../validation/signed-distribution/attempt-1-result.json)
+est conservé. La collecte exige désormais un fichier XML neuf et préserve le
+code de l'outil. Lors du contrôle réussi, les deux exports ont terminé avec le
+code zéro ; aucune tolérance d'erreur n'a été utilisée pour ce résultat.
+
+Le [téléchargement depuis GitHub](../validation/signed-distribution/direct-download.json)
+a aussi été effectué dans l'environnement Codex : HTTP 200, empreinte et
+certificat identiques. Ces contrôles ne valident pas un téléphone physique ni
+les notifications Agora/Talk authentifiées.
+
 ## Clé de diffusion préparée
 
 Une clé RSA 4096 bits a été créée dans un conteneur PKCS12 chiffré, avec un mot de
@@ -64,7 +94,10 @@ Empreinte SHA-256 :
 `d0755310dbd84319bbd0cb658475168cb9234cd1b60f9893a092afa19c31b902`
 
 La conservation durable sous le contrôle du propriétaire n’est pas encore
-établie. L’enregistrement sécurisé des valeurs déjà préparées nécessite une
+établie hors de l'environnement actuel. Une copie locale en lecture seule des
+fichiers privés a été vérifiée et synchronisée sur disque, dans un répertoire
+privé distinct. Elle ne constitue pas une sauvegarde indépendante externe.
+L’enregistrement sécurisé des valeurs déjà préparées dans GitHub nécessiterait une
 identité autorisée à gérer les secrets du dépôt :
 
 - `LEFIL_SIGNING_KEYSTORE_BASE64` : conteneur chiffré encodé en base64.
@@ -96,8 +129,10 @@ Le [rapport](../validation/direct-release/developer-signature-metadata.json)
 précise que le binaire public n’existe pas et que cette proposition n’est ni
 activée dans la MR !52965 ni vérifiée par le serveur F-Droid.
 
-Après la conservation vérifiée de la clé, contrôler l’APK signé avec ce même
-certificat et préparer cette configuration F-Droid avant toute publication.
+La signature locale et les contrôles avec ce même certificat ont désormais
+réussi. La conservation externe reste non vérifiée ; la procédure de publication
+ne doit pas prétendre que les secrets GitHub ou un coffre externe sont configurés.
+La proposition F-Droid reste séparée et la candidature n'est pas modifiée.
 Le tag stable devra désigner le commit réellement construit. Les mises à jour
 ultérieures devront augmenter `versionCode` et garder la même identité de
 signature. Aucun APK non signé ou signé avec une clé d’essai ne doit devenir un
