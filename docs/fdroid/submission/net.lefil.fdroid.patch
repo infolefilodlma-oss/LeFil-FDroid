@@ -1,6 +1,6 @@
 diff --git a/metadata/net.lefil.fdroid.yml b/metadata/net.lefil.fdroid.yml
 new file mode 100644
-index 0000000..f373409
+index 0000000..220cb55
 --- /dev/null
 +++ b/metadata/net.lefil.fdroid.yml
 @@ -0,0 +1,40 @@
@@ -26,7 +26,7 @@ index 0000000..f373409
 +Builds:
 +  - versionName: 0.2.1
 +    versionCode: 3
-+    commit: 4ffa07b85773f7e08b2e2e556c681c1106068443
++    commit: 99789aa0f9c82d90cef020b33444698a05aafc47
 +    subdir: app
 +    gradle:
 +      - yes

@@ -20,7 +20,7 @@ Repo: https://github.com/infolefilodlma-oss/LeFil-FDroid.git
 Builds:
   - versionName: 0.2.1
     versionCode: 3
-    commit: 4ffa07b85773f7e08b2e2e556c681c1106068443
+    commit: 99789aa0f9c82d90cef020b33444698a05aafc47
     subdir: app
     gradle:
       - yes
