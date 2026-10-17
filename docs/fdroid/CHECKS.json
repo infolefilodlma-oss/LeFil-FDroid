@@ -91,5 +91,13 @@
     "official_mr_url": null,
     "accepted": false,
     "published": false
+  },
+  "gitlab_access_requirement": {
+    "secret_name": "GITLAB_TOKEN",
+    "allowed_destination": "gitlab.com",
+    "configuration_requirement_saved": true,
+    "requires_publish": true,
+    "credential_value_received": false,
+    "runtime_authenticated": false
   }
 }
