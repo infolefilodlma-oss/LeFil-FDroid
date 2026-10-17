@@ -1,0 +1,33 @@
+{
+  "source_application_commit": "4ffa07b85773f7e08b2e2e556c681c1106068443",
+  "capture_evidence_commit": "c06a5bac8848f4cdbfeccf26eabf921d94f5ac9c",
+  "capture_run_url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39010816613",
+  "reviewed_at_utc": "2026-10-17T06:54:38.817976+00:00",
+  "scope": "Actual Android 15 emulator screens showing the native light/dark toolbar and public Le Fil homepage. No cropping, overlays or raster edits. No authenticated account, notification or physical-phone validation. Original run passed native recovery and app captures, then failed launcher automation.",
+  "copies": [
+    {
+      "path": "fastlane/metadata/android/en-US/images/phoneScreenshots/1.png",
+      "source_path_at_capture_evidence_commit": "docs/validation/branding/app-light.png",
+      "sha256": "4693f18ce85b02f0e40a3290f14b1b8c5b699e29308c3694fcaeaf162af602d6",
+      "byte_identical": true
+    },
+    {
+      "path": "fastlane/metadata/android/en-US/images/phoneScreenshots/2.png",
+      "source_path_at_capture_evidence_commit": "docs/validation/branding/app-dark.png",
+      "sha256": "c56ded5b5c266b6c9238d9d95d2dc27249fc6826770f0d16f518f1b38e397db8",
+      "byte_identical": true
+    },
+    {
+      "path": "fastlane/metadata/android/fr-FR/images/phoneScreenshots/1.png",
+      "source_path_at_capture_evidence_commit": "docs/validation/branding/app-light.png",
+      "sha256": "4693f18ce85b02f0e40a3290f14b1b8c5b699e29308c3694fcaeaf162af602d6",
+      "byte_identical": true
+    },
+    {
+      "path": "fastlane/metadata/android/fr-FR/images/phoneScreenshots/2.png",
+      "source_path_at_capture_evidence_commit": "docs/validation/branding/app-dark.png",
+      "sha256": "c56ded5b5c266b6c9238d9d95d2dc27249fc6826770f0d16f518f1b38e397db8",
+      "byte_identical": true
+    }
+  ]
+}
