@@ -1,0 +1,54 @@
+{
+  "build_source_commit": "25189d316d8345a601b4dae2fa9987d286831d1e",
+  "workflow_commit": "3c629f6adea9a9043f3a516892b15e2af1b96d05",
+  "run_url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39028853518",
+  "outcome": "release_build_and_disposable_key_installation_checks_passed",
+  "production_key_generated": false,
+  "production_release_published": false,
+  "physical_phone_validated": false,
+  "real_notifications_validated": false,
+  "existing_70_jvm_tests_rerun": false,
+  "official_fdroid_signature_compatibility_validated": false,
+  "unsigned_apk_sha256": [
+    "40b13feceb592df21e4b2e9374e4b0e3adac734fed5bbe7c207f4de13ed59d63",
+    "40b13feceb592df21e4b2e9374e4b0e3adac734fed5bbe7c207f4de13ed59d63"
+  ],
+  "reproducibility": {
+    "method": "Two clean checkouts of the identical pinned commit in different directories on one CI runner",
+    "exact_unsigned_match": true,
+    "official_fdroid_server_verified": false
+  },
+  "manifest": {
+    "applicationId": "net.lefil.fdroid",
+    "versionName": "0.2.1",
+    "versionCode": 3,
+    "debuggable": false,
+    "zip_alignment": "passed"
+  },
+  "installation_test_apk": {
+    "sha256": "5511c5a39be9deb43ebe78f83f3a24345bc238048cb5293bf1a874e5f0a7e3a6",
+    "signer_sha256": "84a804309245bb95c5b1e45d5db9058c1d0053067328e987492686bd7f36fb44",
+    "signature_verified": true,
+    "key_type": "Ephemeral CI installation test key; valid two days; never for distribution",
+    "production_signature_validated": false,
+    "uploaded_or_published": false
+  },
+  "emulator": {
+    "api": 35,
+    "hardware": "ranchu",
+    "fresh_install": "passed",
+    "first_start": {
+      "status": "passed",
+      "native_logo_and_webview_visible": true,
+      "pid_stable_during_check": true,
+      "authenticated_services_validated": false
+    },
+    "same_signature_reinstall": "passed",
+    "second_start": {
+      "status": "passed",
+      "native_logo_and_webview_visible": true,
+      "pid_stable_during_check": true,
+      "authenticated_services_validated": false
+    }
+  }
+}

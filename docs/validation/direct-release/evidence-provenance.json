@@ -1,0 +1,234 @@
+{
+  "recovered_at_utc": "2026-10-17T11:39:44.003109+00:00",
+  "source_run": {
+    "conclusion": "failure",
+    "databaseId": 39028853518,
+    "headSha": "3c629f6adea9a9043f3a516892b15e2af1b96d05",
+    "jobs": [
+      {
+        "completedAt": "2026-10-17T11:29:06Z",
+        "conclusion": "success",
+        "databaseId": 117385112824,
+        "name": "signing-readiness",
+        "startedAt": "2026-10-17T11:28:55Z",
+        "status": "completed",
+        "steps": [
+          {
+            "completedAt": "2026-10-17T11:28:56Z",
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "startedAt": "2026-10-17T11:28:56Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-17T11:28:58Z",
+            "conclusion": "success",
+            "name": "Run actions/checkout@v4",
+            "number": 2,
+            "startedAt": "2026-10-17T11:28:56Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-17T11:29:02Z",
+            "conclusion": "success",
+            "name": "Check release prerequisites without exposing or creating signing keys",
+            "number": 3,
+            "startedAt": "2026-10-17T11:28:58Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-17T11:29:03Z",
+            "conclusion": "success",
+            "name": "Retain public evidence only",
+            "number": 4,
+            "startedAt": "2026-10-17T11:29:02Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-17T11:29:04Z",
+            "conclusion": "success",
+            "name": "Preserve the public result on the dedicated distribution branch",
+            "number": 5,
+            "startedAt": "2026-10-17T11:29:03Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-17T11:29:04Z",
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@v4",
+            "number": 10,
+            "startedAt": "2026-10-17T11:29:04Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-17T11:29:04Z",
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 11,
+            "startedAt": "2026-10-17T11:29:04Z",
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39028853518/job/117385112824"
+      },
+      {
+        "completedAt": "2026-10-17T11:32:59Z",
+        "conclusion": "failure",
+        "databaseId": 117385153320,
+        "name": "release-build-and-install",
+        "startedAt": "2026-10-17T11:29:08Z",
+        "status": "completed",
+        "steps": [
+          {
+            "completedAt": "2026-10-17T11:29:12Z",
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "startedAt": "2026-10-17T11:29:09Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-17T11:29:13Z",
+            "conclusion": "success",
+            "name": "Run actions/checkout@v4",
+            "number": 2,
+            "startedAt": "2026-10-17T11:29:12Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-17T11:29:13Z",
+            "conclusion": "success",
+            "name": "Run actions/setup-java@v4",
+            "number": 3,
+            "startedAt": "2026-10-17T11:29:13Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-17T11:29:22Z",
+            "conclusion": "success",
+            "name": "Run android-actions/setup-android@v3",
+            "number": 4,
+            "startedAt": "2026-10-17T11:29:13Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-17T11:29:29Z",
+            "conclusion": "success",
+            "name": "Run gradle/actions/setup-gradle@v4",
+            "number": 5,
+            "startedAt": "2026-10-17T11:29:22Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-17T11:31:26Z",
+            "conclusion": "success",
+            "name": "Build release twice from clean pinned sources and sign for disposable installation checks only",
+            "number": 6,
+            "startedAt": "2026-10-17T11:29:29Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-17T11:31:26Z",
+            "conclusion": "success",
+            "name": "Enable KVM in the disposable runner",
+            "number": 7,
+            "startedAt": "2026-10-17T11:31:26Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-17T11:32:55Z",
+            "conclusion": "success",
+            "name": "Install and start the non-debuggable release on Android 15",
+            "number": 8,
+            "startedAt": "2026-10-17T11:31:26Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-17T11:32:55Z",
+            "conclusion": "success",
+            "name": "Remove the disposable test key and password",
+            "number": 9,
+            "startedAt": "2026-10-17T11:32:55Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-17T11:32:56Z",
+            "conclusion": "success",
+            "name": "Retain reports and actual emulator captures, never APKs or keys",
+            "number": 10,
+            "startedAt": "2026-10-17T11:32:55Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-17T11:32:56Z",
+            "conclusion": "failure",
+            "name": "Preserve release build and installation evidence on the dedicated branch",
+            "number": 11,
+            "startedAt": "2026-10-17T11:32:56Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-17T11:32:56Z",
+            "conclusion": "success",
+            "name": "Post Run gradle/actions/setup-gradle@v4",
+            "number": 20,
+            "startedAt": "2026-10-17T11:32:56Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-17T11:32:56Z",
+            "conclusion": "success",
+            "name": "Post Run actions/setup-java@v4",
+            "number": 21,
+            "startedAt": "2026-10-17T11:32:56Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-17T11:32:57Z",
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@v4",
+            "number": 22,
+            "startedAt": "2026-10-17T11:32:56Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-17T11:32:57Z",
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 23,
+            "startedAt": "2026-10-17T11:32:57Z",
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39028853518/job/117385153320"
+      }
+    ],
+    "status": "completed",
+    "url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39028853518"
+  },
+  "original_report_outcome": "release_build_and_disposable_key_installation_checks_passed",
+  "recovery_run_url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39029541592",
+  "original_files_copied_without_modification": {
+    "release-reinstall.log": "781a31c82430c97897af612ece5e0ca2205e301cb5ff121ce2660541ea5182c7",
+    "release-manifest.log": "bc7a9cca288ddd4b512b4a67d46af9bdcdb75602088a0fc0a72043afe62c117e",
+    "release-checks.json": "e9cef44248a702c2e3ea88e1a465f537a5895cf341a88bbed47575a030720cee",
+    "release-second-start-hierarchy.xml": "85007d205915833d8acb6a3e24f63e8076c5efdd97767c5a175f679da70022c1",
+    "release-crash-buffer.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "release-test-signature.log": "66f893f7217272134dbc2da3d6a41c7d1e94ac72c38b2d6525f19d60757a3173",
+    "release-build-b.log": "d21cb62b0a1677b0b0bdbb99b878224ed8adc5319aef6cc11e3aaacbafbf1972",
+    "release-second-start-start.log": "5403c571f421957a74c1dea7da130eb6e55af1cdf9dabaf3735a64659bc40001",
+    "release-first-start.png": "cb7dbb6f4a277a43a5d2b56e184bdadf04ca3b73c12c3c4c09ad8692b78212bd",
+    "release-alignment.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "release-first-start-hierarchy.xml": "85007d205915833d8acb6a3e24f63e8076c5efdd97767c5a175f679da70022c1",
+    "release-build-a.log": "15348d26c72bb243b3e21570aff03ccd8e4ac14d879c8ef58b196074b86b3f3e",
+    "release-first-start-start.log": "c8a264c8ae3e236a8d3f274858895060d993368570bbd90d087cd8a62c719737",
+    "release-second-start.png": "5878bd5261082e155f42d3f395d9028988a4289f285305ddc13465edd00f48f2",
+    "release-install.log": "781a31c82430c97897af612ece5e0ca2205e301cb5ff121ce2660541ea5182c7"
+  },
+  "failed_source_steps": [
+    "Preserve release build and installation evidence on the dedicated branch"
+  ],
+  "builds_and_android_tests_rerun_for_recovery": false,
+  "production_release_published": false
+}
