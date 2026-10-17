@@ -1,0 +1,64 @@
+name: Android - final signed APK verification
+
+on:
+  push:
+    branches:
+      - codex/direct-release-0.2.1
+    paths:
+      - .github/workflows/signed-distribution.yml
+      - tools/check_signed_distribution.py
+      - distribution/LeFil.apk
+
+permissions:
+  contents: write
+
+concurrency:
+  group: lefil-signed-distribution
+  cancel-in-progress: false
+
+jobs:
+  verify-final-apk:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+        with:
+          packages: 'platform-tools platforms;android-35 build-tools;34.0.0'
+      - name: Verify the final production certificate and APK without any private key
+        run: python3 tools/check_signed_distribution.py verify
+      - name: Enable KVM
+        run: sudo chmod 666 /dev/kvm
+      - name: Install, reinstall and start the exact final signed APK
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: default
+          arch: x86_64
+          profile: pixel_2
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -camera-back none
+          script: python3 tools/check_signed_distribution.py install
+      - name: Retain verification reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lefil-final-signed-apk-verification
+          path: docs/validation/signed-distribution/
+          if-no-files-found: error
+      - name: Preserve public verification results on the dedicated branch
+        if: always()
+        run: |
+          test -f docs/validation/signed-distribution/result.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f docs/validation/signed-distribution/
+          git commit -m 'Record final production-signed APK checks [skip ci]'
+          git pull --rebase origin codex/direct-release-0.2.1
+          git push origin HEAD:refs/heads/codex/direct-release-0.2.1
