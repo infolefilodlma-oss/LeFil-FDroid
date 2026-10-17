@@ -1,0 +1,41 @@
+Original capture run 39010816613, job 117332780291
+Traceback (most recent call last):
+2026-10-17T06:43:45.7491410Z   File "/home/runner/work/LeFil-FDroid/LeFil-FDroid/tools/capture_branding.py", line 123, in <module>
+2026-10-17T06:43:45.7492288Z     main()
+2026-10-17T06:43:45.7492972Z   File "/home/runner/work/LeFil-FDroid/LeFil-FDroid/tools/capture_branding.py", line 103, in main
+2026-10-17T06:43:45.7493668Z     capture_launcher()
+2026-10-17T06:43:45.7494497Z   File "/home/runner/work/LeFil-FDroid/LeFil-FDroid/tools/capture_branding.py", line 66, in capture_launcher
+2026-10-17T06:43:45.7495395Z     raise RuntimeError('Le Fil not found in the actual launcher app drawer')
+2026-10-17T06:43:45.7496437Z RuntimeError: Le Fil not found in the actual launcher app drawer
+2026-10-17T06:43:45.7658339Z ##[error]The process '/usr/bin/sh' failed with exit code 1
+2026-10-17T06:43:45.7660827Z ##[group]Terminate Emulator
+2026-10-17T06:43:45.7674326Z [command]/usr/local/lib/android/sdk/platform-tools/adb -s emulator-5554 emu kill
+2026-10-17T06:43:45.7708116Z OK: killing emulator, bye bye
+2026-10-17T06:43:45.7708936Z OK
+2026-10-17T06:43:45.7713746Z INFO         | Wait for emulator (pid 3402) 20 seconds to shutdown gracefully before kill;you can set environment variable ANDROID_EMULATOR_WAIT_TIME_BEFORE_KILL(in seconds) to change the default value (20 seconds)
+2026-10-17T06:43:45.7715073Z 
+2026-10-17T06:43:45.7715534Z ##[endgroup]
+2026-10-17T06:43:45.7826871Z USER_INFO    | Snapshots have been disabled by the user, save request is ignored.
+2026-10-17T06:43:45.7830521Z INFO         | Saving snapshot 'default_boot' took 1 ms
+2026-10-17T06:43:46.2960759Z ERROR        | stop: Not implemented
+2026-10-17T06:43:46.2962106Z WARNING      | Emulator client has not yet been configured.. Call configure me first!
+2026-10-17T06:43:46.3094460Z INFO         | removeAll
+2026-10-17T06:43:46.3721313Z WARNING      | Netsim Wifi dns:///localhost:35717 is gone due to Stream removed (CANCELLED)
+2026-10-17T06:43:46.7101514Z ##[group]Run actions/upload-artifact@v4
+2026-10-17T06:43:46.7101860Z with:
+2026-10-17T06:43:46.7102107Z   name: lefil-branding-evidence
+2026-10-17T06:43:46.7102419Z   path: docs/validation/branding/**
+2026-10-17T06:43:46.7102727Z   if-no-files-found: warn
+2026-10-17T06:43:46.7103004Z   compression-level: 6
+2026-10-17T06:43:46.7103261Z   overwrite: false
+2026-10-17T06:43:46.7103515Z   include-hidden-files: false
+2026-10-17T06:43:46.7103791Z env:
+2026-10-17T06:43:46.7104125Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.20-1/x64
+2026-10-17T06:43:46.7104657Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.20-1/x64
+2026-10-17T06:43:46.7105097Z   ANDROID_HOME: /usr/local/lib/android/sdk
+2026-10-17T06:43:46.7105437Z   ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
+2026-10-17T06:43:46.7105809Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-10-17T06:43:46.7106148Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-10-17T06:43:46.7106505Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-10-17T06:43:46.7106839Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-10-17T06:43:46.7107317Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
