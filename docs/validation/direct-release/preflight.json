@@ -1,0 +1,134 @@
+{
+  "checked_at_utc": "2026-10-17T11:22:38.453743+00:00",
+  "run_url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39028454881",
+  "workflow_commit": "aecd0e644078e2ab8658c853795c5fad4f8d9994",
+  "build_source_commit": "25189d316d8345a601b4dae2fa9987d286831d1e",
+  "applicationId": "net.lefil.fdroid",
+  "versionName": "0.2.1",
+  "versionCode": 3,
+  "app_build_inputs_unchanged": true,
+  "expected_signing_bindings_present": {
+    "LEFIL_SIGNING_KEYSTORE_BASE64": false,
+    "LEFIL_SIGNING_STORE_PASSWORD": false,
+    "LEFIL_SIGNING_KEY_PASSWORD": false
+  },
+  "production_signing_key_created": false,
+  "production_signature_validated": false,
+  "production_release_published": false,
+  "tests_or_builds_rerun": false,
+  "notifications_validated": false,
+  "physical_phone_validated": false,
+  "official_documentation": {
+    "android_signing": {
+      "url": "https://developer.android.com/studio/publish/app-signing",
+      "http_status": 200,
+      "resolved_url": "https://developer.android.com/studio/publish/app-signing",
+      "sha256": "20bf13fbe9d370d2c6919d80706d2d289a5bda474efd3984c264ae4a32dbd56f",
+      "relevant_passages": [
+        "Safeguard users against threats and ensure a secure Android experience.",
+        "Learn how to engage users, monitize, and secure your app.",
+        "Automate backup and restore tests",
+        "copy of your app's signing key and Google may retain a backup copy of the key",
+        "Important: If you want to use the same signing key",
+        "Because your app signing key is secured by Google, you can",
+        "user's device. As part of Android’s secure update model, the signing key never",
+        "Tip: To keep your keys secure, it’s a good idea to make sure your app",
+        "Because the debug certificate is created by the build tools and is insecure by",
+        "Password: Create and confirm a secure password for your keystore.",
+        "Password: Create and confirm a secure password for your key. This",
+        "be valid. Your key should be valid for at least 25 years, so you can sign",
+        "app updates with the same key through the lifespan of your app.",
+        "If you are building and signing an APK, you need to select which Signature",
+        "APK Signature Scheme v3",
+        "To use the same key as another app on your developer account, select",
+        "Change app signing key > Use the same key as another app in this",
+        "upload options that lets you securely upload a private key and its public",
+        "to users. That way, Google keeps your signing key secure, and you have the",
+        "update is signed with the same signing key, it's difficult to change the signing"
+      ]
+    },
+    "android_distribution": {
+      "url": "https://developer.android.com/distribute/marketing-tools/alternative-distribution",
+      "http_status": 200,
+      "resolved_url": "https://developer.android.com/distribute/marketing-tools/alternative-distribution",
+      "sha256": "472eaf9ff68af6bef59d9bea6064cff9e3f55ddaf1c116158442db555c8ea1ca",
+      "relevant_passages": [
+        "Safeguard users against threats and ensure a secure Android experience.",
+        "Learn how to engage users, monitize, and secure your app.",
+        "serving your apps from a website or emailing them directly to users, you’re",
+        "Distributing through a website",
+        "can make them available for download on your website or server, including on a",
+        "the normal way, then host the release-ready APK files on your website and",
+        "the Unknown sources system setting, found in Settings > Security on",
+        "unknown sources."
+      ]
+    },
+    "github_releases": {
+      "url": "https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases",
+      "http_status": 200,
+      "resolved_url": "https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases",
+      "sha256": "4eb118df497e1ab89f445d341754581f2c23144ce33f7f756102afb135a8226b",
+      "relevant_passages": [
+        "Anyone with read access to a repository can view and compare releases, but only people with write permissions to a repository can manage releases. For more information, see Managing releases in a repository."
+      ]
+    },
+    "fdroid_developer_signing": {
+      "url": "https://f-droid.org/docs/Reproducible_Builds/",
+      "http_status": 200,
+      "resolved_url": "https://f-droid.org/docs/Reproducible_Builds/",
+      "sha256": "8362144727877e4db60056541ee1558068044a256ad1ee0aa4d26e96680aceae",
+      "relevant_passages": [
+        "F-Droid verifies reproducible builds using APK signature copying against upstream build and our rebuild. To find out if an app can be reproducibly rebuilt by our own buildserver, check the “Reproducibility Status” on any app’s page on this website. This can help us identify factors changing over time.",
+        "The gold standard in reproducible builds for countering Trusting Trust issues is Diverse Double-Compiling. The core idea is to use two entirely distinct sets of build tools to create the exact same binary. This is a difficult standard to achieve, although quite valuable. Some of the work to get there can be done incrementally. Towards that end, F-Droid can reproduce the APKs that the upstream developer built on their own setup. Often times, these are built with different toolchains or on different OSes. To see which apps have enabled this approach, please check its build metadata for the presence of build metadata fields Binaries: or binary:.",
+        "Reproducible signatures",
+        "APK signature",
+        "(a form of embedded signature),",
+        "which requires copying the signature",
+        "The old v1 (JAR) signatures only cover the contents of the APK (e.g. ZIP",
+        "metadata and ordering are irrelevant), but v2/v3 signatures cover all other",
+        "after signing (apart from the signature) in order to verify correctly.",
+        "Copying the signature uses the same algorithm that apksigner uses when signing",
+        "signing APKs, ideally by using apksigner to make the signatures. apksigner is also reproducibly built in Debian.",
+        "platforms (e.g. macOS versus Ubuntu), the resulting binaries will have",
+        "Publishing APKs with the upstream developer’s signature",
+        "An application can be setup to publish the signed binaries from the upstream developer after verifying that they match the ones built using an fdroiddata build recipe. Publishing only takes place if there is a proper match. This means that F-Droid can verify that an app is free software while still using the original developer’s APK signatures. This procedure is implemented as part of fdroid publish. The reproducibility check at the publishing step follows this logic:",
+        "For this approach, everything in the metadata should be the same as normal, with the addition of the Binaries or Builds.binary directive to specify where to get the binaries (APKs) from, and AllowedAPKSigningKeys directive to ensure the expected signing key is used. In this case, F-Droid will never attempt to publish APKs signed by F-Droid. If fdroid publish can verify that the downloaded APK matches the one built from the fdroiddata recipe, the downloaded APK will be published. Otherwise F-Droid will skip publishing this version of the app.",
+        "This requires extracting and adding (upstream) developer signatures to",
+        "fdroiddata. These signatures are then later copied to the unsigned APK built",
+        "signatures from APKs:",
+        "$ fdroid signatures F-Droid.apk",
+        "Instead of local files, you can also supply HTTPS URLs to fdroid signatures."
+      ]
+    }
+  },
+  "github_repository_access": {
+    "full_name": "infolefilodlma-oss/LeFil-FDroid",
+    "private": false,
+    "permissions": {
+      "admin": false,
+      "maintain": false,
+      "push": false,
+      "triage": false,
+      "pull": false
+    }
+  },
+  "releases": [],
+  "repository_secret_metadata": {
+    "error": "gh: Resource not accessible by integration (HTTP 403)"
+  },
+  "secret_public_key_api": {
+    "error": "gh: Resource not accessible by integration (HTTP 403)"
+  },
+  "environments": {
+    "names": [],
+    "total_count": 0
+  },
+  "fdroid_developer_signature_configured": {
+    "Binaries": false,
+    "AllowedAPKSigningKeys": false,
+    "cross_channel_updates_validated": false
+  },
+  "state": "expected_signing_bindings_not_configured",
+  "other_secret_names": "Only metadata returned by the official secrets API can establish other binding names; this workflow does not enumerate the Actions secrets context.",
+  "github_actions_token_limit": "A release-capable workflow token does not establish permission to store repository secrets."
+}
