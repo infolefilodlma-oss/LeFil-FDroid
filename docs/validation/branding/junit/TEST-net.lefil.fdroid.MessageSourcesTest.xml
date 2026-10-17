@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="net.lefil.fdroid.MessageSourcesTest" tests="15" skipped="0" failures="0" errors="0" timestamp="2026-10-17T06:42:28" hostname="runnervm8k3b6" time="0.019">
+  <properties/>
+  <testcase name="talkFallsBackToIndexPhpRouting" classname="net.lefil.fdroid.MessageSourcesTest" time="0.009"/>
+  <testcase name="talkMarksTruncatedListsAsIncomplete" classname="net.lefil.fdroid.MessageSourcesTest" time="0.0"/>
+  <testcase name="agoraRecognizesLoginForm" classname="net.lefil.fdroid.MessageSourcesTest" time="0.0"/>
+  <testcase name="agoraReadsAuthenticatedInbox" classname="net.lefil.fdroid.MessageSourcesTest" time="0.0"/>
+  <testcase name="talkAcceptsJsonWrappedHtml" classname="net.lefil.fdroid.MessageSourcesTest" time="0.004"/>
+  <testcase name="talkRejectsMissingOrMalformedCounters" classname="net.lefil.fdroid.MessageSourcesTest" time="0.001"/>
+  <testcase name="agoraDoesNotTreatAnErrorPageAsEmptyInbox" classname="net.lefil.fdroid.MessageSourcesTest" time="0.0"/>
+  <testcase name="talkRejectsUnknownResponses" classname="net.lefil.fdroid.MessageSourcesTest" time="0.0"/>
+  <testcase name="talkUsesHumHubSessionRoutes" classname="net.lefil.fdroid.MessageSourcesTest" time="0.001"/>
+  <testcase name="emptyAgoraInboxHasTheComposeHeader" classname="net.lefil.fdroid.MessageSourcesTest" time="0.0"/>
+  <testcase name="talkDoesNotAssignACounterToArbitraryConversations" classname="net.lefil.fdroid.MessageSourcesTest" time="0.0"/>
+  <testcase name="talkRecognizesLoginWithoutResettingUnreadState" classname="net.lefil.fdroid.MessageSourcesTest" time="0.0"/>
+  <testcase name="agoraNetworkFailureIsNotAnEmptyInbox" classname="net.lefil.fdroid.MessageSourcesTest" time="0.0"/>
+  <testcase name="agoraRequiresLoginForRedirectsAndDeniedAccess" classname="net.lefil.fdroid.MessageSourcesTest" time="0.0"/>
+  <testcase name="talkAcceptsConfirmedEmptyState" classname="net.lefil.fdroid.MessageSourcesTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

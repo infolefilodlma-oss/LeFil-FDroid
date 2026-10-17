@@ -1,0 +1,27 @@
+{
+  "source_commit": "4ffa07b85773f7e08b2e2e556c681c1106068443",
+  "run_url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39010816563",
+  "jvm": {
+    "tests": 70,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "lint": {
+    "errors": 0,
+    "warnings": 14
+  },
+  "file_sha256": {
+    "docs/validation/branding/junit/TEST-net.lefil.fdroid.AndroidLegacyStartupTest.xml": "ded9f6bbb4ecd0255979747d39d087998e00d2c03bca19cbbb6cc7300b3b445d",
+    "docs/validation/branding/junit/TEST-net.lefil.fdroid.AndroidNavigationTest.xml": "045dd09ab7c9f54634c7a8741b2f3bd6099084527ae0d503d0f1c5b9272cea1b",
+    "docs/validation/branding/junit/TEST-net.lefil.fdroid.AndroidNotificationsTest.xml": "151d93fe73cc60d1d233b9f2cf7f47980445f5dd2a1f506ffda6da16cfc999f4",
+    "docs/validation/branding/junit/TEST-net.lefil.fdroid.AndroidRendererRecoveryTest.xml": "6a2a6ae639497360543cfc9892513dfb899928d34b3836df969331c8fe123d62",
+    "docs/validation/branding/junit/TEST-net.lefil.fdroid.MessageLinksTest.xml": "3ee460adf24d73956f9bf4f740cb3465147f76ad24b5222aac212de2b03e41fe",
+    "docs/validation/branding/junit/TEST-net.lefil.fdroid.MessagePollerTest.xml": "00b62bba8c4a047ded596693c0569840b0e87ba8198682c07b88c699b2703938",
+    "docs/validation/branding/junit/TEST-net.lefil.fdroid.MessageSourcesTest.xml": "be95b97d79e89c1b089b197d677eee4e0d43f1ed13142d14444eddf11ba96346",
+    "docs/validation/branding/junit/TEST-net.lefil.fdroid.UnreadParsersTest.xml": "ff8f39d535aa810d6e7501f9132c6e010489ce9b782ae8524d8a8fc625a00bbb",
+    "docs/validation/branding/lint-results-debug.xml": "f8744339c1286b266ae49b9b15413e55ea8c1d8e6be6255c224ecc5fc4a55462"
+  },
+  "physical_phone_validated": false,
+  "notifications_validated": false
+}
