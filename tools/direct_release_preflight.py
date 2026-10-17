@@ -143,7 +143,10 @@ def main():
         "AllowedAPKSigningKeys": bool(re.search(r"^AllowedAPKSigningKeys:", recipe, re.M)),
         "cross_channel_updates_validated": False,
     }
-    report["state"] = ("requires_signing_validation" if all(bindings.values())
+    required = ("LEFIL_SIGNING_KEYSTORE_BASE64", "LEFIL_SIGNING_STORE_PASSWORD")
+    report["required_signing_bindings"] = list(required)
+    report["optional_signing_binding"] = "LEFIL_SIGNING_KEY_PASSWORD"
+    report["state"] = ("requires_signing_validation" if all(bindings[name] for name in required)
                        else "expected_signing_bindings_not_configured")
     report["other_secret_names"] = (
         "Only metadata returned by the official secrets API can establish other binding names; "
