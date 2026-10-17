@@ -27,9 +27,11 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          if ! gh api repos/infolefilodlma-oss/LeFil-FDroid/actions/jobs/117332780291/logs > "$RUNNER_TEMP/branding-job.log" 2> "$RUNNER_TEMP/branding-log-error.txt"; then
+          if ! gh api --allow-escape-sequences repos/infolefilodlma-oss/LeFil-FDroid/actions/jobs/117332780291/logs > "$RUNNER_TEMP/branding-job.log" 2> "$RUNNER_TEMP/branding-log-error.txt"; then
             mkdir -p docs/validation/branding
             cp "$RUNNER_TEMP/branding-log-error.txt" docs/validation/branding/capture-log-access-error.txt
+          else
+            rm -f docs/validation/branding/capture-log-access-error.txt
           fi
       - name: Summarize the actual reports without rerunning tests
         run: |
@@ -37,6 +39,7 @@ jobs:
           import hashlib
           import json
           import os
+          import re
           import shutil
           from pathlib import Path
           import xml.etree.ElementTree as ET
@@ -68,6 +71,8 @@ jobs:
                     'physical_phone_validated': False, 'notifications_validated': False}
           (output / 'android-checks.json').write_text(json.dumps(result, indent=2) + '\n')
           log = (Path(os.environ['RUNNER_TEMP']) / 'branding-job.log').read_text(errors='replace')
+          log = re.sub(r'\x1b\[[0-?]*[ -/]*[@-~]', '', log)
+          log = ''.join(c for c in log if c in '\n\t' or ord(c) >= 32)
           start = log.rfind('Traceback (most recent call last):')
           if start >= 0:
               excerpt = '\n'.join(log[start:].splitlines()[:40])
