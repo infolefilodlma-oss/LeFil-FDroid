@@ -1,16 +1,17 @@
 {
-  "checked_at_utc": "2026-10-17T07:02:34.281467+00:00",
+  "checked_at_utc": "2026-10-17T07:44:03.833711+00:00",
   "candidate": {
     "package": "net.lefil.fdroid",
     "versionName": "0.2.1",
     "versionCode": 3,
-    "build_source_commit": "99789aa0f9c82d90cef020b33444698a05aafc47",
+    "build_source_commit": "25189d316d8345a601b4dae2fa9987d286831d1e",
     "previous_validated_source_commit": "c85f5a3cbb78ab58e6207f770cd9f6df60fb818d",
-    "branding_application_commit": "4ffa07b85773f7e08b2e2e556c681c1106068443"
+    "branding_application_commit": "4ffa07b85773f7e08b2e2e556c681c1106068443",
+    "previous_build_source_commit": "99789aa0f9c82d90cef020b33444698a05aafc47"
   },
   "production_and_existing_test_inputs_identical": false,
   "existing_java_kotlin_test_sources_and_gradle_declarations_identical": true,
-  "application_input_change": "Official logo resources, legacy/adaptive launcher packaging and native day/night toolbar logo only. No architecture, communication code or test-source change.",
+  "application_input_change": "Earlier branding integration only, compared with c85f5a3; this finalization leaves the full app and all build/test inputs unchanged from 99789aa.",
   "git_object_ids": {
     "app": {
       "validated": "fc2d708fdf81b79ae636d9f9ece37b20970748cb",
@@ -58,7 +59,7 @@
     "failures": 0,
     "errors": 0,
     "skipped": 0,
-    "jvm_tests_rerun": true,
+    "jvm_tests_rerun": false,
     "android_lint_errors": 0,
     "android_lint_warnings": 14,
     "android_run_url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39010816563",
@@ -75,41 +76,23 @@
     "native_source_commit": "0209518364cb0aa22ca501fcfb0d49e18de1596a",
     "native_application_tree_matches_pinned_source": true,
     "native_report": "../validation/branding/result.json",
-    "phone_or_notifications_validated": false
+    "phone_or_notifications_validated": false,
+    "evidence_reused_for_this_finalization": true,
+    "existing_report_did_execute_70_tests": true
   },
   "current_metadata_validation": {
     "tool": "fdroidserver 2.4.5",
     "readmeta": "passed",
     "lint_format_check": "passed",
     "local_scope": "Metadata only locally; full build and scans executed in GitHub Actions",
-    "local_report_source_commit": "99789aa0f9c82d90cef020b33444698a05aafc47"
-  },
-  "current_build_and_scan": {
-    "execution_environment": "GitHub Actions ubuntu-24.04, JDK 17, Gradle 8.7, SDK 35 / build-tools 34.0.0",
-    "run_id": 39011672052,
-    "url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39011672052",
-    "workflow_commit": "96916de17f547aebca7be234f8a3fbed5ce0c0a1",
-    "build_source_commit": "99789aa0f9c82d90cef020b33444698a05aafc47",
-    "conclusion": "success",
-    "readmeta": "passed",
-    "lint": "passed",
-    "build_command": "fdroid build --test --scan-binary --no-tarball net.lefil.fdroid:3",
-    "build_result": "passed; helper asserts 1 build succeeded, pinned HEAD and fresh APK",
-    "source_scan": "passed",
-    "binary_scan": "passed",
-    "scanner_database_freshness": "not independently established",
-    "apk_sha256": "51030d96696b4c77db54c42920ec87187b950351a3305a4a62fdead1ba5280e1",
-    "artifact": "lefil-fdroid-submission-checks (reports only)",
-    "original_result": "../validation/branding/fdroid/result.json",
-    "original_result_sha256": "2e67ab90b2d3e9b5bb02eca9765cbab6bc2802b7f44da53f198908a81bada879",
-    "evidence_scope": "Original result.json retrieved from the Actions artifact and inspected; public success and source notice also inspected. Detailed raw logs remain in the Actions artifact and were not retrieved locally.",
-    "official_fdroid_gitlab_ci": "not run"
+    "local_report_source_commit": "25189d316d8345a601b4dae2fa9987d286831d1e",
+    "local_report": "../validation/fdroid-finalization/metadata-result.json"
   },
   "contribution_files": {
     "metadata_target": "metadata/net.lefil.fdroid.yml",
-    "metadata_sha256": "7d9fa608ba22de302024d34e53e8d223e09cd90ad79a348c268ea10890847f38",
+    "metadata_sha256": "2afa1d9feb1cc5c3ea873df71699e4716342dd954c8a7b60bf75e2baa13476f8",
     "patch_file": "submission/net.lefil.fdroid.patch",
-    "patch_sha256": "d36700e967d3c6c4dd93d4c8ad584d441ad9b101ff30f84e3efcf2af8132b6c0",
+    "patch_sha256": "783150f883c226b72438dcfabbd9ea270df0858ab69af9ef083b71d2fc6c8d70",
     "patch_apply_check": "passed in a fresh empty directory",
     "patched_metadata_exact_match": true,
     "mr_title": "New app: Le Fil",
@@ -139,7 +122,8 @@
     "configuration_requirement_saved": true,
     "requires_publish": true,
     "credential_value_received": false,
-    "runtime_authenticated": false
+    "runtime_authenticated": false,
+    "has_saved_binding": false
   },
   "visual_identity": {
     "status": "Official source bytes integrated; actual Android 15 launcher and light/dark native toolbar captures inspected",
@@ -154,5 +138,101 @@
     "asset_hashes": "../validation/BRANDING-ASSETS.json",
     "visual_review": "../validation/branding/visual-review.json",
     "fastlane_screenshot_provenance": "../validation/branding/fastlane-screenshots.json"
-  }
+  },
+  "this_finalization": {
+    "jvm_tests_rerun": false,
+    "native_tests_rerun": false,
+    "all_app_inputs_identical_to_previous_candidate": true,
+    "comparison_source": "99789aa0f9c82d90cef020b33444698a05aafc47",
+    "change_scope": "Publication descriptions, network disclosures, contribution metadata and evidence only; no application, build declaration, test or graphic changes.",
+    "dependency_observation_url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39013402324",
+    "runtime_module_count": 68,
+    "missing_pom_license_count": 0,
+    "runtime_declared_licenses": [
+      "Apache-2.0"
+    ],
+    "font_fallback_url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39014068125",
+    "font_fallback_public_controls_visible": true,
+    "authenticated_messages_validated": false,
+    "notifications_validated": false,
+    "physical_phone_validated": false,
+    "official_gitlab_ci_executed": false
+  },
+  "previous_build_and_scan": {
+    "execution_environment": "GitHub Actions ubuntu-24.04, JDK 17, Gradle 8.7, SDK 35 / build-tools 34.0.0",
+    "run_id": 39011672052,
+    "url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39011672052",
+    "workflow_commit": "96916de17f547aebca7be234f8a3fbed5ce0c0a1",
+    "build_source_commit": "99789aa0f9c82d90cef020b33444698a05aafc47",
+    "conclusion": "success",
+    "readmeta": "passed",
+    "lint": "passed",
+    "build_command": "fdroid build --test --scan-binary --no-tarball net.lefil.fdroid:3",
+    "build_result": "passed; helper asserts 1 build succeeded, pinned HEAD and fresh APK",
+    "source_scan": "passed",
+    "binary_scan": "passed",
+    "scanner_database_freshness": "not independently established",
+    "apk_sha256": "51030d96696b4c77db54c42920ec87187b950351a3305a4a62fdead1ba5280e1",
+    "artifact": "lefil-fdroid-submission-checks (reports only)",
+    "original_result": "../validation/branding/fdroid/result.json",
+    "original_result_sha256": "2e67ab90b2d3e9b5bb02eca9765cbab6bc2802b7f44da53f198908a81bada879",
+    "evidence_scope": "Original result.json retrieved from the Actions artifact and inspected; public success and source notice also inspected. Detailed raw logs remain in the Actions artifact and were not retrieved locally.",
+    "official_fdroid_gitlab_ci": "not run"
+  },
+  "current_build_and_scan": {
+    "execution_environment": "GitHub Actions ubuntu-24.04, JDK 17, Gradle 8.7, SDK 35 / build-tools 34.0.0",
+    "run_id": 39014443718,
+    "url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39014443718",
+    "workflow_commit": "c0129d75551a23ebdc69457a358a0b67d256bcc9",
+    "build_source_commit": "25189d316d8345a601b4dae2fa9987d286831d1e",
+    "conclusion": "success",
+    "readmeta": "passed",
+    "lint": "passed",
+    "build_command": "fdroid build --test --scan-binary --no-tarball net.lefil.fdroid:3",
+    "build_result": "passed; helper asserts 1 build succeeded, pinned HEAD and fresh APK",
+    "source_scan": "passed",
+    "binary_scan": "passed",
+    "scanner_database_freshness": "not independently established",
+    "apk_sha256": "40b13feceb592df21e4b2e9374e4b0e3adac734fed5bbe7c207f4de13ed59d63",
+    "artifact": "lefil-fdroid-submission-checks (reports only)",
+    "original_result": "../validation/fdroid-finalization/fdroid-result.json",
+    "original_result_sha256": "7317cb002e1c08a3b9c0bff2523f3751ebb9ccf88fd900a46599ecfcdab40b97",
+    "provenance": "../validation/fdroid-finalization/fdroid-provenance.json",
+    "evidence_scope": "Original result.json copied without modification by the successful workflow and inspected. Detailed logs remain in its Actions artifact and were not retrieved locally.",
+    "official_fdroid_gitlab_ci": "not run"
+  },
+  "network_declarations": {
+    "document": "NETWORK-DEPENDENCIES.md",
+    "evidence": "../validation/fdroid-finalization/public-network.json",
+    "public_https_report": "../validation/fdroid-finalization/public-https-report.json",
+    "public_https_reused_not_rerun": true,
+    "observed_web_third_parties": [
+      "fonts.googleapis.com",
+      "fonts.gstatic.com",
+      "s.w.org"
+    ],
+    "third_party_cookies_enabled": true,
+    "tracking_after_authentication_audited": false,
+    "anti_features": [
+      "TetheredNet"
+    ],
+    "additional_anti_feature_review": "Observed Google Fonts and Site Kit marker are disclosed in upstream descriptions/recipe notes. No assertion of tracking or total dependence is inferred from a bounded anonymous observation."
+  },
+  "public_source_reference": {
+    "commit": "25189d316d8345a601b4dae2fa9987d286831d1e",
+    "github_commit_http_status": 200,
+    "repository_public_visibility_label_observed": true,
+    "reference_is_stable_release_tag": false,
+    "receipt": "../validation/fdroid-finalization/public-source-access.json"
+  },
+  "protected_remote_refs": {
+    "checked_at_utc": "2026-10-17T07:44:36.111721+00:00",
+    "unchanged": true,
+    "refs": {
+      "refs/heads/main": "89f73297a3ee807eb79bd17f76b24d154a51e287",
+      "refs/heads/notifications-reelles": "f3770bfc54d98b68d046bc4aa2dbd7318da88422",
+      "refs/pull/2/head": "f3770bfc54d98b68d046bc4aa2dbd7318da88422"
+    }
+  },
+  "input_comparison_baseline_commit": "c85f5a3cbb78ab58e6207f770cd9f6df60fb818d"
 }

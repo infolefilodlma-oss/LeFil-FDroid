@@ -18,4 +18,6 @@ Dernière vérification : [reprise du moteur et candidat 0.2.1](docs/validation/
 
 Finalisation F-Droid : descriptions corrigées pour qualifier la surveillance d'expérimentale, auteur et `TetheredNet` renseignés, recette épinglée et contribution officielle préparée. [Bilan de préparation](docs/fdroid/CHECKS.json). La candidature n'est pas encore déposée ; admission et publication ne sont pas acquises.
 
+La [déclaration réseau](docs/fdroid/NETWORK-DEPENDENCIES.md) distingue les bibliothèques Android libres des ressources Web tierces observées (Google Fonts et emoji WordPress). Le [relevé de finalisation](docs/validation/fdroid-finalization/README.md) conserve les licences des 68 modules de production et les contrôles publics ; il ne valide pas les messages authentifiés.
+
 Identité visuelle contrôlée : logo officiel bleu sur blanc dans le lanceur et le thème clair, variante transparente existante dans le thème sombre. Les [captures réelles et rapports](docs/validation/branding/README.md) attestent 70 tests JVM et un test natif réussis, Lint sans erreur (14 avertissements), compilation et scans de la nouvelle source F-Droid réussis. Les contrôles portent sur un émulateur Android 15 ; ils ne valident pas les notifications réelles.

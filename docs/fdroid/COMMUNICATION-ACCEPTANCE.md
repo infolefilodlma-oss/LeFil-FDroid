@@ -19,8 +19,8 @@ Le [rapport HTTPS d'origine](../validation/fdroid-finalization/public-https-repo
 |---|---|---|
 | Agora `/message` | HTTP 200 avec formulaire Friendica ; NodeInfo public accessible | Soumission de la connexion avec session/jeton exigés par le formulaire, persistance des cookies, liste de messages et pagination. |
 | Atrium `index.php?r=mail%2Fmail%2Findex` | Redirection vers la connexion, puis HTTP 200 avec champ mot de passe et champ CSRF | Connexion HumHub en conservant le CSRF et les cookies ; accès effectif à Mail/Talk. |
-| Talk `/mail/mail/notification-list` et `notification-count` | HTTP 404 sur les routes « propres » | Le lecteur possède déjà un repli vers les routes `index.php?r=...` ; ne pas diagnostiquer à tort un échec de connexion sur ce seul 404. |
-| Talk `index.php?r=mail%2Fmail%2Fnotification-list` et `notification-count` | Redirection vers la connexion, puis HTTP 200 | Format authentifié réel, identifiants stables des messages, nombre d'éléments par page et éventuel chemin de pagination. |
+| Talk `/mail/mail/notification-list` et `/mail/mail/get-new-message-count-json` | HTTP 404 sur les routes « propres » | Le lecteur possède déjà un repli vers les routes `index.php?r=...` ; ne pas diagnostiquer à tort un échec de connexion sur ce seul 404. |
+| Talk `index.php?r=mail%2Fmail%2Fnotification-list` et `index.php?r=mail%2Fmail%2Fget-new-message-count-json` | Redirection vers la connexion, puis HTTP 200 | Format authentifié réel, identifiants stables des messages, nombre d'éléments par page et éventuel chemin de pagination. |
 
 Le transport natif ne suit pas ces redirections : il doit signaler une session requise. Une page de connexion obtenue avec un navigateur suivant les redirections n'est pas une réponse de messagerie. Les formulaires n'ont pas été soumis et aucun mot de passe ou CSRF n'a été conservé dans les preuves.
 

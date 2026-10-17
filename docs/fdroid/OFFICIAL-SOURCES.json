@@ -69,5 +69,18 @@
     "url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/issues/1",
     "author": "infolefilodlma-oss",
     "observed": "Public request to publish the same Android app in the official F-Droid catalog, opened 2026-10-15"
+  },
+  "finalization_recheck": {
+    "recorded_at_utc": "2026-10-17T07:40:39.571465+00:00",
+    "receipt": "../validation/fdroid-finalization/official-access.json",
+    "official_raw_sources_http_200": [
+      "https://gitlab.com/fdroid/fdroid-website/-/raw/master/_docs/Inclusion_Policy.md",
+      "https://gitlab.com/fdroid/fdroid-website/-/raw/master/_docs/Submitting_to_F-Droid_Quick_Start_Guide.md",
+      "https://gitlab.com/fdroid/fdroid-website/-/raw/master/_docs/Anti-Features.md",
+      "https://gitlab.com/fdroid/fdroiddata/-/raw/master/CONTRIBUTING.md"
+    ],
+    "current_policy_and_quick_start_hashes_match_previous_review": true,
+    "rendered_site_connect_403": true,
+    "gitlab_user_http_status": 401
   }
 }

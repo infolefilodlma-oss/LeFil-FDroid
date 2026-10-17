@@ -35,6 +35,10 @@ Deux captures d'émulateur sont maintenant fournies en amont dans Fastlane, avec
 
 Le patch est contrôlé par application dans un répertoire vide et comparaison exacte avec la recette. Ce test prépare une contribution ; il ne crée pas de dépôt de distribution personnel et ne publie aucun paquet.
 
+## Sauvegarde et retour arrière
+
+Les modifications et leurs preuves sont enregistrées uniquement sur la branche dédiée. Le candidat antérieur `99789aa0f9c82d90cef020b33444698a05aafc47` et sa recette réussie restent accessibles dans l'historique ; [CHECKS.json](CHECKS.json) conserve aussi le précédent résultat de build. L'arbre `app` complet n'a pas changé pendant cette reprise. En cas de régression des pièces de candidature, révoquer les commits concernés par `git revert` sur cette branche et restaurer ensemble recette et patch, puis relancer seulement leurs contrôles. Aucun reset, force-push, changement de `main` ou de PR nº 2 n'est nécessaire.
+
 ## Dépôt après levée des points ouverts
 
 Suivre [CONTRIBUTING de fdroiddata](https://gitlab.com/fdroid/fdroiddata/-/blob/master/CONTRIBUTING.md) : utiliser un fork public de contribution, créer une branche non protégée, y ajouter la recette, puis examiner sa CI GitLab et ouvrir la MR vers `fdroid/fdroiddata`. Ce fork sert à la contribution au catalogue officiel.

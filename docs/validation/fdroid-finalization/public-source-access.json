@@ -18,5 +18,12 @@
     "url": "https://gitlab.com/fdroid/fdroiddata/-/raw/master/.gitlab/merge_request_templates/App%20inclusion.md",
     "http_status": 200,
     "sha256": "3b280c4cc11721b1ed61767e77e653652e86dc5223de094539e1cb4bc964fd80"
+  },
+  {
+    "name": "finalization-candidate",
+    "url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/commit/25189d316d8345a601b4dae2fa9987d286831d1e",
+    "http_status": 200,
+    "sha256": "408de199ddfa0b4995a4f23c2d0c491d5feaf6c77d884ea3deb16fb31aef5420",
+    "checked_at_utc": "2026-10-17T07:40:58.960738+00:00"
   }
 ]
