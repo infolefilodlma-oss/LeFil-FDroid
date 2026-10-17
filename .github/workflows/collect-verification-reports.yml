@@ -1,4 +1,4 @@
-name: Preserve existing Android reports
+name: Preserve the verified F-Droid build report
 
 on:
   push:
@@ -19,71 +19,35 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
         with:
-          name: lefil-verification-reports
-          run-id: 39010816563
+          name: lefil-fdroid-submission-checks
+          run-id: 39011672052
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          path: ${{ runner.temp }}/android-reports
-      - name: Read the existing emulator failure log
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          path: ${{ runner.temp }}/fdroid-report
+      - name: Preserve only the verified result and text logs
         run: |
-          if ! gh api --allow-escape-sequences repos/infolefilodlma-oss/LeFil-FDroid/actions/jobs/117332780291/logs > "$RUNNER_TEMP/branding-job.log" 2> "$RUNNER_TEMP/branding-log-error.txt"; then
-            mkdir -p docs/validation/branding
-            cp "$RUNNER_TEMP/branding-log-error.txt" docs/validation/branding/capture-log-access-error.txt
-          else
-            rm -f docs/validation/branding/capture-log-access-error.txt
-          fi
-      - name: Summarize the actual reports without rerunning tests
-        run: |
-          python3 - <<'PY'
-          import hashlib
+          python3 - <<'CHECK'
+          from pathlib import Path
           import json
           import os
           import re
           import shutil
-          from pathlib import Path
-          import xml.etree.ElementTree as ET
-          root = Path(os.environ['RUNNER_TEMP']) / 'android-reports'
-          output = Path('docs/validation/branding')
-          output.mkdir(parents=True, exist_ok=True)
-          totals = dict(tests=0, failures=0, errors=0, skipped=0)
-          files = {}
-          for path in sorted(root.rglob('TEST-*.xml')):
-              suite = ET.parse(path).getroot()
-              for key in totals:
-                  totals[key] += int(suite.get(key, '0'))
-              target = output / 'junit' / path.name
-              target.parent.mkdir(exist_ok=True)
-              shutil.copyfile(path, target)
-              files[str(target)] = hashlib.sha256(path.read_bytes()).hexdigest()
-          assert totals == dict(tests=70, failures=0, errors=0, skipped=0), totals
-          lint_files = list(root.rglob('lint-results-debug.xml'))
-          assert len(lint_files) == 1
-          issues = ET.parse(lint_files[0]).getroot().findall('issue')
-          lint = {'errors': sum(i.get('severity') in ('Error', 'Fatal') for i in issues),
-                  'warnings': sum(i.get('severity') == 'Warning' for i in issues)}
-          assert lint['errors'] == 0, lint
-          shutil.copyfile(lint_files[0], output / 'lint-results-debug.xml')
-          files[str(output / 'lint-results-debug.xml')] = hashlib.sha256(lint_files[0].read_bytes()).hexdigest()
-          result = {'source_commit': '4ffa07b85773f7e08b2e2e556c681c1106068443',
-                    'run_url': 'https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39010816563',
-                    'jvm': totals, 'lint': lint, 'file_sha256': files,
-                    'physical_phone_validated': False, 'notifications_validated': False}
-          (output / 'android-checks.json').write_text(json.dumps(result, indent=2) + '\n')
-          log = (Path(os.environ['RUNNER_TEMP']) / 'branding-job.log').read_text(errors='replace')
-          log = re.sub(r'\x1b\[[0-?]*[ -/]*[@-~]', '', log)
-          log = ''.join(c for c in log if c in '\n\t' or ord(c) >= 32)
-          start = log.rfind('Traceback (most recent call last):')
-          if start >= 0:
-              excerpt = '\n'.join(log[start:].splitlines()[:40])
-              (output / 'capture-failure.txt').write_text('Original capture run 39010816613, job 117332780291\n' + excerpt + '\n')
-          print('::notice::Existing Android run: 70 JVM tests, zero failures/errors/skips; Lint ' + str(lint))
-          PY
-      - name: Preserve reports on the existing development branch
+          source = Path(os.environ['RUNNER_TEMP']) / 'fdroid-report'
+          report = json.loads((source / 'result.json').read_text())
+          assert report['source_commit'] == '99789aa0f9c82d90cef020b33444698a05aafc47'
+          assert all(report[key] == 'passed' for key in ('outcome', 'readmeta', 'lint', 'apk_build', 'source_scan', 'binary_scan'))
+          assert re.fullmatch('[0-9a-f]{64}', report['apk_sha256'])
+          assert report['submitted'] is False and report['accepted'] is False
+          target = Path('docs/validation/branding/fdroid')
+          target.mkdir(parents=True, exist_ok=True)
+          for name in ('result.json', 'readmeta.log', 'lint.log', 'build.log'):
+              shutil.copyfile(source / name, target / name)
+          print('::notice::Original F-Droid report preserved: pinned source built and scanned successfully; no submission or APK publication')
+          CHECK
+      - name: Save evidence on the development branch
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add docs/validation/branding
-          git commit -m 'Preserve the executed 70-test and Lint reports and capture traceback'
+          git add docs/validation/branding/fdroid
+          git commit -m 'Preserve the actual F-Droid candidate build and scan report'
           git pull --rebase origin codex/fdroid-submission-readiness
           git push origin HEAD:refs/heads/codex/fdroid-submission-readiness
