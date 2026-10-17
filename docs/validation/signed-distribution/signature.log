@@ -1,0 +1,17 @@
+Verifies
+Verified using v1 scheme (JAR signing): false
+Verified using v2 scheme (APK Signature Scheme v2): true
+Verified using v3 scheme (APK Signature Scheme v3): true
+Verified using v3.1 scheme (APK Signature Scheme v3.1): false
+Verified using v4 scheme (APK Signature Scheme v4): false
+Verified for SourceStamp: false
+Number of signers: 1
+Signer #1 certificate DN: CN=Le Fil
+Signer #1 certificate SHA-256 digest: d0755310dbd84319bbd0cb658475168cb9234cd1b60f9893a092afa19c31b902
+Signer #1 certificate SHA-1 digest: 676f3c574db82989b2c5bb2bd0ccfa9291f813fe
+Signer #1 certificate MD5 digest: 7bb9338e6dcfe0ff969b5f65d8861bb8
+Signer #1 key algorithm: RSA
+Signer #1 key size (bits): 4096
+Signer #1 public key SHA-256 digest: 5c5221115e6f2642930a352c2ee26620b58a555ba90349c01a89ef11f3534b77
+Signer #1 public key SHA-1 digest: 7554c200c19f0ee9c71b6663c1cf5c1af660d21b
+Signer #1 public key MD5 digest: 568f33db15e2854dbe58b7366d4f1394

@@ -1,0 +1,7 @@
+Starting: Intent { cmp=net.lefil.fdroid/.MainActivity }
+Status: ok
+LaunchState: COLD
+Activity: net.lefil.fdroid/.MainActivity
+TotalTime: 869
+WaitTime: 870
+Complete
