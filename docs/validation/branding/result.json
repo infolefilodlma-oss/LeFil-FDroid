@@ -1,0 +1,35 @@
+{
+  "source_commit": "0209518364cb0aa22ca501fcfb0d49e18de1596a",
+  "source_application_tree": "586d7454d3c8fd6a68ccb09639ac00f8dfea6a76",
+  "run_url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39011609522",
+  "android_api": 35,
+  "hardware": "ranchu",
+  "native_renderer_regression": {
+    "tests": 1,
+    "passed": 1,
+    "failed": 0,
+    "time_seconds": 3.28
+  },
+  "captures": [
+    "app-light.png",
+    "app-dark.png",
+    "launcher-drawer.png",
+    "launcher-home.png"
+  ],
+  "file_sha256": {
+    "launcher-home-hierarchy.xml": "114afcd0e1de7a0569dbf28742ae39991cb7b7070c7a188b94df8cb29b8e40cb",
+    "native-test.txt": "8c7805a0ecbbd3069abfd94ce6aa7e89efbdc7049e4c301836f44a8b9ac72473",
+    "dark-hierarchy.xml": "b566dbcc22b611c5a4f624c5da927df33d6b0b275b8f3dd163c613cfea9d05f2",
+    "app-dark.png": "b79d06ed0fadafa5ca617f382e8c5d77d8773948be3325a9373d51d825aacde9",
+    "light-hierarchy.xml": "1998b1fd85a2533e3b159f08d120d7e50b92376e7c2096bb95d1f100abdb4e9a",
+    "launcher-drawer-hierarchy.xml": "29253f553134f4673e0e815b920a0103b28a82dd791187e7df997f3baaf34999",
+    "launcher-home.png": "c06e92020766a248fc3008f0181172ae91fd872d71585add5bdee29bf58b9773",
+    "launcher-drawer.png": "3db9ea335894c025b59a8efa776efb8d8a7cc21c3556f621e267b458bbee58e5",
+    "app-light.png": "9ef2b901acfbe383f2aa1bf0a197a231a7ec66a4cdca64ca1fcae2ad8398c11a"
+  },
+  "visual_review": "pending human or assistant inspection of actual captures",
+  "real_accounts_used": false,
+  "notifications_validated": false,
+  "physical_phone_validated": false,
+  "published_fdroid_listing_validated": false
+}
