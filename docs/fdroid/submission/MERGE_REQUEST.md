@@ -18,7 +18,7 @@ Issue tracker/contact: https://github.com/infolefilodlma-oss/LeFil-FDroid/issues
 
 ### Policy
 
-- [ ] The app complies with all inclusion criteria. **Open:** the public history checked starts on 2026-10-14. The three-month criterion or an applicable exception needs evidence; live communication acceptance is also outstanding.
+- [ ] The app complies with all inclusion criteria. **Open:** the public history checked starts on 2026-10-14. The three-month criterion or an applicable exception needs review; a project representative has reported testing a failing candidate, which may support examining the user exception but does not establish an independently verified user base. The policy gives no numerical user threshold and does not explicitly exclude test versions. Live communication acceptance is also outstanding.
 - [x] The original author is notified and requests inclusion: [upstream issue #1](https://github.com/infolefilodlma-oss/LeFil-FDroid/issues/1), opened by `infolefilodlma-oss`, explicitly requests publication in the official F-Droid catalog. This is also the copyright holder declared in `LICENSE`.
 - [x] Upstream Fastlane metadata contains summaries, descriptions and versionCode 3 changelogs in `en-US` and `fr-FR`.
 

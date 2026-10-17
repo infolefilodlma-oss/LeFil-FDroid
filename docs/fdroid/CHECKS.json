@@ -82,7 +82,8 @@
     "physical_phone_installation_requested_from_project_representative": false,
     "screenshots": "not provided; recommended",
     "independent_binary_reproducibility": "not performed; recommended",
-    "gitlab_authenticated_access": false
+    "gitlab_authenticated_access": false,
+    "reported_test_user_evidence": "Project representative reported a candidate closing or remaining blank; potential evidence for review of the user exception, with no user count or accepted exception invented."
   },
   "submission": {
     "prepared": true,

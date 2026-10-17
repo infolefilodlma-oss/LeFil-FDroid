@@ -35,6 +35,8 @@ Source officielle vérifiée : [Inclusion Policy, Quality Control](https://gitla
 
 Il s'agit d'un critère officiel formulé avec « should », assorti d'exceptions et d'une revue humaine. L'ancienneté de ce seul dépôt ne démontre pas un historique antérieur de l'application. Des utilisateurs du site Agora/Atrium ne prouvent pas, à eux seuls, des utilisateurs de cette application Android. Une attestation ou des éléments d'utilisation peuvent permettre de documenter l'exception ; aucune n'est supposée acquise.
 
+Le texte ne fixe pas de nombre minimal d'utilisateurs et n'exclut pas explicitement les versions d'essai. Le retour déjà rapporté d'un candidat se fermant ou restant vide constitue un élément de test utilisateur à documenter, sans inventer une base d'utilisateurs ou l'acceptation de cette exception par F-Droid. L'examen ne se résume donc pas à une attente automatique de trois mois.
+
 ## Fonctionnalité et valeur native
 
 La même politique demande que l'application soit fonctionnelle et implémente les fonctions décrites, et qu'une application enveloppant un site fournisse des fonctions natives et des améliorations. Elle n'impose pas une fonction de notifications à toutes les applications ni un certificat d'essai sur téléphone physique.
