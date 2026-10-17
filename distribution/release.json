@@ -20,7 +20,6 @@
   ],
   "signature_verified_for_android_sdk_24_through_35": true,
   "zip_alignment_verified": true,
-  "previous_70_jvm_tests_rerun": false,
   "final_certificate_emulator_installation": "passed",
   "physical_phone_validated": false,
   "authenticated_services_validated": false,
@@ -32,5 +31,13 @@
   "public_download_verified": true,
   "emulator_validation_run_url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39035916585",
   "private_local_read_only_backup_verified": true,
-  "verified_immutable_download_url": "https://raw.githubusercontent.com/infolefilodlma-oss/LeFil-FDroid/2009345408586c291425f67003f74404c4dab561/distribution/LeFil.apk"
+  "verified_immutable_download_url": "https://raw.githubusercontent.com/infolefilodlma-oss/LeFil-FDroid/2009345408586c291425f67003f74404c4dab561/distribution/LeFil.apk",
+  "release_workflows_rerun_70_jvm_tests": false,
+  "standard_android_ci_triggered_automatically_by_tag": true,
+  "standard_android_ci_run_url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39036317287",
+  "standard_android_ci_conclusion": "success",
+  "github_release_url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/releases/tag/v0.2.1",
+  "versioned_apk_url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/releases/download/v0.2.1/LeFil.apk",
+  "permanent_latest_apk_url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/releases/latest/download/LeFil.apk",
+  "release_asset_downloads_verified": true
 }

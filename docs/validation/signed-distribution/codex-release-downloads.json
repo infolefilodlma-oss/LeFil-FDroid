@@ -1,0 +1,26 @@
+{
+  "checked_at_utc": "2026-10-17T13:30:22.215092+00:00",
+  "executor": "Codex environment with inherited HTTPS proxy and TLS verification",
+  "downloads": [
+    {
+      "url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/releases/download/v0.2.1/LeFil.apk",
+      "http_status": 200,
+      "bytes": 4919502,
+      "sha256": "b0141391fad9fe1cfea638fd33a69d4fee1839f14747320820856577f57d4cb2",
+      "certificate_sha256": "d0755310dbd84319bbd0cb658475168cb9234cd1b60f9893a092afa19c31b902",
+      "signature_verified_after_download": true,
+      "resolved_host": "release-assets.githubusercontent.com",
+      "content_type": "application/vnd.android.package-archive"
+    },
+    {
+      "url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/releases/latest/download/LeFil.apk",
+      "http_status": 200,
+      "bytes": 4919502,
+      "sha256": "b0141391fad9fe1cfea638fd33a69d4fee1839f14747320820856577f57d4cb2",
+      "certificate_sha256": "d0755310dbd84319bbd0cb658475168cb9234cd1b60f9893a092afa19c31b902",
+      "signature_verified_after_download": true,
+      "resolved_host": "release-assets.githubusercontent.com",
+      "content_type": "application/vnd.android.package-archive"
+    }
+  ]
+}

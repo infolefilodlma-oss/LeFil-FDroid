@@ -1,0 +1,27 @@
+{
+  "checked_at_utc": "2026-10-17T13:30:59.537622+00:00",
+  "unchanged_inputs_since_start": {
+    "app": "586d7454d3c8fd6a68ccb09639ac00f8dfea6a76",
+    "branding": "cd36fc936ed28c1777eed3c3a4eabb658c343455",
+    "docs/fdroid": "b38e9b989ecb186e92261f05c2fc74a15bb39253",
+    "build.gradle": "9fa0b1b47b25ad054157c6ab7da2dade63793293",
+    "settings.gradle": "1712de36c564f97e32af4c558342b512cad1b02d",
+    "gradle.properties": "5bac8ac504623a676070370da81ec518639e4829"
+  },
+  "remote_refs": {
+    "refs/heads/main": "89f73297a3ee807eb79bd17f76b24d154a51e287",
+    "refs/heads/notifications-reelles": "f3770bfc54d98b68d046bc4aa2dbd7318da88422",
+    "refs/pull/2/head": "f3770bfc54d98b68d046bc4aa2dbd7318da88422",
+    "refs/tags/v0.2.1": "e87e088fb566ac593e6282559d87d0b19566cba1",
+    "refs/tags/v0.2.1^{}": "25189d316d8345a601b4dae2fa9987d286831d1e"
+  },
+  "main_pr2_and_fdroid_files_preserved": true,
+  "fdroid_mr_mutations_performed": false,
+  "production_private_key_uploaded": false,
+  "external_durable_key_retention_verified": false,
+  "standard_android_ci_triggered_automatically_by_source_tag": {
+    "url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39036317287",
+    "conclusion": "success",
+    "existing_tests_changed": false
+  }
+}

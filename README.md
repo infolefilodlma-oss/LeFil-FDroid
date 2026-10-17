@@ -1,6 +1,8 @@
 # LeFil-FDroid
 Application Android officielle du réseau Le Fil — Agora, Atrium, Talk et Radio.
 
+**[Télécharger LeFil.apk signé pour Android](https://github.com/infolefilodlma-oss/LeFil-FDroid/releases/latest/download/LeFil.apk)** — version 0.2.1, Android 7.0 et suivants. Signature, téléchargement, installation, réinstallation et deux démarrages vérifiés sur émulateur Android 15 : [preuves de diffusion](docs/release/DIRECT-DISTRIBUTION.md). Les notifications réelles et le téléphone physique restent non validés.
+
 Développement des notifications : branche `notifications-reelles`, PR #2 ; les corrections de validation sont réalisées sur une branche dédiée. Talk est la messagerie **HumHub** intégrée à Atrium, pas Nextcloud Talk.
 
 Le menu natif ouvre Agora, Atrium et Talk et permet d'activer/désactiver la surveillance des messages. Se connecter d'abord aux deux services dans l'application. Cette surveillance expérimentale, désactivée par défaut, utilise des sessions WebView et du polling sans services Google ; la veille et les restrictions Android peuvent la retarder. La réception exhaustive reste à vérifier (pagination et empreintes des messages).
@@ -16,7 +18,7 @@ L'APK de débogage sert uniquement aux essais. Aucun résultat de compilation ou
 
 Dernière vérification : [reprise du moteur et candidat 0.2.1](docs/validation/RENDERER-RECOVERY.md) — 70 tests JVM réussis et un test natif réussi dans l'émulateur Android 15. La panne signalée sur téléphone reste à recontrôler ; les essais authentifiés et de notifications sur téléphone restent à effectuer.
 
-Finalisation F-Droid : descriptions corrigées pour qualifier la surveillance d'expérimentale, auteur et `TetheredNet` renseignés, recette épinglée et contribution officielle préparée. [Bilan de préparation](docs/fdroid/CHECKS.json). La candidature n'est pas encore déposée ; admission et publication ne sont pas acquises.
+Finalisation F-Droid : descriptions corrigées pour qualifier la surveillance d'expérimentale, auteur et `TetheredNet` renseignés, recette épinglée et contribution officielle préparée. [Bilan de préparation](docs/fdroid/CHECKS.json). [Candidature officielle MR !52965](https://gitlab.com/fdroid/fdroiddata/-/merge_requests/52965). La diffusion GitHub ne constitue pas une admission ni une publication au catalogue F-Droid.
 
 La [déclaration réseau](docs/fdroid/NETWORK-DEPENDENCIES.md) distingue les bibliothèques Android libres des ressources Web tierces observées (Google Fonts et emoji WordPress). Le [relevé de finalisation](docs/validation/fdroid-finalization/README.md) conserve les licences des 68 modules de production et les contrôles publics ; il ne valide pas les messages authentifiés.
 

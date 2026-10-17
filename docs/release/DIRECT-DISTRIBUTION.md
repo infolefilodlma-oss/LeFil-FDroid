@@ -81,6 +81,30 @@ a aussi été effectué dans l'environnement Codex : HTTP 200, empreinte et
 certificat identiques. Ces contrôles ne valident pas un téléphone physique ni
 les notifications Agora/Talk authentifiées.
 
+## Publication et téléchargement vérifiés
+
+La [Release 0.2.1](https://github.com/infolefilodlma-oss/LeFil-FDroid/releases/tag/v0.2.1)
+est publiée. Le tag annoté `v0.2.1` désigne exactement le commit construit
+`25189d316d8345a601b4dae2fa9987d286831d1e`.
+
+- [Lien permanent de téléchargement Android](https://github.com/infolefilodlma-oss/LeFil-FDroid/releases/latest/download/LeFil.apk).
+- [Fichier de la version 0.2.1](https://github.com/infolefilodlma-oss/LeFil-FDroid/releases/download/v0.2.1/LeFil.apk).
+
+Le [rapport de publication](../validation/signed-distribution/publication.json)
+atteste les deux téléchargements anonymes depuis GitHub Actions. Le
+[contrôle distinct depuis Codex](../validation/signed-distribution/codex-release-downloads.json)
+atteste HTTP 200, 4 919 502 octets, même SHA-256 et signature revérifiée après
+téléchargement pour les deux URL. Aucune clé privée n'est disponible dans le
+runner ou dans les assets de Release.
+
+La création du tag a aussi déclenché automatiquement la
+[CI Android standard existante](https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39036317287),
+qui a réussi. Les indicateurs de non-réexécution des tests JVM dans les rapports
+des workflows de diffusion décrivent ces workflows ; ils ne décrivent pas cette
+CI distincte, déclenchée par GitHub sur le tag. Les tests existants ne sont pas
+modifiés. Le [contrôle final de préservation](../validation/signed-distribution/final-preservation.json)
+conserve les références protégées et les arbres de sources inchangés.
+
 ## Clé de diffusion préparée
 
 Une clé RSA 4096 bits a été créée dans un conteneur PKCS12 chiffré, avec un mot de
@@ -122,25 +146,26 @@ contrôle. Aucune compatibilité de mise à jour intercanaux n’est annoncée c
 validée.
 
 Une [proposition séparée](net.lefil.fdroid.developer-signed.yml) prépare ces deux
-champs avec l’empreinte réelle du certificat et l’URL de la future Release.
+champs avec l’empreinte réelle du certificat et l’URL de la Release.
 `fdroidserver 2.4.5 readmeta` et `lint -f` ont réussi sur cette proposition après
 formatage canonique ; les autres champs restent identiques à la candidature.
 Le [rapport](../validation/direct-release/developer-signature-metadata.json)
-précise que le binaire public n’existe pas et que cette proposition n’est ni
-activée dans la MR !52965 ni vérifiée par le serveur F-Droid.
+décrit le contrôle antérieur à l'existence du binaire public. Celui-ci est
+désormais téléchargeable, mais cette proposition n’est ni activée dans la MR
+!52965 ni vérifiée par le serveur F-Droid.
 
 La signature locale et les contrôles avec ce même certificat ont désormais
 réussi. La conservation externe reste non vérifiée ; la procédure de publication
 ne doit pas prétendre que les secrets GitHub ou un coffre externe sont configurés.
 La proposition F-Droid reste séparée et la candidature n'est pas modifiée.
-Le tag stable devra désigner le commit réellement construit. Les mises à jour
+Le tag stable désigne le commit réellement construit. Les mises à jour
 ultérieures devront augmenter `versionCode` et garder la même identité de
 signature. Aucun APK non signé ou signé avec une clé d’essai ne doit devenir un
 asset de Release.
 
-GitHub documente un lien permanent vers le dernier asset portant un nom constant :
-`releases/latest/download/LeFil.apk`. Ce suffixe décrit le lien futur ; il ne
-désigne pas un téléchargement existant pour Le Fil à ce stade.
+Le lien `releases/latest/download/LeFil.apk` est désormais actif et vérifié.
+Les prochaines versions directes devront conserver ce nom d'asset et la même
+identité de signature pour permettre les mises à jour Android.
 
 ## Sources officielles consultées
 
