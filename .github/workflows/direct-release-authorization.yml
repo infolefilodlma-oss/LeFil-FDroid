@@ -1,0 +1,41 @@
+name: Android - signing authorization only
+
+on:
+  push:
+    branches:
+      - codex/direct-release-0.2.1
+    paths:
+      - .github/workflows/direct-release-authorization.yml
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  check-current-signing-authorization:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Check existing authorization and signing binding presence only
+        env:
+          GH_TOKEN: ${{ github.token }}
+          LEFIL_KEYSTORE_CONFIGURED: ${{ secrets.LEFIL_SIGNING_KEYSTORE_BASE64 != '' }}
+          LEFIL_STORE_PASSWORD_CONFIGURED: ${{ secrets.LEFIL_SIGNING_STORE_PASSWORD != '' }}
+          LEFIL_KEY_PASSWORD_CONFIGURED: ${{ secrets.LEFIL_SIGNING_KEY_PASSWORD != '' }}
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import tools.direct_release_preflight as check
+          check.OUTPUT = Path('docs/validation/direct-release/final-signing-authorization.json')
+          check.main()
+          PY
+      - name: Record the public authorization result without touching previous test results
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/validation/direct-release/final-signing-authorization.json
+          git commit -m 'Record current signing authorization without repeating Android tests [skip ci]'
+          git push origin HEAD:refs/heads/codex/direct-release-0.2.1
