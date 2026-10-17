@@ -1,5 +1,5 @@
 {
-  "checked_at_utc": "2026-10-17T07:44:03.833711+00:00",
+  "checked_at_utc": "2026-10-17T07:52:59.970501+00:00",
   "candidate": {
     "package": "net.lefil.fdroid",
     "versionName": "0.2.1",
@@ -84,23 +84,24 @@
     "tool": "fdroidserver 2.4.5",
     "readmeta": "passed",
     "lint_format_check": "passed",
-    "local_scope": "Metadata only locally; full build and scans executed in GitHub Actions",
+    "local_scope": "Readmeta and lint -f rerun only because MaintainerNotes changed. Successful build/scans reused for unchanged source and build fields.",
     "local_report_source_commit": "25189d316d8345a601b4dae2fa9987d286831d1e",
-    "local_report": "../validation/fdroid-finalization/metadata-result.json"
+    "local_report": "../validation/fdroid-pre-submission-metadata.json"
   },
   "contribution_files": {
     "metadata_target": "metadata/net.lefil.fdroid.yml",
-    "metadata_sha256": "2afa1d9feb1cc5c3ea873df71699e4716342dd954c8a7b60bf75e2baa13476f8",
+    "metadata_sha256": "1b23123fb55029313b79ca849ed6eaa809d78726dcb939f7f7cd33bb87d620c6",
     "patch_file": "submission/net.lefil.fdroid.patch",
-    "patch_sha256": "783150f883c226b72438dcfabbd9ea270df0858ab69af9ef083b71d2fc6c8d70",
+    "patch_sha256": "ffdda0153f384d9cfd75e964f76463181a192a16a28880abcd443a23daf334cf",
     "patch_apply_check": "passed in a fresh empty directory",
     "patched_metadata_exact_match": true,
     "mr_title": "New app: Le Fil",
-    "mr_body": "submission/MERGE_REQUEST.md"
+    "mr_body": "submission/MERGE_REQUEST.md",
+    "initial_draft_title": "Draft: New app: Le Fil"
   },
   "eligibility": {
-    "overall": "not fully demonstrated",
-    "age_or_documented_exception": "not established",
+    "overall": "Admission is for F-Droid review; technically ready to propose with explicit review items and no full-compliance assertion.",
+    "age_or_documented_exception": "Three-month history not demonstrated; review of user exception requested on reported Android phone trial, without claiming it is accepted.",
     "live_communications": "not validated",
     "physical_phone_installation_requested_from_project_representative": false,
     "screenshots": "Two actual unedited Android 15 emulator screenshots in upstream en-US and fr-FR Fastlane; provenance recorded",
@@ -114,7 +115,15 @@
     "submitted": false,
     "official_mr_url": null,
     "accepted": false,
-    "published": false
+    "published": false,
+    "ready_to_initiate_official_contribution_for_review": true,
+    "initial_draft_title": "Draft: New app: Le Fil",
+    "review_items": [
+      "User-exception evidence for Quality Control age criterion",
+      "Native value and declared experimental polling limitation",
+      "Reason for offering an untagged candidate at a full public SHA",
+      "Additional Anti-Feature review of disclosed remote web resources"
+    ]
   },
   "gitlab_access_requirement": {
     "secret_name": "GITLAB_TOKEN",
@@ -199,7 +208,9 @@
     "original_result_sha256": "7317cb002e1c08a3b9c0bff2523f3751ebb9ccf88fd900a46599ecfcdab40b97",
     "provenance": "../validation/fdroid-finalization/fdroid-provenance.json",
     "evidence_scope": "Original result.json copied without modification by the successful workflow and inspected. Detailed logs remain in its Actions artifact and were not retrieved locally.",
-    "official_fdroid_gitlab_ci": "not run"
+    "official_fdroid_gitlab_ci": "not run",
+    "recipe_used_by_successful_build_sha256": "2afa1d9feb1cc5c3ea873df71699e4716342dd954c8a7b60bf75e2baa13476f8",
+    "change_since_build": "MaintainerNotes only; every other parsed metadata field, the pinned source and all build inputs are unchanged. APK build and scans not repeated."
   },
   "network_declarations": {
     "document": "NETWORK-DEPENDENCIES.md",
@@ -234,5 +245,15 @@
       "refs/pull/2/head": "f3770bfc54d98b68d046bc4aa2dbd7318da88422"
     }
   },
-  "input_comparison_baseline_commit": "c85f5a3cbb78ab58e6207f770cd9f6df60fb818d"
+  "input_comparison_baseline_commit": "c85f5a3cbb78ab58e6207f770cd9f6df60fb818d",
+  "last_submission_readiness_review": {
+    "evidence": "../validation/fdroid-pre-submission-review.json",
+    "technically_ready_to_propose_for_review": true,
+    "full_compliance_asserted": false,
+    "only_external_access_needed_to_initiate_contribution": "Authorized GitLab account for contribution fork, CI and merge request",
+    "new_secret_requested": false,
+    "application_or_logo_changed": false,
+    "jvm_native_or_build_checks_repeated": false,
+    "metadata_checks_repeated_after_notes_change": true
+  }
 }

@@ -39,8 +39,11 @@ MaintainerNotes: |-
   generator marker was present without an analytics request observed.
   Please review any additional Anti-Feature classification using the
   recorded requests; absence of GMS/Firebase is a native dependency claim.
-  Eligibility, including the three-month rule or an evidenced exception,
-  and functional acceptance remain for review before submission.
+  Review of the Quality Control user exception is requested: public history
+  starts on 2026-10-14, and the project representative reported a candidate
+  trial on a phone. No user count or accepted exception is claimed.
+  Live message acceptance is disclosed as pending during inclusion review;
+  the proposal does not claim validated notification delivery.
 
 AutoUpdateMode: Version
 UpdateCheckMode: Tags v[0-9].*

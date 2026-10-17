@@ -1,6 +1,6 @@
-# New app: Le Fil
+# Draft: New app: Le Fil
 
-DRAFT PREPARED UPSTREAM — NOT SUBMITTED. Policy eligibility and functional acceptance below remain open. This text must not be posted as a claim that the candidate has passed them.
+PREPARED FOR INCLUSION REVIEW — NOT SUBMITTED. This draft requests review of the user exception and discloses the unvalidated experimental polling. It does not attest that the open review items are accepted or request merging before review.
 
 ## Abstract
 
@@ -18,7 +18,7 @@ Issue tracker/contact: https://github.com/infolefilodlma-oss/LeFil-FDroid/issues
 
 ### Policy
 
-- [ ] The app complies with all inclusion criteria. **Open:** the public history checked starts on 2026-10-14. The three-month criterion or an applicable exception needs review; a project representative has reported testing a failing candidate, which may support examining the user exception but does not establish an independently verified user base. The policy gives no numerical user threshold and does not explicitly exclude test versions. Live communication acceptance is also outstanding.
+- [ ] The app complies with all inclusion criteria. **Review requested:** public history starts on 2026-10-14, so three months of active development is not demonstrated. We request examination of the Quality Control exception "The application has been proven to have some users", using the project representative's reported Android candidate trial on a phone. That candidate closed or remained blank; its renderer defect was subsequently fixed and tested in an emulator. This is a reported trial, not independent user statistics or proof that the corrected version was retested on that phone. The policy sets no numeric user threshold and does not exclude trials; acceptance of this evidence remains yours. The other two exceptions are not claimed. Experimental message polling remains unvalidated and is disclosed; the public description does not promise working message alerts.
 - [x] The original author is notified and requests inclusion: [upstream issue #1](https://github.com/infolefilodlma-oss/LeFil-FDroid/issues/1), opened by `infolefilodlma-oss`, explicitly requests publication in the official F-Droid catalog. This is also the copyright holder declared in `LICENSE`.
 - [x] Upstream Fastlane metadata contains summaries, descriptions and versionCode 3 changelogs in `en-US` and `fr-FR`.
 
@@ -30,7 +30,7 @@ Issue tracker/contact: https://github.com/infolefilodlma-oss/LeFil-FDroid/issues
 
 ### Merge Request Setup
 
-- [x] Proposed title: `New app: Le Fil`.
+- [x] Proposed draft title: `Draft: New app: Le Fil`; final title `New app: Le Fil` after review.
 - [ ] A public fdroiddata contribution fork and an unprotected source branch are available. **Open:** no authenticated GitLab account is available in the execution environment.
 - [x] Only one app and one file are proposed: `metadata/net.lefil.fdroid.yml`.
 - [x] Searches by exact package ID found no fdroiddata metadata, MR or RFP entry at the time of this preparation. These searches do not claim exhaustive name-based matching.
@@ -40,7 +40,7 @@ Issue tracker/contact: https://github.com/infolefilodlma-oss/LeFil-FDroid/issues
 
 - [x] Canonical YAML with LF line endings, including `AuthorName`, public sources and issue tracker.
 - [x] Summaries, full descriptions and changelogs remain upstream. No screenshots or other publication assets are added to fdroiddata.
-- [ ] Stable release is tagged. **Open:** version 0.2.1 is still a candidate. Tag-based automatic update settings are prepared.
+- [ ] Releases are tagged. **Reason for this proposal:** 0.2.1 is still a candidate, offered for review at the immutable public commit below before declaring a stable release. Tag-based automatic update settings are enabled for future releases. We request review of this reason under the template's "unless there is a special reason" provision; no stable tag is claimed.
 - [x] Only the current candidate build is proposed, pinned to a full public commit.
 - [x] `TetheredNet` has localized explanations for the fixed server instances.
 - [x] Automatic Google Fonts requests, WordPress emoji resources and enabled third-party cookies are disclosed in the upstream descriptions and recipe notes. The native library graph has 68 selected modules, each with an Apache 2.0 POM declaration. Remote web content is a separate scope.
@@ -60,4 +60,4 @@ This finalization changes publication descriptions and evidence only. The comple
 
 The official blue-on-white PNG supplied by the project is now included byte-for-byte in the Android launcher resources and Fastlane icons. The existing transparent light-lettered variant is preserved for the dark native toolbar. Actual Android 15 home, app drawer and native light/dark captures have been inspected. Other launchers and themed icon modes are untested; the published listing cannot be checked before publication. No logo has been recreated or recolored.
 
-No claim is made that GitLab CI, inclusion, publication or phone notification acceptance have passed. Resolve the policy and functionality items before marking the inclusion checklist complete or posting this as an eligible submission.
+No claim is made that GitLab CI, inclusion, publication or phone notification acceptance have passed. The official Quick Start Guide's Application Review Process says that, once a proposal is filed, reviewers determine whether it fits and the steps needed if it does not. We submit these items for that examination, leaving the full-compliance checkbox open. Please assess the user exception, native value, candidate tag explanation and disclosed polling limitation before merging; we will not treat submission as acceptance.

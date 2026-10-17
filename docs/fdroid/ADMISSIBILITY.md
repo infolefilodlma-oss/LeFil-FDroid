@@ -1,6 +1,6 @@
 # Admission F-Droid — vérification du 17 octobre 2026
 
-L'admissibilité de Le Fil 0.2.1 n'est pas encore entièrement établie. Les sources libres et la compilation sont documentées ; l'ancienneté ou une exception, ainsi que le fonctionnement des communications annoncées, restent à établir. Le dossier technique et une MR préparée ne constituent ni une soumission, ni une acceptation, ni une publication.
+Le dossier de Le Fil 0.2.1 est techniquement prêt à être proposé pour examen, avec demande explicite d'examen de l'exception d'ancienneté et déclaration des notifications non validées. Cela ne certifie pas son admission. La politique fixe des critères pour l'ajout au catalogue ; le guide prévoit que les mainteneurs examinent la proposition et déterminent les écarts à résoudre. Les limites connues restent ouvertes dans le texte de MR, sans être transformées en interdiction générale de déposer une proposition.
 
 ## Critères et preuves
 
@@ -23,7 +23,7 @@ L'admissibilité de Le Fil 0.2.1 n'est pas encore entièrement établie. Les sou
 | Icône officielle et captures | Fournies et examinées | PNG bleu sur blanc copié à l’identique ; deux captures Android 15 réelles et non retouchées dans Fastlane en/fr. [Provenance](../validation/branding/fastlane-screenshots.json). Fiche publiée non vérifiée. |
 | Identité visuelle demandée par le projet | Intégrée et contrôlée sur Android 15 | Logo bleu sur blanc dans le lanceur et la barre claire ; variante transparente existante sur fond sombre. [Rendus et limites](../BRANDING.md). Autres lanceurs, téléphone et fiche publiée non validés. |
 | Versions / maintenance | Activité récente visible ; aucun tag stable | Le guide recommande un tag par version officielle. La recette peut construire un commit ; le suivi des futurs tags est configuré. Aucun tag stable n'est créé pour faire passer une candidature pour une version validée. |
-| Ancienneté / exception | Non établie | Historique public vérifié à partir du 14 octobre 2026 ; aucun élément reçu ne démontre trois mois de développement ou une exception. Un historique antérieur peut être apporté sans être inventé. |
+| Ancienneté / exception | Trois mois non démontrés ; examen de l'exception « utilisateurs » demandé | Historique public à partir du 14 octobre 2026. Le chef de projet a rapporté un essai du candidat Android sur téléphone ; ce retour est présenté comme témoignage d'essai, sans nombre d'utilisateurs inventé ni exception annoncée comme acceptée. Les deux autres exceptions ne sont pas invoquées. |
 | Accès de soumission | Non authentifié sur GitLab | `GET https://gitlab.com/api/v4/user` retourne HTTP 401 ; aucune identité ni liaison GitLab utilisable n'est configurée dans cet environnement. Les accès GitHub ne donnent pas accès au compte GitLab. |
 
 ## La règle des trois mois existe
@@ -39,6 +39,8 @@ Il s'agit d'un critère officiel formulé avec « should », assorti d'exception
 
 Le texte ne fixe pas de nombre minimal d'utilisateurs et n'exclut pas explicitement les versions d'essai. Le retour déjà rapporté d'un candidat se fermant ou restant vide constitue un élément de test utilisateur à documenter, sans inventer une base d'utilisateurs ou l'acceptation de cette exception par F-Droid. L'examen ne se résume donc pas à une attente automatique de trois mois.
 
+**Application au Fil :** la voie ordinaire des trois mois n'est pas démontrée par l'historique disponible. L'exception pertinente à demander est celle des utilisateurs, à partir du retour d'essai Android déjà rapporté. Il n'existe pas de preuve examinée que l'auteur maintienne une autre application F-Droid ; Le Fil n'est pas présenté comme une application événementielle. Aucun de ces deux cas n'est donc revendiqué. Le témoignage d'essai n'est ni une validation du candidat corrigé ni une décision d'exception prise par les mainteneurs. La demande de revue l'expose explicitement.
+
 ## Fonctionnalité et valeur native
 
 La même politique demande que l'application soit fonctionnelle et implémente les fonctions décrites, et qu'une application enveloppant un site fournisse des fonctions natives et des améliorations. Elle n'impose pas une fonction de notifications à toutes les applications ni un certificat d'essai sur téléphone physique.
@@ -46,6 +48,20 @@ La même politique demande que l'application soit fonctionnelle et implémente l
 Le menu et la reprise du moteur sont des fonctions natives identifiables. La surveillance des messages apporte une valeur supplémentaire prévue, mais ses échanges authentifiés et sa réception réelle ne sont pas validés. Les textes corrigés rendent cette limite explicite ; ils ne remplacent pas une preuve fonctionnelle. La [recette de communication](COMMUNICATION-ACCEPTANCE.md) prépare les contrôles avec une équipe technique et un émulateur, sans installation demandée au chef de projet.
 
 Le test natif acquis reste un contrôle de reprise du moteur. Les messages identiques, la pagination, les conversations ouvertes depuis une vraie alerte, la veille et le redémarrage restent à renseigner. La décision d'admission et l'appréciation de la valeur native appartiennent aux mainteneurs F-Droid.
+
+## Dépôt d'une proposition et admission
+
+Référence exacte : [Quick Start Guide, Application Review Process](https://gitlab.com/fdroid/fdroid-website/-/blob/master/_docs/Submitting_to_F-Droid_Quick_Start_Guide.md#application-review-process).
+
+> Once the inclusion proposal is filed, the application will enter a reviewing process where F-Droid staff look into the applications source code and determine whether it fits for inclusion (and when it's not, determine all necessary steps to make it so).
+
+Le [CONTRIBUTING officiel, Building it](https://gitlab.com/fdroid/fdroiddata/-/blob/master/CONTRIBUTING.md#building-it) exige une recette avec au moins un build fonctionnel et ses contrôles de métadonnées, déjà acquis pour la source épinglée. Aucun des textes examinés ne demande un rapport de test authentifié des notifications avant de pouvoir déposer une proposition. L'absence de ce test est donc une **limitation déclarée à examiner**, pas un motif automatique interdisant le dépôt. Cela ne prouve pas que la surveillance fonctionne et n'autorise pas à en promettre la fiabilité. Un défaut fonctionnel établi ou une description trompeuse devra être corrigé avant l'admission ; les mainteneurs peuvent demander ces essais pendant l'examen.
+
+La proposition s'appuie sur l'accès aux services, le menu natif et la reprise native testée, sans utiliser les notifications non validées comme preuve de fonctionnement. La case attestant l'ensemble des critères reste ouverte, avec demande de revue de l'exception. Une MR en brouillon peut présenter ces points sans revendiquer une admission acquise ; [GitLab documente](https://gitlab.com/gitlab-org/gitlab/-/blob/master/doc/user/project/merge_requests/drafts.md) que le préfixe `Draft:` interdit sa fusion tant qu'il n'est pas retiré.
+
+Le [modèle officiel, Metadata](https://gitlab.com/fdroid/fdroiddata/-/blob/master/.gitlab/merge_request_templates/App%20inclusion.md#metadata) demande des versions taguées « unless there is a special reason » et une révision `commit` sous forme de hash complet. Le motif exposé ici est l'examen du candidat 0.2.1 à une révision publique immuable, avant de le déclarer version stable. Le suivi des futurs tags est configuré. Cette explication reste soumise à la revue ; aucun tag ni aucune publication de version stable n'est inventé.
+
+Le seul prérequis extérieur à la poursuite de cette contribution est maintenant l'accès d'un compte GitLab autorisé, pour le fork de contribution, sa CI et la MR vers `fdroid/fdroiddata`. Un jeton nouvellement généré n'est pas un critère d'admission ; utiliser un accès existant s'il devient disponible. La CI GitLab et la décision des mainteneurs seront des étapes de la contribution, pas des résultats déjà obtenus.
 
 ## Obligations et recommandations séparées
 

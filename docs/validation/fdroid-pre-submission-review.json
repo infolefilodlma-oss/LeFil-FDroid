@@ -1,0 +1,123 @@
+{
+  "checked_at_utc": "2026-10-17T07:52:59.970501+00:00",
+  "purpose": "Distinguish submission for inclusion review from admission and publication; no application change or new secret request.",
+  "official_sources": [
+    {
+      "name": "policy",
+      "url": "https://gitlab.com/fdroid/fdroid-website/-/raw/master/_docs/Inclusion_Policy.md",
+      "http_status": 200,
+      "sha256": "b675086815139c322b95b0e4dc139886a4d068955ef62b0aba70025c34f361a3"
+    },
+    {
+      "name": "quick-start",
+      "url": "https://gitlab.com/fdroid/fdroid-website/-/raw/master/_docs/Submitting_to_F-Droid_Quick_Start_Guide.md",
+      "http_status": 200,
+      "sha256": "db2288a0a4ffdc74d7154d2062264aab419b5d9b0bfccdb7c5561e1e732c2831"
+    },
+    {
+      "name": "contributing",
+      "url": "https://gitlab.com/fdroid/fdroiddata/-/raw/master/CONTRIBUTING.md",
+      "http_status": 200,
+      "sha256": "c7dd8b99260d051e0751a7923f76ad7fb70080879244ae5743c880c628ac35cb"
+    },
+    {
+      "name": "template",
+      "url": "https://gitlab.com/fdroid/fdroiddata/-/raw/master/.gitlab/merge_request_templates/App%20inclusion.md",
+      "http_status": 200,
+      "sha256": "3b280c4cc11721b1ed61767e77e653652e86dc5223de094539e1cb4bc964fd80"
+    }
+  ],
+  "pinned_policy": {
+    "url": "https://gitlab.com/fdroid/fdroid-website/-/raw/a9c6e1c591bfa4a36d4da0ce9ad15d1b7463c244/_docs/Inclusion_Policy.md",
+    "http_status": 200,
+    "sha256": "b675086815139c322b95b0e4dc139886a4d068955ef62b0aba70025c34f361a3",
+    "matches_current_master": true
+  },
+  "gitlab_draft_support": {
+    "url": "https://gitlab.com/gitlab-org/gitlab/-/raw/master/doc/user/project/merge_requests/drafts.md",
+    "http_status": 200,
+    "sha256": "06029412f2db6dd39a3535bf618b4f042b87235005b2b0073acf0a67468f57d5"
+  },
+  "public_access": {
+    "checked_at_utc": "2026-10-17T07:48:59.888774+00:00",
+    "checks": [
+      {
+        "name": "branch",
+        "url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/tree/codex/fdroid-submission-readiness",
+        "http_status": 200,
+        "body_sha256": "a5365996b50bf407ff72e78541dcc91938f7c591f6a77982f05d1686cd49e51c",
+        "public_label_observed": true
+      },
+      {
+        "name": "candidate",
+        "url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/commit/25189d316d8345a601b4dae2fa9987d286831d1e",
+        "http_status": 200,
+        "body_sha256": "bd4a4fccfc7616514bb26ba30639b6113817b283bb70535b207a858c6cd366cd",
+        "public_label_observed": null
+      },
+      {
+        "name": "author-request",
+        "url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/issues/1",
+        "http_status": 200,
+        "body_sha256": "402cd7a7f10a3943625700b0da237174ee41511436675ac7077bdc8e8a68286b",
+        "public_label_observed": null
+      }
+    ]
+  },
+  "version_and_patch": {
+    "candidate_commit": "25189d316d8345a601b4dae2fa9987d286831d1e",
+    "identity": {
+      "package": "net.lefil.fdroid",
+      "versionName": "0.2.1",
+      "versionCode": 3
+    },
+    "metadata_version_exact_match": true,
+    "only_maintainer_notes_changed": true,
+    "application_build_tests_logos_and_fastlane_unchanged": true,
+    "patch_applies_and_matches_exactly": true,
+    "metadata_sha256": "1b23123fb55029313b79ca849ed6eaa809d78726dcb939f7f7cd33bb87d620c6",
+    "patch_sha256": "ffdda0153f384d9cfd75e964f76463181a192a16a28880abcd443a23daf334cf"
+  },
+  "branch_head_at_start_of_check": "29acd10d8fc8ba7ce64889e7c6418b4244fdbcab",
+  "interpretation": {
+    "age_rule": "Quality Control uses should and three explicit exceptions; ordinary three-month history is not demonstrated here.",
+    "user_exception": "Review requested using a reported phone trial by the project representative. No user statistics or accepted exception asserted.",
+    "other_age_exceptions_claimed": false,
+    "authenticated_notification_report_before_filing": "No explicit prerequisite found in the reviewed official policy, guide, contribution instructions or inclusion template. This does not validate delivery.",
+    "notifications_status": "Experimental, disabled by default, not validated; disclosed in unchanged Fastlane descriptions. Review may require tests before admission.",
+    "review_process": "Quick Start Application Review Process explicitly places fitness assessment and resolution of gaps after the proposal is filed.",
+    "tag_reason": "Candidate review at a full immutable public SHA; stable tag not claimed; template allows a special reason for missing release tags.",
+    "draft_use": "Prepared Draft: New app: Le Fil; full compliance checkbox remains open; no merge request has been created."
+  },
+  "reused_evidence": {
+    "build_and_source_binary_scans_url": "https://github.com/infolefilodlma-oss/LeFil-FDroid/actions/runs/39014443718",
+    "jvm_tests": 70,
+    "native_android_tests": 1,
+    "jvm_tests_rerun": false,
+    "native_tests_rerun": false,
+    "apk_rebuilt": false,
+    "logos_modified": false,
+    "main_or_pr_2_modified": false,
+    "authenticated_communications_validated": false,
+    "physical_phone_validated": false
+  },
+  "gitlab_account_access": {
+    "runtime_observations_current": true,
+    "ready_secret_bindings": 0,
+    "outbound_identities": 0,
+    "new_secret_requested": false,
+    "new_secret_requirement_added": false,
+    "environment_variable_presence": {
+      "GITLAB_TOKEN": false,
+      "GITLAB_ACCESS_TOKEN": false,
+      "GL_TOKEN": false
+    }
+  },
+  "ready_to_initiate_official_contribution_for_review": true,
+  "full_policy_compliance_asserted": false,
+  "submitted": false,
+  "accepted": false,
+  "published": false,
+  "correction_scope": "Remove an unsupported prerequisite requiring closure of every admission review item before filing a proposal; documentation and MaintainerNotes only.",
+  "ci_policy": "Do not repeat successful JVM, native or pinned-source build/scans for an unchanged app and build recipe. Readmeta/lint were rerun for changed human-readable notes. Documentation commit uses the standard [skip ci] marker."
+}

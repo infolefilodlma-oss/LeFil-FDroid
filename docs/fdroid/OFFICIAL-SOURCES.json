@@ -82,5 +82,18 @@
     "current_policy_and_quick_start_hashes_match_previous_review": true,
     "rendered_site_connect_403": true,
     "gitlab_user_http_status": 401
+  },
+  "submission_readiness_recheck": {
+    "checked_at_utc": "2026-10-17T07:52:59.970501+00:00",
+    "evidence": "../validation/fdroid-pre-submission-review.json",
+    "policy_current_master_matches_pinned_revision": true,
+    "quick_start_sha256": "db2288a0a4ffdc74d7154d2062264aab419b5d9b0bfccdb7c5561e1e732c2831",
+    "exact_references": {
+      "age_exceptions": "https://gitlab.com/fdroid/fdroid-website/-/blob/a9c6e1c591bfa4a36d4da0ce9ad15d1b7463c244/_docs/Inclusion_Policy.md#quality-control",
+      "application_review_process": "https://gitlab.com/fdroid/fdroid-website/-/blob/master/_docs/Submitting_to_F-Droid_Quick_Start_Guide.md#application-review-process",
+      "working_build_requirement": "https://gitlab.com/fdroid/fdroiddata/-/blob/master/CONTRIBUTING.md#building-it",
+      "tag_special_reason": "https://gitlab.com/fdroid/fdroiddata/-/blob/master/.gitlab/merge_request_templates/App%20inclusion.md#metadata",
+      "draft_merge_protection": "https://gitlab.com/gitlab-org/gitlab/-/blob/master/doc/user/project/merge_requests/drafts.md"
+    }
   }
 }
