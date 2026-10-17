@@ -3,6 +3,7 @@
 from datetime import datetime, timezone
 import json
 import os
+import re
 from pathlib import Path
 import urllib.parse
 from playwright.sync_api import sync_playwright
@@ -31,14 +32,24 @@ with sync_playwright() as playwright:
         page.route('**/*', intercept)
         response = page.goto(url, wait_until='domcontentloaded', timeout=30000)
         page.wait_for_timeout(5000)
+        matches = {}
         if label == 'Le Fil':
-            controls = {word: page.get_by_text(word, exact=True).first.is_visible()
-                        for word in ('AGORA', 'ATRIUM', 'TALK')}
+            controls = {}
+            for word, host in (('AGORA', 'social.le-fil.net'), ('ATRIUM', 'team.le-fil.net'),
+                               ('TALK', 'team.le-fil.net')):
+                # Text-only selectors also match hidden navigation entries and depend on
+                # source capitalization. Check visible, accessible links to the actual service.
+                links = page.get_by_role('link', name=re.compile(r'\b' + word + r'\b', re.I)).all()
+                matches[word] = [{'visible': link.is_visible(),
+                                  'host': urllib.parse.urlsplit(link.get_attribute('href') or '').hostname}
+                                 for link in links]
+                controls[word] = any(x['visible'] and x['host'] == host for x in matches[word])
         else:
             controls = {'password_input_visible': page.locator('input[type=password]').first.is_visible()}
         record = {'label': label, 'input_url': url, 'http_status': response.status,
                   'google_hosts_blocked': sorted(blocked), 'visible_controls': controls,
-                  'public_controls_remain_visible': bool(controls) and all(controls.values())}
+                  'public_controls_remain_visible': bool(controls) and all(controls.values()),
+                  'service_link_matches': matches}
         records.append(record)
         context.close()
     browser.close()
