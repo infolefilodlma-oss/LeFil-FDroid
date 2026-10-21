@@ -26,7 +26,7 @@ class AndroidNotificationsTest {
         override val displayName = "Talk"
         override fun fetch(): FetchResult = error("No live fetch in this test")
     }
-    private val item = UnreadItem("31", "Marie", "https://team.le-fil.net/mail/mail/index?id=31", "Bonjour")
+    private val item = UnreadItem("31", "Marie", "https://atrium.le-fil.net/mail/mail/index?id=31", "Bonjour")
 
     @Before fun createService() {
         MessageWatchService.setEnabled(context, true)
@@ -52,7 +52,7 @@ class AndroidNotificationsTest {
     }
     @Test fun notificationsUseDifferentIntentsForDifferentConversations() {
         controller.get().showMessage(source, item)
-        controller.get().showMessage(source, item.copy(id = "32", url = "https://team.le-fil.net/mail/mail/index?id=32"))
+        controller.get().showMessage(source, item.copy(id = "32", url = "https://atrium.le-fil.net/mail/mail/index?id=32"))
         val manager = shadowOf(context.getSystemService(NotificationManager::class.java))
         assertNotEquals(manager.getNotification("atrium-31", 0).contentIntent, manager.getNotification("atrium-32", 0).contentIntent)
     }
