@@ -90,6 +90,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         }
 
         MessageWatchService.start(this)
+        offerNotificationsOnce()
 
         onBackPressedDispatcher.addCallback(
             this,
@@ -270,6 +271,18 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 }.setNegativeButton("Fermer", null).show()
             true
         }
+    }
+
+    private fun offerNotificationsOnce() {
+        val prefs = getSharedPreferences("lefil_watch", Context.MODE_PRIVATE)
+        if (MessageWatchService.enabled(this) || prefs.getBoolean("notification_intro_seen", false)) return
+        prefs.edit().putBoolean("notification_intro_seen", true).apply()
+        AlertDialog.Builder(this)
+            .setTitle("Recevoir les messages du Fil ?")
+            .setMessage("Le Fil peut vous avertir des messages Agora et Talk lorsque vous êtes connecté aux deux services. La veille du téléphone peut retarder certains messages.")
+            .setPositiveButton("Activer") { _, _ -> askNotificationPermission() }
+            .setNegativeButton("Plus tard", null)
+            .show()
     }
 
     private fun askNotificationPermission() {
