@@ -233,9 +233,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         toolbar.title = "Le Fil"
         val destinations = listOf(
             "Accueil" to FIL_URL,
-            "Agora" to "https://social.le-fil.net/",
-            "Atrium" to "https://team.le-fil.net/",
-            "Talk (Atrium)" to "https://team.le-fil.net/index.php?r=mail%2Fmail%2Findex"
+            "Agora" to "https://agora.le-fil.net/",
+            "Atrium" to "https://atrium.le-fil.net/",
+            "Talk (Atrium)" to "https://atrium.le-fil.net/index.php?r=mail%2Fmail%2Findex"
         )
         destinations.forEachIndexed { index, (label, url) ->
             toolbar.menu.add(Menu.NONE, index + 1, index, label).setOnMenuItemClickListener {
