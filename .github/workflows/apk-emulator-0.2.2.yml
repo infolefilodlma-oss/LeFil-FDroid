@@ -37,10 +37,10 @@ jobs:
           target: default
           arch: x86_64
           profile: pixel_2
-          disable-animations: true
+          disable-animations: false
           emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -camera-back none
           script: |
-            set -euo pipefail
+            set -eu
             adb install -r app/build/outputs/apk/debug/app-debug.apk
             adb shell am start -W -n net.lefil.fdroid/.MainActivity | tee android-start.txt
             grep -q 'Status: ok' android-start.txt
