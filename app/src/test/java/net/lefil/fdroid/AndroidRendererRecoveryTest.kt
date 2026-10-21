@@ -40,7 +40,7 @@ class AndroidRendererRecoveryTest {
     }
 
     @Test fun retryCreatesANewRendererAndKeepsTheLastConversation() {
-        val url = "https://team.le-fil.net/index.php?r=mail%2Fmail%2Findex&id=31"
+        val url = "https://atrium.le-fil.net/index.php?r=mail%2Fmail%2Findex&id=31"
         val controller = Robolectric.buildActivity(MainActivity::class.java, Intent().putExtra(MainActivity.EXTRA_URL, url)).setup()
         val activity = controller.get()
         val old = activity.findViewById<WebView>(R.id.site_webview)
@@ -61,7 +61,7 @@ class AndroidRendererRecoveryTest {
         val activity = controller.get()
         val old = activity.findViewById<WebView>(R.id.site_webview)
         old.webViewClient.onRenderProcessGone(old, crashed)
-        val url = "https://social.le-fil.net/message/12"
+        val url = "https://agora.le-fil.net/message/12"
         controller.newIntent(Intent().putExtra(MainActivity.EXTRA_URL, url))
         assertEquals(url, shadowOf(activity.findViewById<WebView>(R.id.site_webview)).lastLoadedUrl)
         assertEquals(View.GONE, activity.findViewById<View>(R.id.site_renderer_error).visibility)
@@ -71,7 +71,7 @@ class AndroidRendererRecoveryTest {
     @Test fun savedStateDoesNotUseTheDestroyedWebView() {
         val controller = Robolectric.buildActivity(MainActivity::class.java).setup()
         val activity = controller.get()
-        val url = "https://social.le-fil.net/message/12"
+        val url = "https://agora.le-fil.net/message/12"
         controller.newIntent(Intent().putExtra(MainActivity.EXTRA_URL, url))
         val old = activity.findViewById<WebView>(R.id.site_webview)
         old.webViewClient.onRenderProcessGone(old, crashed)
