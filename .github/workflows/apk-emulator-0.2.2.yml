@@ -30,6 +30,10 @@ jobs:
           gradle-version: '8.7'
       - name: Build debug APK for emulator ONLY
         run: gradle --no-daemon :app:assembleDebug
+      - name: Enable hardware acceleration for Android emulator
+        run: |
+          test -c /dev/kvm
+          sudo chmod 666 /dev/kvm
       - name: Install and open APK on Android 15 emulator
         uses: reactivecircus/android-emulator-runner@v2
         with:
