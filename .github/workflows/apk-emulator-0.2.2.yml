@@ -1,0 +1,68 @@
+name: Android - 0.2.2 emulator startup smoke test
+
+on:
+  push:
+    branches:
+      - fix/direct-apk-0.2.2
+    paths:
+      - '.github/workflows/apk-emulator-0.2.2.yml'
+      - 'app/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  install-and-open:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+        with:
+          packages: 'platform-tools platforms;android-35'
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.7'
+      - name: Build debug APK for emulator ONLY
+        run: gradle --no-daemon :app:assembleDebug
+      - name: Install and open APK on Android 15 emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: default
+          arch: x86_64
+          profile: pixel_2
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -camera-back none
+          script: |
+            set -euo pipefail
+            adb install -r app/build/outputs/apk/debug/app-debug.apk
+            adb shell am start -W -n net.lefil.fdroid/.MainActivity | tee android-start.txt
+            grep -q 'Status: ok' android-start.txt
+            sleep 12
+            adb shell pidof net.lefil.fdroid | tee android-pid.txt
+            test -s android-pid.txt
+            adb exec-out screencap -p > android-start.png
+            file android-start.png | grep -q 'PNG image data'
+            adb shell am force-stop net.lefil.fdroid
+            adb shell am start -W -n net.lefil.fdroid/.MainActivity | tee android-restart.txt
+            grep -q 'Status: ok' android-restart.txt
+            adb shell pidof net.lefil.fdroid | tee android-restart-pid.txt
+            test -s android-restart-pid.txt
+      - name: Keep emulator evidence, no publishable APK
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lefil-0.2.2-emulator-evidence
+          path: |
+            android-start.txt
+            android-restart.txt
+            android-start.png
+            android-pid.txt
+            android-restart-pid.txt
+          if-no-files-found: warn
