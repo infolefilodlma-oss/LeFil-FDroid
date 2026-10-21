@@ -37,7 +37,7 @@ class MessageSourcesTest {
             if (it.endsWith("notification-list")) reply(body = talkHtml) else reply(body = """{"newMessages":1}""")
         }).fetch() as FetchResult.Unread
         assertEquals("31", result.items.single().id)
-        assertEquals(listOf("https://team.le-fil.net/mail/mail/notification-list", "https://team.le-fil.net/mail/mail/get-new-message-count-json"), urls)
+        assertEquals(listOf("https://atrium.le-fil.net/mail/mail/notification-list", "https://atrium.le-fil.net/mail/mail/get-new-message-count-json"), urls)
     }
     @Test fun talkFallsBackToIndexPhpRouting() {
         assertEquals(1, (talk(reply(404), reply(body = talkHtml), reply(body = """{"newMessages":1}""")) as FetchResult.Unread).items.size)
