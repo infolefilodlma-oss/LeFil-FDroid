@@ -6,6 +6,10 @@ on:
       - fix/direct-apk-0.2.2
     paths:
       - '.github/workflows/direct-apk-0.2.2.yml'
+      - 'app/**'
+      - 'tools/check_public_https.py'
+      - 'build.gradle'
+      - 'settings.gradle'
   workflow_dispatch:
 
 permissions:
