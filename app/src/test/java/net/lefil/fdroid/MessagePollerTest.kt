@@ -6,7 +6,7 @@ import org.junit.Test
 class MessagePollerTest {
     private val store = mutableMapOf<String, Set<String>>()
     private val tracker = UnreadTracker({ store[it] ?: emptySet() }, { key, value -> store[key] = value })
-    private val item = UnreadItem("31", "Marie", "https://team.le-fil.net/mail/mail/index?id=31", "Bonjour")
+    private val item = UnreadItem("31", "Marie", "https://atrium.le-fil.net/mail/mail/index?id=31", "Bonjour")
     private var result: FetchResult = FetchResult.Unread(listOf(item))
     private val source = object : MessageSource {
         override val key = "atrium"
