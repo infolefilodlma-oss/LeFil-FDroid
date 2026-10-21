@@ -22,7 +22,7 @@ internal class SessionHttp : SessionTransport {
     data class Reply(val status:Int,val body:String)
     override fun get(url:String):Reply? {
         val u=URL(url)
-        if (u.protocol!="https" || u.host !in listOf("social.le-fil.net","team.le-fil.net")) return null
+        if (u.protocol!="https" || u.host !in listOf("agora.le-fil.net","atrium.le-fil.net")) return null
         var c:HttpURLConnection?=null
         return try {
             c=(u.openConnection() as HttpURLConnection).apply {
@@ -45,17 +45,17 @@ internal class AgoraSource(private val http:SessionTransport=SessionHttp()):Mess
     override val key="agora"
     override val displayName="Agora"
     override fun fetch():FetchResult {
-        val r=http.get("https://social.le-fil.net/message")?:return FetchResult.Failed
+        val r=http.get("https://agora.le-fil.net/message")?:return FetchResult.Failed
         if (r.status in 300..399 || r.status==401 || r.status==403 || UnreadParsers.isLoginPage(r.body)) return FetchResult.LoginRequired
         if(r.status!=200 || !UnreadParsers.hasAgoraInbox(r.body)) return FetchResult.Failed
-        return FetchResult.Unread(UnreadParsers.parseAgora(r.body,"https://social.le-fil.net"), complete = false)
+        return FetchResult.Unread(UnreadParsers.parseAgora(r.body,"https://agora.le-fil.net"), complete = false)
     }
 }
 internal class AtriumSource(private val http:SessionTransport=SessionHttp()):MessageSource {
     override val key="atrium"
     override val displayName="Atrium"
     override fun fetch():FetchResult {
-        val base="https://team.le-fil.net"
+        val base="https://atrium.le-fil.net"
         for(path in listOf("/mail/mail/notification-list","/index.php?r=mail%2Fmail%2Fnotification-list")) {
             val r=http.get(base+path)?:return FetchResult.Failed
             if(r.status==404) continue
