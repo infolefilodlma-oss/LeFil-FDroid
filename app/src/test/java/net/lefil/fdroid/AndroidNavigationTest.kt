@@ -19,7 +19,7 @@ class AndroidNavigationTest {
     @Before fun disableLiveWatch() { MessageWatchService.setEnabled(RuntimeEnvironment.getApplication(), false) }
 
     @Test fun coldLaunchOpensNotificationConversation() {
-        val url = "https://team.le-fil.net/mail/mail/index?id=31"
+        val url = "https://atrium.le-fil.net/mail/mail/index?id=31"
         val intent = Intent().putExtra(MainActivity.EXTRA_URL, url)
         val controller = Robolectric.buildActivity(MainActivity::class.java, intent).setup()
         assertEquals(url, shadowOf(controller.get().findViewById<WebView>(R.id.site_webview)).lastLoadedUrl)
@@ -27,7 +27,7 @@ class AndroidNavigationTest {
     }
     @Test fun warmLaunchOpensTheNewConversation() {
         val controller = Robolectric.buildActivity(MainActivity::class.java).setup()
-        val url = "https://social.le-fil.net/message/12"
+        val url = "https://agora.le-fil.net/message/12"
         controller.newIntent(Intent().putExtra(MainActivity.EXTRA_URL, url))
         assertEquals(url, shadowOf(controller.get().findViewById<WebView>(R.id.site_webview)).lastLoadedUrl)
         controller.pause().stop().destroy()
@@ -44,7 +44,7 @@ class AndroidNavigationTest {
         assertEquals("Atrium", menu.findItem(3).title)
         assertEquals("Talk (Atrium)", menu.findItem(4).title)
         menu.performIdentifierAction(4, 0)
-        assertEquals("https://team.le-fil.net/index.php?r=mail%2Fmail%2Findex", shadowOf(controller.get().findViewById<WebView>(R.id.site_webview)).lastLoadedUrl)
+        assertEquals("https://atrium.le-fil.net/index.php?r=mail%2Fmail%2Findex", shadowOf(controller.get().findViewById<WebView>(R.id.site_webview)).lastLoadedUrl)
         controller.pause().stop().destroy()
     }
 }
