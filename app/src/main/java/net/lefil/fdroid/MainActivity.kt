@@ -90,6 +90,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         }
 
         MessageWatchService.start(this)
+        offerNotificationsOnce()
 
         onBackPressedDispatcher.addCallback(
             this,
@@ -233,9 +234,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         toolbar.title = "Le Fil"
         val destinations = listOf(
             "Accueil" to FIL_URL,
-            "Agora" to "https://social.le-fil.net/",
-            "Atrium" to "https://team.le-fil.net/",
-            "Talk (Atrium)" to "https://team.le-fil.net/index.php?r=mail%2Fmail%2Findex"
+            "Agora" to "https://agora.le-fil.net/",
+            "Atrium" to "https://atrium.le-fil.net/",
+            "Talk (Atrium)" to "https://atrium.le-fil.net/index.php?r=mail%2Fmail%2Findex"
         )
         destinations.forEachIndexed { index, (label, url) ->
             toolbar.menu.add(Menu.NONE, index + 1, index, label).setOnMenuItemClickListener {
@@ -272,6 +273,18 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         }
     }
 
+    private fun offerNotificationsOnce() {
+        val prefs = getSharedPreferences("lefil_watch", Context.MODE_PRIVATE)
+        if (MessageWatchService.enabled(this) || prefs.getBoolean("notification_intro_seen", false)) return
+        prefs.edit().putBoolean("notification_intro_seen", true).apply()
+        AlertDialog.Builder(this)
+            .setTitle("Recevoir les messages du Fil ?")
+            .setMessage("Le Fil peut vous avertir des messages et nouvelles activités d’Agora, d’Atrium et de Talk lorsque vous êtes connecté aux deux services. La veille du téléphone peut retarder certains messages.")
+            .setPositiveButton("Activer") { _, _ -> askNotificationPermission() }
+            .setNegativeButton("Plus tard", null)
+            .show()
+    }
+
     private fun askNotificationPermission() {
         if (Build.VERSION.SDK_INT >= 33 &&
             ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
@@ -284,7 +297,24 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         if (!MessageWatchService.start(this)) {
             MessageWatchService.setEnabled(this, false)
             Toast.makeText(this, "Android n’a pas autorisé le démarrage. Réessayez avec l’application ouverte.", Toast.LENGTH_LONG).show()
-        }
+        } else offerBatteryExemption()
+    }
+
+    private fun offerBatteryExemption() {
+        val power = getSystemService(Context.POWER_SERVICE) as android.os.PowerManager
+        if (power.isIgnoringBatteryOptimizations(packageName)) return
+        AlertDialog.Builder(this)
+            .setTitle("Messages même téléphone verrouillé")
+            .setMessage("Android peut suspendre les messages pendant la veille. Vous pouvez autoriser Le Fil à vérifier les messages en arrière-plan. Cela consomme davantage de batterie et ne garantit pas une réception instantanée sur tous les téléphones.")
+            .setPositiveButton("Autoriser") { _, _ ->
+                val request = Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS,
+                    Uri.parse("package:$packageName"))
+                if (runCatching { startActivity(request) }.isFailure) {
+                    runCatching { startActivity(Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS)) }
+                }
+            }
+            .setNegativeButton("Plus tard", null)
+            .show()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

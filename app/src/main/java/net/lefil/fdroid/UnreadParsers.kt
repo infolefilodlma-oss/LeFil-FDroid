@@ -54,7 +54,7 @@ internal object UnreadParsers {
             val mid=id.find(attrs)?.groupValues?.get(1) ?: continue
             val raw=href.find(attrs)?.groupValues?.get(1)?.let(::decodeEntities) ?: "/index.php?r=mail%2Fmail%2Findex&id=$mid"
             val url=when {
-                raw.startsWith("https://team.le-fil.net/") -> raw
+                raw.startsWith("https://atrium.le-fil.net/") -> raw
                 raw.startsWith("https://") -> continue
                 raw.startsWith("/") -> base.trimEnd('/')+raw
                 else -> base.trimEnd('/')+"/"+raw

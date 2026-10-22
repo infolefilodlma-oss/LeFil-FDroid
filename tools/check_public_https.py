@@ -11,16 +11,16 @@ import tempfile
 import urllib.parse
 
 ENDPOINTS = [
-    ("Agora", "https://social.le-fil.net/message"),
+    ("Agora", "https://agora.le-fil.net/message"),
     ("Le Fil home", "https://le-fil.net/"),
     ("Le Fil home WebView", "https://le-fil.net/"),
-    ("Agora NodeInfo", "https://social.le-fil.net/.well-known/nodeinfo"),
-    ("Talk inbox", "https://team.le-fil.net/index.php?r=mail%2Fmail%2Findex"),
-    ("Atrium home", "https://team.le-fil.net/"),
-    ("Talk list PHP", "https://team.le-fil.net/index.php?r=mail%2Fmail%2Fnotification-list"),
-    ("Talk count PHP", "https://team.le-fil.net/index.php?r=mail%2Fmail%2Fget-new-message-count-json"),
-    ("Talk list", "https://team.le-fil.net/mail/mail/notification-list"),
-    ("Talk count", "https://team.le-fil.net/mail/mail/get-new-message-count-json"),
+    ("Agora NodeInfo", "https://agora.le-fil.net/.well-known/nodeinfo"),
+    ("Talk inbox", "https://atrium.le-fil.net/index.php?r=mail%2Fmail%2Findex"),
+    ("Atrium home", "https://atrium.le-fil.net/"),
+    ("Talk list PHP", "https://atrium.le-fil.net/index.php?r=mail%2Fmail%2Fnotification-list"),
+    ("Talk count PHP", "https://atrium.le-fil.net/index.php?r=mail%2Fmail%2Fget-new-message-count-json"),
+    ("Talk list", "https://atrium.le-fil.net/mail/mail/notification-list"),
+    ("Talk count", "https://atrium.le-fil.net/mail/mail/get-new-message-count-json"),
 ]
 
 
@@ -73,7 +73,7 @@ def check(label, url):
                     software = payload.get("software", {})
                     record["software"] = {key: str(software[key])[:100] for key in ["name", "version"] if key in software}
                 record["nodeinfo_links"] = [link["href"] for link in payload.get("links", [])
-                    if urllib.parse.urlsplit(link.get("href", "")).hostname == "social.le-fil.net"
+                    if urllib.parse.urlsplit(link.get("href", "")).hostname == "agora.le-fil.net"
                     and urllib.parse.urlsplit(link.get("href", "")).scheme == "https"]
             except (ValueError, TypeError, KeyError):
                 record["nodeinfo_json"] = False

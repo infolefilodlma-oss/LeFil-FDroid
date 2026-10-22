@@ -37,11 +37,29 @@ class MessageSourcesTest {
             if (it.endsWith("notification-list")) reply(body = talkHtml) else reply(body = """{"newMessages":1}""")
         }).fetch() as FetchResult.Unread
         assertEquals("31", result.items.single().id)
-        assertEquals(listOf("https://team.le-fil.net/mail/mail/notification-list", "https://team.le-fil.net/mail/mail/get-new-message-count-json"), urls)
+        assertEquals(listOf("https://atrium.le-fil.net/mail/mail/notification-list", "https://atrium.le-fil.net/mail/mail/get-new-message-count-json"), urls)
     }
     @Test fun talkFallsBackToIndexPhpRouting() {
         assertEquals(1, (talk(reply(404), reply(body = talkHtml), reply(body = """{"newMessages":1}""")) as FetchResult.Unread).items.size)
     }
+    @Test fun talkUsesFallbackIfPrettyRouteCannotBeReached() {
+        val urls = mutableListOf<String>()
+        val result = AtriumSource(SessionTransport { url ->
+            urls += url
+            when (urls.size) {
+                1 -> null
+                2 -> reply(body = talkHtml)
+                else -> reply(body = """{"newMessages":1}""")
+            }
+        }).fetch() as FetchResult.Unread
+        assertEquals(listOf(
+            "https://atrium.le-fil.net/mail/mail/notification-list",
+            "https://atrium.le-fil.net/index.php?r=mail%2Fmail%2Fnotification-list",
+            "https://atrium.le-fil.net/index.php?r=mail%2Fmail%2Fget-new-message-count-json"
+        ), urls)
+        assertEquals("31", result.items.single().id)
+    }
+
     @Test fun talkAcceptsJsonWrappedHtml() {
         val json = org.json.JSONObject().put("html", talkHtml).toString()
         assertEquals("31", (talk(reply(body = json), reply(body = """{"newMessages":1}""")) as FetchResult.Unread).items.single().id)

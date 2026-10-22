@@ -1,0 +1,103 @@
+name: Android - 0.2.2 emulator startup smoke test
+
+on:
+  push:
+    branches:
+      - fix/direct-apk-0.2.2
+    paths:
+      - '.github/workflows/apk-emulator-0.2.2.yml'
+      - 'app/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  install-and-open:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.7'
+      - name: Build debug APK for emulator ONLY
+        run: gradle --no-daemon :app:assembleDebug :app:assembleDebugAndroidTest
+      - name: Enable hardware acceleration for Android emulator
+        run: |
+          test -c /dev/kvm
+          sudo chmod 666 /dev/kvm
+      - name: Install and open APK on Android 15 emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: default
+          arch: x86_64
+          profile: pixel_2
+          disable-animations: false
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -camera-back none
+          script: |
+            set -eu
+            adb install -r app/build/outputs/apk/debug/app-debug.apk
+            adb shell am start -W -n net.lefil.fdroid/.MainActivity | tee android-start.txt
+            grep -q 'Status: ok' android-start.txt
+            sleep 12
+            adb shell pidof net.lefil.fdroid | tee android-pid.txt
+            test -s android-pid.txt
+            adb exec-out screencap -p > android-start.png
+            file android-start.png | grep -q 'PNG image data'
+            adb shell am force-stop net.lefil.fdroid
+            adb shell am start -W -n net.lefil.fdroid/.MainActivity | tee android-restart.txt
+            grep -q 'Status: ok' android-restart.txt
+            adb shell pidof net.lefil.fdroid | tee android-restart-pid.txt
+            test -s android-restart-pid.txt
+            # No production user/password: a separate instrumented test enables the existing watch.
+            adb install -r app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
+            adb shell pm grant net.lefil.fdroid android.permission.POST_NOTIFICATIONS
+            adb shell am instrument -w -e class net.lefil.fdroid.NotificationLockInstrumentedTest net.lefil.fdroid.test/androidx.test.runner.AndroidJUnitRunner | tee android-lock-setup.txt
+            grep -q 'OK (1 test)' android-lock-setup.txt
+            # Instrumentation ends its target process. Reopen the app normally with watch enabled.
+            adb shell am start -W -n net.lefil.fdroid/.MainActivity | tee android-watch-start.txt
+            grep -q 'Status: ok' android-watch-start.txt
+            adb shell pidof net.lefil.fdroid | tee android-watch-pid.txt
+            test -s android-watch-pid.txt
+            # Verify that the enabled preference survived the instrumentation process shutdown.
+            adb shell run-as net.lefil.fdroid cat shared_prefs/lefil_watch.xml | tee android-watch-state.txt
+            grep -q 'name="enabled" value="true"' android-watch-state.txt
+            # Explicitly turn the screen off, then observe Android's real service/process state.
+            adb shell input keyevent 223
+            sleep 10
+            adb shell pidof net.lefil.fdroid | tee android-locked-pid.txt
+            test -s android-locked-pid.txt
+            adb shell dumpsys activity services net.lefil.fdroid | tee android-locked-service.txt
+            adb shell logcat -d -t 1200 | grep -E 'MessageWatchService|net.lefil.fdroid|ForegroundService' > android-locked-logcat.txt || true
+            grep -q 'MessageWatchService' android-locked-service.txt
+            adb shell dumpsys power | grep -E 'mWakefulness|mInteractive' > android-locked-power.txt || true
+            adb shell input keyevent 224
+      - name: Keep emulator evidence, no publishable APK
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lefil-0.2.2-emulator-evidence
+          path: |
+            android-start.txt
+            android-restart.txt
+            android-start.png
+            android-pid.txt
+            android-restart-pid.txt
+            android-lock-setup.txt
+            android-watch-start.txt
+            android-watch-pid.txt
+            android-watch-state.txt
+            android-locked-logcat.txt
+            android-locked-pid.txt
+            android-locked-service.txt
+            android-locked-power.txt
+          if-no-files-found: warn
