@@ -49,6 +49,7 @@ jobs:
       - name: Install native dependencies only on the disposable runner
         run: |
           composer install --working-dir=integration-runtime/humhub --no-interaction --prefer-dist --no-progress
+          mkdir -p integration-runtime/friendica/addon
           composer install --working-dir=integration-runtime/friendica --no-interaction --prefer-dist --no-progress
       - name: Create isolated native schemas, no production access
         env:
