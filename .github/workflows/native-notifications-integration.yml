@@ -67,7 +67,7 @@ jobs:
         run: |
           php -r '$db=new PDO("mysql:host=127.0.0.1;port=33306","root",""); foreach(["lefil_humhub_ephemeral","lefil_friendica_ephemeral"] as $name) $db->exec("CREATE DATABASE ".$name." CHARACTER SET utf8mb4"); $config=["controllerMap"=>["installer"=>"humhub\\modules\\installer\\commands\\InstallController"],"components"=>["db"=>["class"=>"yii\\db\\Connection","dsn"=>"mysql:host=127.0.0.1;port=33306;dbname=lefil_humhub_ephemeral","username"=>"root","password"=>"","charset"=>"utf8mb4"]]]; file_put_contents("integration-runtime/humhub/protected/config/dynamic.php","<?php return ".var_export($config,true).";");'
           (cd integration-runtime/humhub && php protected/yii installer/install-db --interactive=0)
-          (cd integration-runtime/friendica && php bin/console autoinstall --savedb)
+          (cd integration-runtime/friendica && php bin/console.php autoinstall --savedb)
       - name: Verify Gotify binary and start a private disposable process
         run: |
           set -eu
