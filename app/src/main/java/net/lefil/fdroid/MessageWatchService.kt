@@ -37,6 +37,8 @@ class MessageWatchService: Service() {
         }
     }
     private var executor:ScheduledExecutorService?=null
+    private var push:GotifyPushManager?=null
+    private var pushConfigured=false
     private lateinit var tracker:UnreadTracker
     private var loginNeeded=false
     private var unavailable=false
@@ -55,14 +57,18 @@ class MessageWatchService: Service() {
     override fun onStartCommand(intent:Intent?,flags:Int,startId:Int):Int {
         if (!enabled(this)) { stopSelf(); return START_NOT_STICKY }
         if(executor==null) {
-            executor=Executors.newSingleThreadScheduledExecutor().also {
-                it.scheduleWithFixedDelay({pollSafe()},0,60,TimeUnit.SECONDS)
-            }
-        } else if(intent?.action==ACTION_POLL) executor?.execute {pollSafe()}
+            val runner=Executors.newSingleThreadScheduledExecutor()
+            executor=runner
+            push=GotifyPushManager(this,runner,::showPushMessage)
+            pushConfigured=push?.start() == true
+            // The existing polling remains a temporary fallback only when no
+            // per-device Gotify credentials have been provisioned.
+            if (!pushConfigured) runner.scheduleWithFixedDelay({pollSafe()},0,60,TimeUnit.SECONDS)
+        } else if(intent?.action==ACTION_POLL && !pushConfigured) executor?.execute {pollSafe()}
         return START_STICKY
     }
     override fun onBind(intent:Intent?):IBinder?=null
-    override fun onDestroy() {executor?.shutdownNow();executor=null;super.onDestroy()}
+    override fun onDestroy() {push?.stop();push=null;executor?.shutdownNow();executor=null;super.onDestroy()}
     private fun pollSafe() {
         val power=getSystemService(Context.POWER_SERVICE) as PowerManager
         val wake=power.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,"LeFil:poll")
@@ -79,6 +85,22 @@ class MessageWatchService: Service() {
             catch (_: SecurityException) { /* Permission can be revoked while polling. */ }
         }
     }
+    internal fun showPushMessage(notice:PushNotice):Boolean {
+        // Reuse the existing native Android notification and trusted deep-link
+        // implementation. Gotify message body/title is deliberately not shown.
+        val origin = object:MessageSource {
+            override val key="push_" + notice.source
+            override val displayName=when(notice.source) {
+                "agora" -> "Agora"
+                "atrium" -> "Atrium"
+                else -> "Talk"
+            }
+            override val alertLabel=if(notice.source=="talk") "nouveau message" else "nouvelle activité"
+            override fun fetch():FetchResult=FetchResult.Failed
+        }
+        return showMessage(origin,UnreadItem(notice.eventId,notice.label,notice.url))
+    }
+
     internal fun showMessage(source:MessageSource,item:UnreadItem):Boolean {
         if (!enabled(this)) return false
         val nm=NotificationManagerCompat.from(this)
@@ -107,7 +129,7 @@ class MessageWatchService: Service() {
         return NotificationCompat.Builder(this,STATUS_CHANNEL)
             .setSmallIcon(R.drawable.ic_launcher_monochrome)
             .setContentTitle("Le Fil")
-            .setContentText(if(loginNeeded) "Touchez pour vous reconnecter" else if(unavailable) "Vérification indisponible — nouvel essai automatique" else "Surveillance Agora, Atrium et Talk")
+            .setContentText(if(loginNeeded) "Touchez pour vous reconnecter" else if(unavailable) "Vérification indisponible — nouvel essai automatique" else if(pushConfigured) "Notifications directes Agora, Atrium et Talk" else "Surveillance Agora, Atrium et Talk")
             .setOngoing(true).setShowWhen(false).setPriority(NotificationCompat.PRIORITY_MIN)
             .setContentIntent(pending).build()
     }
