@@ -14,8 +14,8 @@ class LeFilFixtureController extends \yii\console\Controller {
   \humhub\services\MigrationService::create()->migrateUp();
   $state=is_file(getenv('LEFIL_FIXTURE_FILE'))?$this->state():[];
   foreach(['sender','a','b'] as $name) {
-   $user=new User(['username'=>'fixture_'.$name,'email'=>'hh_'.$name.'@example.com','status'=>User::STATUS_ENABLED,'language'=>'en']);
-   if (!$user->save()) throw new \RuntimeException('Native HumHub user creation failed');
+   $user=new User(['username'=>'fixture_'.$name,'email'=>'hh_'.$name.'@example.com','status'=>User::STATUS_ENABLED]);
+   if (!$user->save()) throw new \RuntimeException('Native HumHub user invalid fields: '.implode(',',array_keys($user->getErrors())));
    $user->profile->firstname='Fixture';$user->profile->lastname=$name;$user->profile->save();
    $password=bin2hex(random_bytes(24));
    $model=new Password(['user_id'=>$user->id]);$model->setPassword($password);
