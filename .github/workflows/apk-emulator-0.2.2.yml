@@ -68,12 +68,16 @@ jobs:
             grep -q 'Status: ok' android-watch-start.txt
             adb shell pidof net.lefil.fdroid | tee android-watch-pid.txt
             test -s android-watch-pid.txt
+            # Verify that the enabled preference survived the instrumentation process shutdown.
+            adb shell run-as net.lefil.fdroid cat shared_prefs/lefil_watch.xml | tee android-watch-state.txt
+            grep -q 'name="enabled" value="true"' android-watch-state.txt
             # Explicitly turn the screen off, then observe Android's real service/process state.
             adb shell input keyevent 223
             sleep 10
             adb shell pidof net.lefil.fdroid | tee android-locked-pid.txt
             test -s android-locked-pid.txt
             adb shell dumpsys activity services net.lefil.fdroid | tee android-locked-service.txt
+            adb shell logcat -d -t 1200 | grep -E 'MessageWatchService|net.lefil.fdroid|ForegroundService' > android-locked-logcat.txt || true
             grep -q 'MessageWatchService' android-locked-service.txt
             adb shell dumpsys power | grep -E 'mWakefulness|mInteractive' > android-locked-power.txt || true
             adb shell input keyevent 224
@@ -91,6 +95,8 @@ jobs:
             android-lock-setup.txt
             android-watch-start.txt
             android-watch-pid.txt
+            android-watch-state.txt
+            android-locked-logcat.txt
             android-locked-pid.txt
             android-locked-service.txt
             android-locked-power.txt

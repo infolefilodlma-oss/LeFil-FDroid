@@ -21,7 +21,7 @@ class MessageWatchService: Service() {
         fun enabled(context: Context) = context.getSharedPreferences("lefil_watch", Context.MODE_PRIVATE)
             .getBoolean("enabled", false)
         fun setEnabled(context: Context, enabled: Boolean) {
-            context.getSharedPreferences("lefil_watch", Context.MODE_PRIVATE).edit().putBoolean("enabled", enabled).apply()
+            context.getSharedPreferences("lefil_watch", Context.MODE_PRIVATE).edit().putBoolean("enabled", enabled).commit()
         }
         fun start(context:Context): Boolean {
             if (!enabled(context)) return false
