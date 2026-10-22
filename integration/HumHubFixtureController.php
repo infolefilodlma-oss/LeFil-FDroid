@@ -16,7 +16,7 @@ class LeFilFixtureController extends \yii\console\Controller {
   foreach(['sender','a','b'] as $name) {
    $user=new User(['username'=>'fixture_'.$name,'email'=>'hh_'.$name.'@example.com','status'=>User::STATUS_ENABLED]);
    if (!$user->save()) throw new \RuntimeException('Native HumHub user invalid fields: '.implode(',',array_keys($user->getErrors())));
-   $user->profile->firstname='Fixture';$user->profile->lastname=$name;$user->profile->save();
+   // Minimal native account fixture: no optional profile schema assumptions.
    $password=bin2hex(random_bytes(24));
    $model=new Password(['user_id'=>$user->id]);$model->setPassword($password);
    if (!$model->save()) throw new \RuntimeException('Native password persistence failed');
