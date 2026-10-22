@@ -60,7 +60,8 @@ class MessageWatchService: Service() {
             val runner=Executors.newSingleThreadScheduledExecutor()
             executor=runner
             push=GotifyPushManager(this,runner,::showPushMessage)
-            pushConfigured=push?.start() == true
+            // A failed push initialization must not disable the existing polling fallback.
+            pushConfigured=runCatching { push?.start() == true }.getOrDefault(false)
             // The existing polling remains a temporary fallback only when no
             // per-device Gotify credentials have been provisioned.
             if (!pushConfigured) runner.scheduleWithFixedDelay({pollSafe()},0,60,TimeUnit.SECONDS)
