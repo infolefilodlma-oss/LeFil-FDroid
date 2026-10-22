@@ -23,7 +23,7 @@ class GotifyNoticeParserTest {
         val n = GotifyNoticeParser.parse(event())!!
         assertEquals("talk", n.source)
         assertEquals("message-123", n.eventId)
-        assertEquals(981, n.gotifyMessageId)
+        assertEquals(981L, n.gotifyMessageId)
         assertEquals("Nouveau message dans Talk", n.label)
         assertFalse(n.label.contains("Texte privé"))
     }
