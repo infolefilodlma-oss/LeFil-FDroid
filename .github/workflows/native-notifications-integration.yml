@@ -34,6 +34,12 @@ jobs:
           repository: humhub/humhub
           ref: a6a2710b84b9c851e5685520786ebfb809a8cb0d
           path: integration-runtime/humhub
+      - name: Native HumHub Messenger 3.3.10 source
+        uses: actions/checkout@v4
+        with:
+          repository: humhub/mail
+          ref: v3.3.10
+          path: integration-runtime/humhub/protected/modules/mail
       - name: Friendica 2026.05 native source
         uses: actions/checkout@v4
         with:
@@ -59,6 +65,7 @@ jobs:
           module_dir=integration-runtime/humhub/protected/modules/lefil-gotify
           mkdir -p "$module_dir"
           cp -R server/humhub/lefil-gotify/. "$module_dir/"
+          cp integration/HumHubFixtureController.php integration-runtime/humhub/protected/humhub/commands/LeFilFixtureController.php
           test -f "$module_dir/config.php"
           test -f "$module_dir/Module.php"
           test -f "$module_dir/Bridge.php"
@@ -75,7 +82,7 @@ jobs:
           FRIENDICA_TZ: UTC
           FRIENDICA_LANG: en
         run: |
-          php -r '$db=new PDO("mysql:host=127.0.0.1;port=33306","root",""); foreach(["lefil_humhub_ephemeral","lefil_friendica_ephemeral"] as $name) $db->exec("CREATE DATABASE ".$name." CHARACTER SET utf8mb4"); $config=["controllerMap"=>["installer"=>"humhub\\modules\\installer\\commands\\InstallController"],"components"=>["db"=>["class"=>"yii\\db\\Connection","dsn"=>"mysql:host=127.0.0.1;port=33306;dbname=lefil_humhub_ephemeral","username"=>"root","password"=>"","charset"=>"utf8mb4"]]]; file_put_contents("integration-runtime/humhub/protected/config/dynamic.php","<?php return ".var_export($config,true).";");'
+          php -r '$db=new PDO("mysql:host=127.0.0.1;port=33306","root",""); foreach(["lefil_humhub_ephemeral","lefil_friendica_ephemeral"] as $name) $db->exec("CREATE DATABASE ".$name." CHARACTER SET utf8mb4"); $config=["controllerMap"=>["installer"=>"humhub\\modules\\installer\\commands\\InstallController","lefil-fixture"=>"humhub\\commands\\LeFilFixtureController"],"components"=>["db"=>["class"=>"yii\\db\\Connection","dsn"=>"mysql:host=127.0.0.1;port=33306;dbname=lefil_humhub_ephemeral","username"=>"root","password"=>"","charset"=>"utf8mb4"]]]; file_put_contents("integration-runtime/humhub/protected/config/dynamic.php","<?php return ".var_export($config,true).";");'
           (cd integration-runtime/humhub && php protected/yii installer/install-db --interactive=0)
           (cd integration-runtime/friendica && php bin/console.php autoinstall --savedb)
       - name: Verify Gotify binary and start a private disposable process
@@ -104,6 +111,15 @@ jobs:
       - name: Native runtime availability
         run: |
           php -r '$db=new PDO("mysql:host=127.0.0.1;port=33306","root",""); foreach(["lefil_humhub_ephemeral","lefil_friendica_ephemeral"] as $name) { $count=$db->query("SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=".$db->quote($name))->fetchColumn(); if ($count<10) exit(1); } echo "Two separate native schemas installed; private Gotify healthy.\n";'
+      - name: Exercise native HumHub Atrium and Talk events
+        env:
+          LEFIL_FIXTURE_FILE: ${{ runner.temp }}/humhub-fixture-state.json
+        run: |
+          set -eu
+          cd integration-runtime/humhub
+          php protected/yii lefil-fixture/seed --interactive=0
+          php protected/yii lefil-fixture/events --interactive=0
+          php -r '$db=new PDO("mysql:host=127.0.0.1;port=33306;dbname=lefil_humhub_ephemeral","root",""); if ((int)$db->query("SELECT COUNT(*) FROM notification")->fetchColumn() < 1) exit(1); if ((int)$db->query("SELECT COUNT(*) FROM message_entry")->fetchColumn() < 1) exit(2); echo "Native Atrium notification and Talk message persisted.\\n";'
       - name: Destroy temporary application data
         if: always()
         run: |
