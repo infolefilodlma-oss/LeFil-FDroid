@@ -297,7 +297,24 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         if (!MessageWatchService.start(this)) {
             MessageWatchService.setEnabled(this, false)
             Toast.makeText(this, "Android n’a pas autorisé le démarrage. Réessayez avec l’application ouverte.", Toast.LENGTH_LONG).show()
-        }
+        } else offerBatteryExemption()
+    }
+
+    private fun offerBatteryExemption() {
+        val power = getSystemService(Context.POWER_SERVICE) as android.os.PowerManager
+        if (power.isIgnoringBatteryOptimizations(packageName)) return
+        AlertDialog.Builder(this)
+            .setTitle("Messages même téléphone verrouillé")
+            .setMessage("Android peut suspendre les messages pendant la veille. Vous pouvez autoriser Le Fil à vérifier les messages en arrière-plan. Cela consomme davantage de batterie et ne garantit pas une réception instantanée sur tous les téléphones.")
+            .setPositiveButton("Autoriser") { _, _ ->
+                val request = Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS,
+                    Uri.parse("package:$packageName"))
+                if (runCatching { startActivity(request) }.isFailure) {
+                    runCatching { startActivity(Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS)) }
+                }
+            }
+            .setNegativeButton("Plus tard", null)
+            .show()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
