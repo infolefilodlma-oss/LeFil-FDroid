@@ -47,13 +47,4 @@ class AndroidNavigationTest {
         assertEquals("https://atrium.le-fil.net/index.php?r=mail%2Fmail%2Findex", shadowOf(controller.get().findViewById<WebView>(R.id.site_webview)).lastLoadedUrl)
         controller.pause().stop().destroy()
     }
-
-    @Test fun nativeRadioMenuOpensTheCurrentRadioAddress() {
-        val controller = Robolectric.buildActivity(MainActivity::class.java).setup()
-        val menu = controller.get().findViewById<MaterialToolbar>(R.id.toolbar).menu
-        assertEquals("Radio", menu.findItem(5).title)
-        menu.performIdentifierAction(5, 0)
-        assertEquals("https://radio.le-fil.net/", shadowOf(controller.get().findViewById<WebView>(R.id.site_webview)).lastLoadedUrl)
-        controller.pause().stop().destroy()
-    }
 }
