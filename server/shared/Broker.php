@@ -97,7 +97,7 @@ final class Broker
         if ($state) return $state;
         $name = 'lefil-' . $this->subject($uid);
         // Recoverable, strong per-account password derived from a server-only key.
-        $password = hash_hmac('sha512', 'gotify-password:' . $name, $this->key);
+        $password = hash_hmac('sha256', 'gotify-password:' . $name, $this->key);
         $user = null;
         foreach ($this->api('GET', '/user', $this->admin()) as $candidate) {
             if (($candidate['name'] ?? '') === $name) { $user = $candidate; break; }
