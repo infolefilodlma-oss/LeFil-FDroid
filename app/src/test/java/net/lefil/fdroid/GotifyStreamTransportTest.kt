@@ -4,7 +4,7 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class GotifyStreamTransportTest {
-    private const val token = "client_token_0123456789abcdef"
+    private val token = "client_token_0123456789abcdef"
 
     @Test fun buildsAuthenticatedWebsocketWithoutLeakingTokenInUrl() {
         val r = GotifyStreamTransport.buildRequest("https://notifications.le-fil.net/", token)!!
