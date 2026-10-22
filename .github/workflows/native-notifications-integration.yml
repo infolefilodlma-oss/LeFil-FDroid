@@ -1,0 +1,101 @@
+name: Native notifications - isolated integration
+on:
+  push:
+    branches: [work/gotify-native-integration]
+    paths:
+      - '.github/workflows/native-notifications-integration.yml'
+      - 'server/**'
+      - 'integration/**'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: native-notifications-integration
+  cancel-in-progress: true
+jobs:
+  native-backends:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    services:
+      database:
+        image: mariadb:11.4
+        env:
+          MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: "yes"
+        ports:
+          - 127.0.0.1:33306:3306
+        options: >-
+          --health-cmd="healthcheck.sh --connect --innodb_initialized"
+          --health-interval=5s --health-timeout=5s --health-retries=30
+    steps:
+      - uses: actions/checkout@v4
+      - name: HumHub 1.18.3 native source
+        uses: actions/checkout@v4
+        with:
+          repository: humhub/humhub
+          ref: a6a2710b84b9c851e5685520786ebfb809a8cb0d
+          path: integration-runtime/humhub
+      - name: Friendica 2026.05 native source
+        uses: actions/checkout@v4
+        with:
+          repository: friendica/friendica
+          ref: 285cc571e92c92175c22ccad1902309fdb6ba4e1
+          path: integration-runtime/friendica
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: pdo_mysql, gd, intl, curl, sodium, mbstring, xml, zip, bcmath, opcache, gmp, imagick
+          tools: composer:v2
+          coverage: none
+      - name: Install native dependencies only on the disposable runner
+        run: |
+          composer install --working-dir=integration-runtime/humhub --no-interaction --prefer-dist --no-progress
+          composer install --working-dir=integration-runtime/friendica --no-interaction --prefer-dist --no-progress
+      - name: Create isolated native schemas, no production access
+        env:
+          MYSQL_HOST: 127.0.0.1
+          MYSQL_PORT: '33306'
+          MYSQL_USER: root
+          MYSQL_PASSWORD: ''
+          MYSQL_DATABASE: lefil_friendica_ephemeral
+          FRIENDICA_URL: http://127.0.0.1:18082
+          FRIENDICA_ADMIN_MAIL: fixture@example.invalid
+          FRIENDICA_TZ: UTC
+          FRIENDICA_LANG: en
+        run: |
+          php -r '$db=new PDO("mysql:host=127.0.0.1;port=33306","root",""); foreach(["lefil_humhub_ephemeral","lefil_friendica_ephemeral"] as $name) $db->exec("CREATE DATABASE ".$name." CHARACTER SET utf8mb4"); $config=["components"=>["db"=>["class"=>"yii\\db\\Connection","dsn"=>"mysql:host=127.0.0.1;port=33306;dbname=lefil_humhub_ephemeral","username"=>"root","password"=>"","charset"=>"utf8mb4"]]]; file_put_contents("integration-runtime/humhub/protected/config/dynamic.php","<?php return ".var_export($config,true).";");'
+          (cd integration-runtime/humhub && php protected/yii installer/install-db --interactive=0)
+          (cd integration-runtime/friendica && php bin/console autoinstall --savedb)
+      - name: Verify Gotify binary and start a private disposable process
+        run: |
+          set -eu
+          umask 077
+          curl --fail --silent --show-error --location https://github.com/gotify/server/releases/download/v3.1.1/gotify-linux-amd64.zip -o "$RUNNER_TEMP/gotify.zip"
+          echo 'd452faad071981d191d5c95f70d0f9520dc2ef2336b2b03055e12cfabfbae2d2  '"$RUNNER_TEMP/gotify.zip" | sha256sum --check --status
+          mkdir "$RUNNER_TEMP/gotify-native"
+          unzip -q "$RUNNER_TEMP/gotify.zip" -d "$RUNNER_TEMP/gotify-native"
+          python3 - <<'PY'
+          import os,pathlib,secrets
+          root=pathlib.Path(os.environ['RUNNER_TEMP'])/'gotify-native'
+          password=secrets.token_urlsafe(48)
+          print('::add-mask::'+password)
+          (root/'admin-password').write_text(password)
+          (root/'gotify-server.env').write_text('GOTIFY_SERVER_LISTENADDR=127.0.0.1\nGOTIFY_SERVER_PORT=18765\nGOTIFY_DEFAULTUSER_PASS_FILE='+str(root/'admin-password')+'\nGOTIFY_REGISTRATION=false\nGOTIFY_LOGLEVEL=warn\n')
+          PY
+          chmod 700 "$RUNNER_TEMP/gotify-native/gotify-linux-amd64"
+          (cd "$RUNNER_TEMP/gotify-native" && ./gotify-linux-amd64 >private-runtime.log 2>&1 &)
+          for attempt in $(seq 1 20); do
+            if curl --fail --silent http://127.0.0.1:18765/health >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          exit 1
+      - name: Native runtime availability
+        run: |
+          php -r '$db=new PDO("mysql:host=127.0.0.1;port=33306","root",""); foreach(["lefil_humhub_ephemeral","lefil_friendica_ephemeral"] as $name) { $count=$db->query("SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=".$db->quote($name))->fetchColumn(); if ($count<10) exit(1); } echo "Two separate native schemas installed; private Gotify healthy.\n";'
+      - name: Destroy temporary application data
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import os,pathlib,shutil
+          root=pathlib.Path(os.environ['RUNNER_TEMP'])/'gotify-native'
+          if root.is_dir(): shutil.rmtree(root)
+          PY
