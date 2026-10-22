@@ -102,12 +102,22 @@ jobs:
           (root/'gotify-server.env').write_text('GOTIFY_SERVER_LISTENADDR=127.0.0.1\nGOTIFY_SERVER_PORT=18765\nGOTIFY_DEFAULTUSER_PASS_FILE='+str(root/'admin-password')+'\nGOTIFY_REGISTRATION=false\nGOTIFY_LOGLEVEL=warn\n')
           PY
           chmod 700 "$RUNNER_TEMP/gotify-native/gotify-linux-amd64"
-          (cd "$RUNNER_TEMP/gotify-native" && ./gotify-linux-amd64 >private-runtime.log 2>&1 &)
+          (cd "$RUNNER_TEMP/gotify-native" && GOTIFY_SERVER_LISTENADDR=127.0.0.1 GOTIFY_SERVER_PORT=18765 GOTIFY_DEFAULTUSER_PASS="$(cat admin-password)" GOTIFY_REGISTRATION=false GOTIFY_LOGLEVEL=warn ./gotify-linux-amd64 >private-runtime.log 2>&1 &)
           for attempt in $(seq 1 20); do
             if curl --fail --silent http://127.0.0.1:18765/health >/dev/null; then exit 0; fi
             sleep 1
           done
           exit 1
+      - name: Exercise private Gotify broker end to end
+        env:
+          LEFIL_GOTIFY_KEY_FILE: ${{ runner.temp }}/gotify-native/secretbox.key
+          LEFIL_GOTIFY_ADMIN_PASSWORD_FILE: ${{ runner.temp }}/gotify-native/admin-password
+          LEFIL_GOTIFY_LOCK_DIR: ${{ runner.temp }}/gotify-native/locks
+        run: |
+          set -eu
+          mkdir -m 700 "$LEFIL_GOTIFY_LOCK_DIR"
+          php -r 'file_put_contents(getenv("LEFIL_GOTIFY_KEY_FILE"), random_bytes(SODIUM_CRYPTO_SECRETBOX_KEYBYTES)); chmod(getenv("LEFIL_GOTIFY_KEY_FILE"), 0600);'
+          php integration/GotifyBrokerFixture.php
       - name: Native runtime availability
         run: |
           php -r '$db=new PDO("mysql:host=127.0.0.1;port=33306","root",""); foreach(["lefil_humhub_ephemeral","lefil_friendica_ephemeral"] as $name) { $count=$db->query("SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=".$db->quote($name))->fetchColumn(); if ($count<10) exit(1); } echo "Two separate native schemas installed; private Gotify healthy.\n";'
