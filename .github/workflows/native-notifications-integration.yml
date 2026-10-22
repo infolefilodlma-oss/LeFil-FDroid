@@ -52,7 +52,17 @@ jobs:
           mkdir -p integration-runtime/friendica/addon
           composer install --working-dir=integration-runtime/friendica --no-interaction --prefer-dist --no-progress
       - name: Check candidate PHP syntax
-        run: find server -name '*.php' -print0 | xargs -0 -r -n1 php -l
+        run: find server integration -name '*.php' -print0 | xargs -0 -r -n1 php -l
+      - name: Install isolated Le Fil HumHub module
+        run: |
+          set -eu
+          module_dir=integration-runtime/humhub/protected/modules/lefil-gotify
+          mkdir -p "$module_dir"
+          cp -R server/humhub/lefil-gotify/. "$module_dir/"
+          test -f "$module_dir/config.php"
+          test -f "$module_dir/Module.php"
+          test -f "$module_dir/Bridge.php"
+          php -r '$j=json_decode(file_get_contents("integration-runtime/humhub/protected/modules/lefil-gotify/module.json"),true,512,JSON_THROW_ON_ERROR); if(($j["id"]??"")!=="lefil-gotify") exit(1);'
       - name: Create isolated native schemas, no production access
         env:
           MYSQL_HOST: 127.0.0.1

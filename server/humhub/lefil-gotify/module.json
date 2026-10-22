@@ -1,0 +1,9 @@
+{
+  "id": "lefil-gotify",
+  "name": "Le Fil - Native Notifications",
+  "description": "Private notification delivery to the Le Fil Android app; disabled until explicitly configured.",
+  "version": "0.1.0",
+  "humhub": {
+    "minVersion": "1.18"
+  }
+}
