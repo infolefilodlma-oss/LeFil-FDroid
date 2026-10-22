@@ -5,7 +5,7 @@ require_once __DIR__ . '/../server/shared/Broker.php';
 use LeFil\Notifications\Broker;
 
 $state = [];
-$load = static fn(int $uid): ?string => $state[$uid] ?? null;
+$load = static function (int $uid) use (&$state): ?string { return $state[$uid] ?? null; };
 $save = static function(int $uid, string $ciphertext) use (&$state): void { $state[$uid] = $ciphertext; };
 $broker = new Broker('humhub', $load, $save);
 $deviceA = hash('sha256', 'isolated-device-A');
@@ -47,10 +47,5 @@ if (($actual['event_id']??'')!=='humhub:fixture-101' || ($actual['source']??'')!
 }
 if (str_contains(json_encode($messagesA), 'PRIVATE_BODY_SENTINEL')) throw new RuntimeException('Private body leaked');
 $broker->revoke(2001,$deviceA);
-try {
-    $broker->deliver(2001,$payload);
-    throw new RuntimeException('Revocation not enforced');
-} catch (RuntimeException $e) {
-    if ($e->getMessage()==='Revocation not enforced') throw $e;
-}
+if ($broker->deliver(2001,$payload) !== false) throw new RuntimeException('Revocation not enforced');
 echo "Broker enrollment, Gotify delivery, payload contract, recipient isolation and revocation verified.\n";
