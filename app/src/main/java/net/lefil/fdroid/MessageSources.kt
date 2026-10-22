@@ -13,6 +13,7 @@ internal sealed class FetchResult {
 internal interface MessageSource {
     val key:String
     val displayName:String
+    val alertLabel:String get() = "nouveau message"
     fun fetch():FetchResult
 }
 internal fun interface SessionTransport {
@@ -53,7 +54,7 @@ internal class AgoraSource(private val http:SessionTransport=SessionHttp()):Mess
 }
 internal class AtriumSource(private val http:SessionTransport=SessionHttp()):MessageSource {
     override val key="atrium"
-    override val displayName="Atrium"
+    override val displayName="Talk"
     override fun fetch():FetchResult {
         val base="https://atrium.le-fil.net"
         for(path in listOf("/mail/mail/notification-list","/index.php?r=mail%2Fmail%2Fnotification-list")) {

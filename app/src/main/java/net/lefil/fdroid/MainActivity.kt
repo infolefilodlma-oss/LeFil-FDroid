@@ -279,7 +279,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         prefs.edit().putBoolean("notification_intro_seen", true).apply()
         AlertDialog.Builder(this)
             .setTitle("Recevoir les messages du Fil ?")
-            .setMessage("Le Fil peut vous avertir des messages Agora et Talk lorsque vous êtes connecté aux deux services. La veille du téléphone peut retarder certains messages.")
+            .setMessage("Le Fil peut vous avertir des messages et nouvelles activités d’Agora, d’Atrium et de Talk lorsque vous êtes connecté aux deux services. La veille du téléphone peut retarder certains messages.")
             .setPositiveButton("Activer") { _, _ -> askNotificationPermission() }
             .setNegativeButton("Plus tard", null)
             .show()

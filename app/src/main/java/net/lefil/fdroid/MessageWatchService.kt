@@ -40,7 +40,7 @@ class MessageWatchService: Service() {
     private lateinit var tracker:UnreadTracker
     private var loginNeeded=false
     private var unavailable=false
-    private val sources=listOf<MessageSource>(AgoraSource(),AtriumSource())
+    private val sources=listOf<MessageSource>(AgoraSource(),AgoraActivitySource(),AtriumSource(),AtriumActivitySource())
     override fun onCreate() {
         super.onCreate()
         val prefs=getSharedPreferences("lefil_watch",Context.MODE_PRIVATE)
@@ -93,7 +93,7 @@ class MessageWatchService: Service() {
         val pending=PendingIntent.getActivity(this,requestCode,open,PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
         val n=NotificationCompat.Builder(this,MESSAGE_CHANNEL)
             .setSmallIcon(R.drawable.ic_launcher_monochrome)
-            .setContentTitle("${source.displayName} — nouveau message")
+            .setContentTitle("${source.displayName} — ${source.alertLabel}")
             .setContentText(item.label.ifBlank{"Touchez pour lire"})
             .setCategory(NotificationCompat.CATEGORY_MESSAGE)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -107,7 +107,7 @@ class MessageWatchService: Service() {
         return NotificationCompat.Builder(this,STATUS_CHANNEL)
             .setSmallIcon(R.drawable.ic_launcher_monochrome)
             .setContentTitle("Le Fil")
-            .setContentText(if(loginNeeded) "Touchez pour vous reconnecter" else if(unavailable) "Vérification indisponible — nouvel essai automatique" else "Surveillance Agora et Talk (Atrium)")
+            .setContentText(if(loginNeeded) "Touchez pour vous reconnecter" else if(unavailable) "Vérification indisponible — nouvel essai automatique" else "Surveillance Agora, Atrium et Talk")
             .setOngoing(true).setShowWhen(false).setPriority(NotificationCompat.PRIORITY_MIN)
             .setContentIntent(pending).build()
     }
@@ -115,6 +115,6 @@ class MessageWatchService: Service() {
         if(Build.VERSION.SDK_INT<26)return
         val manager=getSystemService(NotificationManager::class.java)
         manager.createNotificationChannel(NotificationChannel(STATUS_CHANNEL,"Le Fil actif",NotificationManager.IMPORTANCE_MIN))
-        manager.createNotificationChannel(NotificationChannel(MESSAGE_CHANNEL,"Messages privés",NotificationManager.IMPORTANCE_HIGH))
+        manager.createNotificationChannel(NotificationChannel(MESSAGE_CHANNEL,"Messages et activités",NotificationManager.IMPORTANCE_HIGH))
     }
 }
