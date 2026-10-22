@@ -9,7 +9,8 @@ internal object ActivityParsers {
         MessageDigest.getInstance("SHA-256").digest(s.toByteArray(Charsets.UTF_8))
             .take(12).joinToString("") { (it.toInt() and 255).toString(16).padStart(2, '0') }
 
-    fun agora(body: String): FetchResult = try {
+    fun agora(body: String): FetchResult {
+        return try {
         val data = JSONObject(body).optJSONObject("result") ?: return FetchResult.Failed
         val notifications = data.optJSONArray("notifications") ?: return FetchResult.Failed
         val found = linkedMapOf<String, UnreadItem>()
@@ -32,12 +33,14 @@ internal object ActivityParsers {
         }
         // Ping does not guarantee an exhaustive notification history.
         FetchResult.Unread(found.values.toList(), complete = false)
-    } catch (_: Exception) { FetchResult.Failed }
+        } catch (_: Exception) { FetchResult.Failed }
+    }
 
     private val entry = Regex("""<a\b([^>]*\bdata-notification-id=["'](\d+)["'][^>]*)>([\s\S]*?)</a>""", RegexOption.IGNORE_CASE)
     private val classes = Regex("""\bclass=["']([^"']*)["']""", RegexOption.IGNORE_CASE)
 
-    fun atrium(body: String): FetchResult = try {
+    fun atrium(body: String): FetchResult {
+        return try {
         val data = JSONObject(body)
         val count = data.optInt("newNotifications", -1)
         if (count < 0 || !data.has("output") || data.isNull("output")) return FetchResult.Failed
@@ -55,7 +58,8 @@ internal object ActivityParsers {
         }
         if (found.isEmpty()) FetchResult.Failed
         else FetchResult.Unread(found.values.toList(), complete = false)
-    } catch (_: Exception) { FetchResult.Failed }
+        } catch (_: Exception) { FetchResult.Failed }
+    }
 }
 
 internal class AgoraActivitySource(private val http: SessionTransport = SessionHttp()): MessageSource {
