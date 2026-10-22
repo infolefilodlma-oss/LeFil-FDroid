@@ -11,7 +11,7 @@ class PushNoticeLedgerTest {
     @Test fun notifiesOnceForRepeatedWebsocketEventEvenAfterRecreation() {
         var deliveries = 0
         val load = { stored.toSet() }
-        val save = { values:Set<String> -> stored.clear();stored.addAll(values) }
+        val save: (Set<String>) -> Unit = { values -> stored.clear(); stored.addAll(values); Unit }
         val first = PushNoticeLedger(load, save) { deliveries++;true }
         assertTrue(first.accept(notice("agora","event-1")))
         assertFalse(first.accept(notice("agora","event-1")))
