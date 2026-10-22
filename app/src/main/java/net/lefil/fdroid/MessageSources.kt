@@ -57,8 +57,8 @@ internal class AtriumSource(private val http:SessionTransport=SessionHttp()):Mes
     override fun fetch():FetchResult {
         val base="https://atrium.le-fil.net"
         for(path in listOf("/mail/mail/notification-list","/index.php?r=mail%2Fmail%2Fnotification-list")) {
-            val r=http.get(base+path)?:return FetchResult.Failed
-            if(r.status==404) continue
+            val r=http.get(base+path)
+            if(r==null || r.status==404) continue
             if(r.status in 300..399 || r.status==401 || r.status==403) return FetchResult.LoginRequired
             if(r.status!=200) return FetchResult.Failed
             val html=if(r.body.trimStart().startsWith("{")) try {
