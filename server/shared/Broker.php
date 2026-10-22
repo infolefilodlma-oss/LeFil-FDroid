@@ -45,7 +45,7 @@ final class Broker
         try {
             $data = curl_exec($curl);
             $status = (int)curl_getinfo($curl, CURLINFO_RESPONSE_CODE);
-            if ($data === false || $status < 200 || $status >= 300) throw new \RuntimeException('Gotify operation unavailable');
+            if ($data === false || $status < 200 || $status >= 300) throw new \RuntimeException(sprintf('Gotify HTTP failure: %s %s status=%d', $method, $path, $status));
             return $data === '' ? [] : json_decode($data, true, 64, JSON_THROW_ON_ERROR);
         } finally { curl_close($curl); }
     }
