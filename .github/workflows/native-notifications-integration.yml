@@ -1,7 +1,7 @@
 name: Native notifications - isolated integration
 on:
   push:
-    branches: [work/gotify-native-integration]
+    branches: [work/gotify-native-integration, work/notifications-natives]
     paths:
       - '.github/workflows/native-notifications-integration.yml'
       - 'server/**'
