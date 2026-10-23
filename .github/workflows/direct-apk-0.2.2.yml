@@ -1,0 +1,75 @@
+name: Android - direct APK 0.2.2 signing candidate
+
+on:
+  push:
+    branches:
+      - fix/direct-apk-0.2.2
+    paths:
+      - '.github/workflows/direct-apk-0.2.2.yml'
+      - 'app/**'
+      - 'tools/check_public_https.py'
+      - 'build.gradle'
+      - 'settings.gradle'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  signed-candidate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+        with:
+          packages: 'platform-tools platforms;android-35 build-tools;34.0.0'
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.7'
+      - name: Verify unit tests and build unsigned release
+        run: |
+          gradle --no-daemon :app:testDebugUnitTest :app:lintDebug :app:assembleRelease
+          test -s app/build/outputs/apk/release/app-release-unsigned.apk
+      - name: Sign ONLY with existing release keystore and verify original certificate
+        env:
+          LEFIL_SIGNING_KEYSTORE_BASE64: ${{ secrets.LEFIL_SIGNING_KEYSTORE_BASE64 }}
+          LEFIL_SIGNING_STORE_PASSWORD: ${{ secrets.LEFIL_SIGNING_STORE_PASSWORD }}
+          LEFIL_SIGNING_KEY_PASSWORD: ${{ secrets.LEFIL_SIGNING_KEY_PASSWORD }}
+          EXPECTED_CERT_SHA256: d0755310dbd84319bbd0cb658475168cb9234cd1b60f9893a092afa19c31b902
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -z "$LEFIL_SIGNING_KEYSTORE_BASE64" || -z "$LEFIL_SIGNING_STORE_PASSWORD" ]]; then
+            echo "::error::Original signing key is not configured in GitHub Actions secrets; cannot deliver an updatable APK."
+            exit 1
+          fi
+          umask 077
+          KEYSTORE="$RUNNER_TEMP/lefil-release.p12"
+          trap 'rm -f "$KEYSTORE"' EXIT
+          printf '%s' "$LEFIL_SIGNING_KEYSTORE_BASE64" | base64 --decode > "$KEYSTORE"
+          BT="$ANDROID_HOME/build-tools/34.0.0"
+          "$BT/zipalign" -f 4 app/build/outputs/apk/release/app-release-unsigned.apk "$RUNNER_TEMP/LeFil-aligned.apk"
+          export KEY_PASS="${LEFIL_SIGNING_KEY_PASSWORD:-$LEFIL_SIGNING_STORE_PASSWORD}"
+          "$BT/apksigner" sign --ks "$KEYSTORE" --ks-type PKCS12 --ks-key-alias lefil-release --ks-pass env:LEFIL_SIGNING_STORE_PASSWORD --key-pass env:KEY_PASS --out LeFil.apk "$RUNNER_TEMP/LeFil-aligned.apk"
+          "$BT/apksigner" verify --min-sdk-version 24 --verbose --print-certs LeFil.apk > signature-verification.txt
+          GOT="$(grep -m1 'certificate SHA-256 digest' signature-verification.txt | awk '{print tolower($NF)}')"
+          if [[ "$GOT" != "$EXPECTED_CERT_SHA256" ]]; then
+            echo "::error::Wrong signing certificate; cannot upgrade existing 0.2.1 installs."
+            exit 1
+          fi
+          "$BT/aapt" dump badging LeFil.apk | grep -F "name='net.lefil.fdroid' versionCode='4' versionName='0.2.2'"
+          sha256sum LeFil.apk > LeFil.apk.sha256
+      - name: Retain signed candidate, not a public release
+        uses: actions/upload-artifact@v4
+        with:
+          name: lefil-0.2.2-signed-candidate
+          path: |
+            LeFil.apk
+            LeFil.apk.sha256
+            signature-verification.txt
+          if-no-files-found: error
