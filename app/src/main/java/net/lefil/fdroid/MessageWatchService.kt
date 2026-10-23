@@ -39,6 +39,8 @@ class MessageWatchService: Service() {
     private var executor:ScheduledExecutorService?=null
     private var push:GotifyPushManager?=null
     private var pushConfigured=false
+    private var lastEnrollAttempt=0L
+    private val enrollTransport:EnrollTransport=SessionEnrollTransport()
     private lateinit var tracker:UnreadTracker
     private var loginNeeded=false
     private var unavailable=false
@@ -59,32 +61,68 @@ class MessageWatchService: Service() {
         if(executor==null) {
             val runner=Executors.newSingleThreadScheduledExecutor()
             executor=runner
-            push=GotifyPushManager(this,runner,::showPushMessage)
+            push=GotifyPushManager(this,runner,::showPushMessage) {
+                // A revoked token (logout) returns the service to polling and re-enrollment.
+                runCatching { runner.execute { restartPush(); cycleSafe(true) } }
+            }
             // A failed push initialization must not disable the existing polling fallback.
-            pushConfigured=runCatching { push?.start() == true }.getOrDefault(false)
-            // The existing polling remains a temporary fallback only when no
-            // per-device Gotify credentials have been provisioned.
-            if (!pushConfigured) runner.scheduleWithFixedDelay({pollSafe()},0,60,TimeUnit.SECONDS)
-        } else if(intent?.action==ACTION_POLL && !pushConfigured) executor?.execute {pollSafe()}
+            restartPush()
+            // Every minute: enroll services still without native push, and poll only those.
+            runner.scheduleWithFixedDelay({cycleSafe(false)},0,60,TimeUnit.SECONDS)
+        } else if(intent?.action==ACTION_POLL) executor?.execute {cycleSafe(true)}
         return START_STICKY
     }
     override fun onBind(intent:Intent?):IBinder?=null
     override fun onDestroy() {push?.stop();push=null;executor?.shutdownNow();executor=null;super.onDestroy()}
-    private fun pollSafe() {
+    private fun restartPush() {
+        val previous = pushConfigured
+        pushConfigured = runCatching { push?.start() == true }.getOrDefault(false)
+        if (previous != pushConfigured) refreshStatus()
+    }
+    /** Services without native push yet: periodic polling stays the temporary fallback. */
+    private fun uncovered(): Set<PushRealm> =
+        PushRealm.values().toSet() - (push?.configuredRealms() ?: emptySet())
+    private fun cycleSafe(force:Boolean) {
+        if (uncovered().isEmpty()) {
+            // Native push covers every service: earlier polling states no longer apply.
+            if (loginNeeded || unavailable) { loginNeeded = false; unavailable = false; refreshStatus() }
+            return
+        }
         val power=getSystemService(Context.POWER_SERVICE) as PowerManager
         val wake=power.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,"LeFil:poll")
         wake.acquire(120_000L)
-        try { pollAll() } catch(_:Exception) {} finally {if(wake.isHeld)wake.release()}
+        try {
+            if (enrollMissing(force)) restartPush()
+            val remaining = uncovered()
+            if (remaining.isNotEmpty()) pollAll(sources.filter { PushRealm.of(it) in remaining })
+        } catch(_:Exception) {} finally {if(wake.isHeld)wake.release()}
     }
-    @Synchronized private fun pollAll() {
-        val status = MessagePoller(sources, tracker, ::showMessage).poll()
+    /** Pairing uses the member's own logged-in session; every 5 minutes, or 15 s after a page of the service. */
+    private fun enrollMissing(force:Boolean):Boolean {
+        val manager = push ?: return false
+        val now = SystemClock.elapsedRealtime()
+        val wait = if (force) 15_000L else 300_000L
+        if (lastEnrollAttempt != 0L && now - lastEnrollAttempt < wait) return false
+        lastEnrollAttempt = now
+        val device = GotifyEnrollment.deviceId(this)
+        var enrolled = false
+        for (realm in uncovered()) {
+            val credentials = GotifyEnrollment.enroll(realm, device, enrollTransport) ?: continue
+            manager.store(realm, credentials)
+            enrolled = true
+        }
+        return enrolled
+    }
+    @Synchronized private fun pollAll(active:List<MessageSource>) {
+        val status = MessagePoller(active, tracker, ::showMessage).poll()
         val changed = status.loginRequired != loginNeeded || status.unavailable != unavailable
         loginNeeded = status.loginRequired
         unavailable = status.unavailable
-        if (changed) {
-            try { NotificationManagerCompat.from(this).notify(STATUS_ID, statusNotification()) }
-            catch (_: SecurityException) { /* Permission can be revoked while polling. */ }
-        }
+        if (changed) refreshStatus()
+    }
+    private fun refreshStatus() {
+        try { NotificationManagerCompat.from(this).notify(STATUS_ID, statusNotification()) }
+        catch (_: SecurityException) { /* Permission can be revoked while polling. */ }
     }
     internal fun showPushMessage(notice:PushNotice):Boolean {
         // Reuse the existing native Android notification and trusted deep-link

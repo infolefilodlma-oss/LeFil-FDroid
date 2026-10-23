@@ -25,10 +25,26 @@ final class Broker
 
     public function identity(int $uid): string { return $this->subject($uid); }
 
+    /** Loopback-only Gotify API; the port is set by the server administrator. */
+    private static function internalBase(): string
+    {
+        $base = getenv('LEFIL_GOTIFY_INTERNAL_URL') ?: 'http://127.0.0.1:18765';
+        if (!preg_match('~^http://127\.0\.0\.1:[0-9]{2,5}$~D', $base)) throw new \RuntimeException('Invalid internal Gotify location');
+        return $base;
+    }
+
+    /** Public HTTPS endpoint handed to the Android app; must stay under le-fil.net. */
+    private static function publicBase(): string
+    {
+        $base = getenv('LEFIL_GOTIFY_PUBLIC_URL') ?: 'https://notifications.le-fil.net';
+        if (!preg_match('~^https://[a-z0-9.-]+\.le-fil\.net$~D', $base)) throw new \RuntimeException('Invalid public Gotify location');
+        return $base;
+    }
+
     private function api(string $method, string $path, array $auth, ?array $body = null): array
     {
         if (!preg_match('~^/(?:user|application|client|message)(?:/[0-9]+)?(?:\\?limit=100&since=[0-9]+)?$~D', $path)) throw new \RuntimeException('Invalid internal request');
-        $curl = curl_init('http://127.0.0.1:18765' . $path);
+        $curl = curl_init(self::internalBase() . $path);
         $headers = ['Content-Type: application/json'];
         $options = [CURLOPT_CUSTOMREQUEST => $method, CURLOPT_RETURNTRANSFER => true,
             CURLOPT_FOLLOWLOCATION => false, CURLOPT_CONNECTTIMEOUT_MS => 1500, CURLOPT_TIMEOUT_MS => 8000,
@@ -55,7 +71,9 @@ final class Broker
         $path = getenv('LEFIL_GOTIFY_ADMIN_PASSWORD_FILE');
         $password = $path ? @file_get_contents($path) : false;
         if ($password === false || strlen(trim($password)) < 24) throw new \RuntimeException('Gotify enrollment unavailable');
-        return ['name' => 'admin', 'password' => trim($password)];
+        $name = getenv('LEFIL_GOTIFY_ADMIN_USER') ?: 'admin';
+        if (!preg_match('/^[A-Za-z0-9_.@-]{1,64}$/D', $name)) throw new \RuntimeException('Gotify enrollment unavailable');
+        return ['name' => $name, 'password' => trim($password)];
     }
 
     private function read(int $uid): array
@@ -131,7 +149,7 @@ final class Broker
             $state = $this->account($uid);
             $existing = $state['devices'][$key] ?? null;
             if ($existing && hash_equals($existing['session'], $sessionTag)) {
-                return ['subject' => $state['subject'], 'server' => 'https://notifications.le-fil.net', 'client_token' => $existing['token']];
+                return ['subject' => $state['subject'], 'server' => self::publicBase(), 'client_token' => $existing['token']];
             }
             $auth = ['name' => $state['name'], 'password' => $state['password']];
             if ($existing) {
@@ -143,7 +161,7 @@ final class Broker
             $client = $this->api('POST', '/client', $auth, ['name' => 'Le Fil ' . substr($key, 0, 12)]);
             $state['devices'][$key] = ['id' => (int)$client['id'], 'token' => $client['token'], 'session' => $sessionTag];
             $this->write($uid, $state);
-            return ['subject' => $state['subject'], 'server' => 'https://notifications.le-fil.net', 'client_token' => $client['token']];
+            return ['subject' => $state['subject'], 'server' => self::publicBase(), 'client_token' => $client['token']];
         });
     }
 

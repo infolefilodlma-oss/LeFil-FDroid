@@ -38,6 +38,50 @@ class LeFilFixtureController extends \yii\console\Controller {
   Yii::$app->queue->run(false);
   echo "Native Atrium and Talk events processed.\n";
  }
+ /** Pairs a device for members a and b through the production Bridge, as the enrollment route does. */
+ public function actionEnroll() {
+  $state=$this->state();
+  foreach(['a','b'] as $name) {
+   $credentials=Bridge::provision($state['humhub'][$name]['id'],hash('sha256','device-'.$name),'fixture-session-'.$name);
+   if (($credentials['server']??'')!=='https://notifications.le-fil.net' || strlen($credentials['client_token']??'')<16) throw new \RuntimeException('Enrollment contract broken');
+   $state['humhub'][$name]['token']=$credentials['client_token'];
+  }
+  $this->store($state);
+  echo "HumHub members paired through the Le Fil bridge.\n";
+ }
+ private function gotify(string $token,string $path='/message?limit=100'):array {
+  $curl=curl_init('http://127.0.0.1:18765'.$path);
+  curl_setopt_array($curl,[CURLOPT_RETURNTRANSFER=>true,CURLOPT_HTTPHEADER=>['X-Gotify-Key: '.$token],CURLOPT_TIMEOUT=>5,CURLOPT_PROXY=>'']);
+  $json=curl_exec($curl);$status=(int)curl_getinfo($curl,CURLINFO_RESPONSE_CODE);curl_close($curl);
+  return [$status,$status===200?json_decode($json,true,64,JSON_THROW_ON_ERROR):null];
+ }
+ /** Proves the real HumHub chain: native Atrium notification and Messenger message reach only the recipient. */
+ public function actionVerify() {
+  $state=$this->state()['humhub'];
+  [$status,$page]=$this->gotify($state['a']['token']);
+  if ($status!==200) throw new \RuntimeException('Recipient history unreadable');
+  $found=[];
+  foreach($page['messages'] as $message) {
+   $n=$message['extras']['lefil::notification']??[];
+   if (str_contains(json_encode($message),'PRIVATE_BODY_SENTINEL')) throw new \RuntimeException('Private body leaked');
+   $found[$n['source']??'']=$n;
+  }
+  if (!isset($found['atrium']) || !str_starts_with($found['atrium']['url'],'https://atrium.le-fil.net/index.php?r=notification%2Fentry&id=')) throw new \RuntimeException('Atrium notification missing: '.json_encode(array_keys($found)));
+  if (!isset($found['talk']) || !preg_match('~^https://atrium\.le-fil\.net/index\.php\?r=mail%2Fmail%2Findex&id=[0-9]+$~D',$found['talk']['url'])) throw new \RuntimeException('Talk notification missing: '.json_encode(array_keys($found)));
+  [$status,$other]=$this->gotify($state['b']['token']);
+  if ($status!==200 || count($other['messages'])!==0) throw new \RuntimeException('Recipient privacy isolation failed');
+  echo "Atrium and Talk delivered natively to the recipient only, without private text.\n";
+ }
+ /** Logging out of HumHub revokes the device token bound to that session. */
+ public function actionLogout() {
+  $state=$this->state()['humhub'];
+  Bridge::logout($state['a']['id'],'fixture-session-a');
+  [$status]=$this->gotify($state['a']['token']);
+  if ($status!==401) throw new \RuntimeException('Logout did not revoke the device token (HTTP '.$status.')');
+  [$status]=$this->gotify($state['b']['token']);
+  if ($status!==200) throw new \RuntimeException('Logout of one member affected another');
+  echo "Logout revoked only the member's own device.\n";
+ }
  public function actionTransactionalRollback() {
   $state=$this->state()['humhub'];$sender=User::findOne($state['sender']['id']);$a=User::findOne($state['a']['id']);
   Yii::$app->user->switchIdentity($sender);
