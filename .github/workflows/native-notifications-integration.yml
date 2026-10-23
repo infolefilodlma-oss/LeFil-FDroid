@@ -147,6 +147,11 @@ jobs:
       - name: Exercise native Friendica Agora private message
         env:
           LEFIL_FIXTURE_FILE: ${{ runner.temp }}/friendica-fixture-state.json
+          MYSQL_HOST: 127.0.0.1
+          MYSQL_PORT: '33306'
+          MYSQL_USER: root
+          MYSQL_PASSWORD: ''
+          MYSQL_DATABASE: lefil_friendica_ephemeral
           LEFIL_GOTIFY_KEY_FILE: ${{ runner.temp }}/gotify-native/secretbox.key
           LEFIL_GOTIFY_ADMIN_PASSWORD_FILE: ${{ runner.temp }}/gotify-native/admin-password
           LEFIL_GOTIFY_LOCK_DIR: ${{ runner.temp }}/gotify-native/locks
@@ -154,8 +159,10 @@ jobs:
         run: |
           set -eu
           cd integration-runtime/friendica
-          php bin/console.php user add "Fixture A" lefil_a lefil_a@example.com en >/dev/null
-          php bin/console.php user add "Fixture B" lefil_b lefil_b@example.com en >/dev/null
+          # Disposable runner: no DNS check of fixture e-mail domains, no avatar prompt.
+          php bin/console.php config system disable_email_validation 1
+          echo "" | php bin/console.php user add "Fixture A" lefil_a lefil_a@example.com en >/dev/null
+          echo "" | php bin/console.php user add "Fixture B" lefil_b lefil_b@example.com en >/dev/null
           php bin/console.php addon enable lefilgotify
           php LeFilFixture.php enroll
           php LeFilFixture.php event

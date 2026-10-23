@@ -25,6 +25,7 @@ $app = \Friendica\App::fromContainer($container);
         $this->container->create(\Friendica\AppHelper::class),
         $this->container->create(\Friendica\Core\Addon\AddonHelper::class),
     );
+    $this->registerTemplateEngine();
 }, $app, \Friendica\App::class))($_SERVER);
 
 require_once getcwd() . '/addon/lefilgotify/lefilgotify.php';
