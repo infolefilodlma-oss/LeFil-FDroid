@@ -148,6 +148,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 if (view !== this@MainActivity.webView) return
                 progress.visibility = View.GONE
                 CookieManager.getInstance().flush()
+                // Just logged in to Agora or Atrium: pair this phone for native notifications without waiting.
+                val host = url?.let { Uri.parse(it).host }
+                if (host == "agora.le-fil.net" || host == "atrium.le-fil.net") MessageWatchService.pollNow(this@MainActivity)
             }
 
             @RequiresApi(26)

@@ -70,6 +70,13 @@ jobs:
           test -f "$module_dir/Module.php"
           test -f "$module_dir/Bridge.php"
           php -r '$j=json_decode(file_get_contents("integration-runtime/humhub/protected/modules/lefil-gotify/module.json"),true,512,JSON_THROW_ON_ERROR); if(($j["id"]??"")!=="lefil-gotify") exit(1);'
+      - name: Install isolated Le Fil Friendica addon
+        run: |
+          set -eu
+          mkdir -p integration-runtime/friendica/addon/lefilgotify
+          cp -R server/friendica/lefilgotify/. integration-runtime/friendica/addon/lefilgotify/
+          cp integration/FriendicaFixture.php integration-runtime/friendica/LeFilFixture.php
+          test -f integration-runtime/friendica/addon/lefilgotify/lefilgotify.php
       - name: Create isolated native schemas, no production access
         env:
           MYSQL_HOST: 127.0.0.1
@@ -124,12 +131,36 @@ jobs:
       - name: Exercise native HumHub Atrium and Talk events
         env:
           LEFIL_FIXTURE_FILE: ${{ runner.temp }}/humhub-fixture-state.json
+          LEFIL_GOTIFY_KEY_FILE: ${{ runner.temp }}/gotify-native/secretbox.key
+          LEFIL_GOTIFY_ADMIN_PASSWORD_FILE: ${{ runner.temp }}/gotify-native/admin-password
+          LEFIL_GOTIFY_LOCK_DIR: ${{ runner.temp }}/gotify-native/locks
+          LEFIL_GOTIFY_BROKER_FILE: ${{ github.workspace }}/server/shared/Broker.php
         run: |
           set -eu
           cd integration-runtime/humhub
           php protected/yii lefil-fixture/seed --interactive=0
+          php protected/yii lefil-fixture/enroll --interactive=0
           php protected/yii lefil-fixture/events --interactive=0
+          php protected/yii lefil-fixture/verify --interactive=0
+          php protected/yii lefil-fixture/logout --interactive=0
           php -r '$db=new PDO("mysql:host=127.0.0.1;port=33306;dbname=lefil_humhub_ephemeral","root",""); if ((int)$db->query("SELECT COUNT(*) FROM notification")->fetchColumn() < 1) exit(1); if ((int)$db->query("SELECT COUNT(*) FROM message_entry")->fetchColumn() < 1) exit(2); echo "Native Atrium notification and Talk message persisted.\\n";'
+      - name: Exercise native Friendica Agora private message
+        env:
+          LEFIL_FIXTURE_FILE: ${{ runner.temp }}/friendica-fixture-state.json
+          LEFIL_GOTIFY_KEY_FILE: ${{ runner.temp }}/gotify-native/secretbox.key
+          LEFIL_GOTIFY_ADMIN_PASSWORD_FILE: ${{ runner.temp }}/gotify-native/admin-password
+          LEFIL_GOTIFY_LOCK_DIR: ${{ runner.temp }}/gotify-native/locks
+          LEFIL_GOTIFY_BROKER_FILE: ${{ github.workspace }}/server/shared/Broker.php
+        run: |
+          set -eu
+          cd integration-runtime/friendica
+          php bin/console.php user add "Fixture A" lefil_a lefil_a@example.com en >/dev/null
+          php bin/console.php user add "Fixture B" lefil_b lefil_b@example.com en >/dev/null
+          php bin/console.php addon enable lefilgotify
+          php LeFilFixture.php enroll
+          php LeFilFixture.php event
+          php LeFilFixture.php verify
+          php LeFilFixture.php logout
       - name: Destroy temporary application data
         if: always()
         run: |
