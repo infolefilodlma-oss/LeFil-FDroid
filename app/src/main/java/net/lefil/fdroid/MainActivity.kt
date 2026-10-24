@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     companion object {
         private const val FIL_URL = "https://le-fil.net/"
+        private const val ATRIUM_HOME_URL = "https://atrium.le-fil.net/"
         private const val STATE_WEBVIEW = "site_webview_state"
         private const val STATE_LAST_URL = "site_last_url"
         const val EXTRA_URL = "net.lefil.fdroid.OPEN_URL"
@@ -49,6 +50,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private var webView: WebView? = null
     private var lastSiteUrl = FIL_URL
+    private var notificationFallbackUsed = false
 
     private val permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
         granted ->
@@ -66,6 +68,19 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private fun isFilHost(host: String?): Boolean {
         return host != null && (host == "le-fil.net" || host.endsWith(".le-fil.net"))
+    }
+
+    // Filet apres-coup (onPageFinished, pas shouldOverrideUrlLoading) : si la
+    // page finalement chargee sur un hote du Fil est la route JSON des
+    // notifications HumHub (ex. apres une redirection post-connexion que
+    // shouldOverrideUrlLoading ne voit pas, POST compris), revenir une seule
+    // fois a l'accueil d'Atrium plutot que d'afficher le JSON brut.
+    private fun isNotificationJsonRoute(url: String?): Boolean {
+        if (url == null) return false
+        val uri = Uri.parse(url)
+        if (uri.scheme != "https" || !isFilHost(uri.host)) return false
+        val route = uri.getQueryParameter("r") ?: uri.path?.removePrefix("/")
+        return route == "notification/list"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -161,6 +176,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
             override fun onPageFinished(view: WebView, url: String?) {
                 if (view !== this@MainActivity.webView) return
+                if (!notificationFallbackUsed && isNotificationJsonRoute(url)) {
+                    notificationFallbackUsed = true
+                    view.loadUrl(ATRIUM_HOME_URL)
+                    return
+                }
                 progress.visibility = View.GONE
                 CookieManager.getInstance().flush()
                 // Just logged in to Agora or Atrium: pair this phone for native notifications without waiting.
@@ -217,6 +237,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     private fun loadSite(url: String) {
+        notificationFallbackUsed = false
         lastSiteUrl = url
         val view = webView ?: WebView(this).also { replacement ->
             replacement.id = R.id.site_webview

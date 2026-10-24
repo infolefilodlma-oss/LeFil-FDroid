@@ -24,6 +24,12 @@ internal class SessionHttp : SessionTransport {
     override fun get(url:String):Reply? {
         val u=URL(url)
         if (u.protocol!="https" || u.host !in listOf("agora.le-fil.net","atrium.le-fil.net")) return null
+        // Sans cookie de session, l'utilisateur ne s'est jamais connecté sur ce
+        // domaine via la WebView : ne pas interroger le serveur avant cette
+        // connexion (evite qu'un retour non authentifie sur une route de
+        // notifications ne soit memorise comme page a rejoindre apres connexion).
+        val cookie = CookieManager.getInstance().getCookie(url)
+        if (cookie.isNullOrBlank()) return null
         var c:HttpURLConnection?=null
         return try {
             c=(u.openConnection() as HttpURLConnection).apply {
@@ -31,7 +37,12 @@ internal class SessionHttp : SessionTransport {
                 connectTimeout=15000
                 readTimeout=15000
                 setRequestProperty("Accept","text/html,application/json")
-                CookieManager.getInstance().getCookie(url)?.let { setRequestProperty("Cookie",it) }
+                // Signale explicitement une requete AJAX : sans cet en-tete,
+                // HumHub/Yii2 peut traiter cet appel comme une navigation de
+                // page normale et memoriser son URL (ex. notification/list)
+                // comme destination a rejoindre apres une connexion ulterieure.
+                setRequestProperty("X-Requested-With","XMLHttpRequest")
+                setRequestProperty("Cookie",cookie)
             }
             val status=c.responseCode
             c.headerFields.filterKeys { it?.equals("Set-Cookie", ignoreCase = true) == true }
