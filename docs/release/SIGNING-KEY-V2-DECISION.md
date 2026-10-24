@@ -30,6 +30,28 @@ Cette rupture ne concerne que les appareils ayant installé l'APK 0.2.1
 GitHub. Les appareils n'ayant encore rien installé n'ont aucune action à
 faire : ils reçoivent directement une version signée v2.
 
+## Canal de distribution F-Droid (décision du 2026-10-24)
+
+La soumission au catalogue officiel F-Droid utilise la **signature
+standard F-Droid** : F-Droid compile et signe lui-même l'APK distribué
+via son dépôt, avec sa propre clé, comme c'est l'usage pour la majorité
+des applications du catalogue. La clé **v2** reste réservée exclusivement
+à la distribution directe (`le-fil.net` / `aide.le-fil.net`) et n'est
+pas transmise à F-Droid.
+
+Conséquence déjà documentée plus haut : un appareil installé depuis
+F-Droid et un appareil installé directement depuis le-fil.net portent
+des signatures différentes et ne peuvent pas se mettre à jour l'un vers
+l'autre sans désinstallation. Ce sont deux canaux de distribution
+distincts et non interchangeables, par choix.
+
+La variante de recette « developer-signed »
+(`docs/release/net.lefil.fdroid.developer-signed.yml`, conservation de
+la signature v2 via vérification de reproductibilité binaire et un
+APK publié en `Binaries`) n'est **pas retenue** pour la soumission
+actuelle. Elle reste dans le dépôt comme option documentée pour une
+éventuelle évolution future, non comme une soumission en cours.
+
 ## Conservation
 
 - `docs/release/LeFil-signing-certificate.pem` (certificat public v1) reste

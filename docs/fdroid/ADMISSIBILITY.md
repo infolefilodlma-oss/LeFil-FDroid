@@ -11,7 +11,12 @@
 > été reconfirmée le 2026-10-24 sur le dépôt officiel et reste
 > d'application ; les preuves techniques détaillées (tests, scans,
 > exécutions CI) ci-dessous n'ont pas été recommencées pour le nouveau
-> candidat et ne doivent pas être lues comme le validant.
+> candidat et ne doivent pas être lues comme le validant. Décision du
+> 2026-10-24 : signature standard F-Droid retenue, clé v2 réservée à la
+> distribution directe (`docs/release/SIGNING-KEY-V2-DECISION.md`) ;
+> compilation depuis les sources du candidat actuel vérifiée ce même
+> jour par un build Gradle propre réussi (`CHECKS.json`), sans preuve de
+> reproductibilité binaire.
 
 Le dossier de Le Fil 0.2.1 est techniquement prêt à être proposé pour examen, avec demande explicite d'examen de l'exception d'ancienneté et déclaration des notifications non validées. Cela ne certifie pas son admission. La politique fixe des critères pour l'ajout au catalogue ; le guide prévoit que les mainteneurs examinent la proposition et déterminent les écarts à résoudre. Les limites connues restent ouvertes dans le texte de MR, sans être transformées en interdiction générale de déposer une proposition.
 

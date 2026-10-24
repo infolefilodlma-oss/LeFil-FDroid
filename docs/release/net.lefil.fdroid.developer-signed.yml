@@ -1,3 +1,9 @@
+# NON RETENU POUR LA SOUMISSION ACTUELLE (décision du 2026-10-24).
+# La signature standard F-Droid est retenue pour le dépôt officiel ;
+# la clé v2 reste réservée à la distribution directe sur le-fil.net.
+# Voir docs/release/SIGNING-KEY-V2-DECISION.md. Ce fichier est conservé
+# comme option documentée pour une évolution future, pas comme un
+# dossier à proposer à fdroiddata aujourd'hui.
 AntiFeatures:
   TetheredNet:
     en-US: Only the Le Fil services can be used; server instances cannot be changed

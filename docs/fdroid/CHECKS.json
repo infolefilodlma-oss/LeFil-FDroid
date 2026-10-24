@@ -3,6 +3,16 @@
     "added_utc": "2026-10-24",
     "status": "All checks below ran against the superseded 0.2.1/versionCode 3 candidate (commit 25189d316d8345a601b4dae2fa9987d286831d1e). The current candidate is 0.2.7-test/versionCode 11, commit 85cbe966f3948a6fac9b690c82a21e2531cc25e1. None of the recorded test/build/scan runs below have been repeated for the new candidate; they must not be cited as validating it. See net.lefil.fdroid.yml and docs/release/SIGNING-KEY-V2-DECISION.md."
   },
+  "current_candidate_compilation_check_20261024": {
+    "commit": "85cbe966f3948a6fac9b690c82a21e2531cc25e1",
+    "tool": "Gradle 8.7, JDK 17 (temurin)",
+    "command": "gradle --no-daemon clean :app:assembleRelease",
+    "fresh_tasks_executed": "45 of 46 (clean build, not reused cache)",
+    "result": "BUILD SUCCESSFUL",
+    "unsigned_apk_sha256": "af51a239638ceda18441059fa0aa5692b6f0ee4506b24e32b456db9a6683af82",
+    "signing_decision": "Standard F-Droid signing retained for this submission; v2 key reserved for direct distribution only (docs/release/SIGNING-KEY-V2-DECISION.md).",
+    "scope": "Confirms the pinned commit/subdir/gradle recipe fields build successfully from source. This is a successful compilation, not a demonstrated reproducible build: no independent second build was compared against this output, and no F-Droid-side build/scan was run."
+  },
   "checked_at_utc": "2026-10-17T07:52:59.970501+00:00",
   "candidate": {
     "package": "net.lefil.fdroid",

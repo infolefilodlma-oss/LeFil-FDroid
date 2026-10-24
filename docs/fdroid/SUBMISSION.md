@@ -8,7 +8,13 @@
 > été déposée pour ce nouveau candidat ; les points « à exposer à
 > l'examen » ci-dessous restent d'actualité et s'ajoutent désormais le
 > changement de clé de signature et l'absence de vérification de
-> reproductibilité binaire.
+> reproductibilité binaire. Décision du 2026-10-24 : signature standard
+> F-Droid retenue pour cette soumission, clé v2 réservée à la
+> distribution directe sur le-fil.net (voir
+> `docs/release/SIGNING-KEY-V2-DECISION.md`). Compilation depuis les
+> sources vérifiée le 2026-10-24 (Gradle 8.7/JDK17, build propre réussi,
+> voir `CHECKS.json`) ; ce n'est pas une preuve de reproductibilité
+> binaire.
 
 Le Fil reste la même application Android `net.lefil.fdroid`, version candidate `0.2.1` / code `3`. La finalisation du dossier est isolée sur `codex/fdroid-submission-readiness`, à partir des travaux validés de `codex/notifications-fdroid-validation`. `main`, `notifications-reelles` et la PR nº 2 sont préservées.
 
