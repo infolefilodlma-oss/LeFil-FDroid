@@ -124,6 +124,16 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 request: android.webkit.WebResourceRequest
             ): Boolean {
                 val uri = request.url
+                // HumHub (Atrium/Talk) peut rediriger une connexion expirée vers
+                // /notification/list, qui renvoie du JSON brut (newNotifications,
+                // lastEntryId, output) au lieu d'une page. Cet appel est normalement
+                // fait en arrière-plan par le site (XHR) ; seule sa navigation en
+                // page principale est anormale et doit être redirigée vers Atrium.
+                if (request.isForMainFrame && uri.scheme == "https" && isFilHost(uri.host) &&
+                    uri.path == "/notification/list") {
+                    view.loadUrl("https://atrium.le-fil.net/")
+                    return true
+                }
                 if (uri.scheme == "https" && isFilHost(uri.host)) {
                     return false
                 }

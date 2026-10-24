@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorSurface"
+        android:visibility="gone"
         app:logo="@drawable/le_fil_toolbar_logo"
         app:logoDescription="@string/app_name" />
     <FrameLayout android:id="@+id/site_container"
