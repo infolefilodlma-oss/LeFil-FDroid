@@ -18,34 +18,46 @@ RepoType: git
 Repo: https://github.com/infolefilodlma-oss/LeFil-FDroid.git
 
 Builds:
-  - versionName: 0.2.1
-    versionCode: 3
-    commit: 25189d316d8345a601b4dae2fa9987d286831d1e
+  - versionName: 0.2.7-test
+    versionCode: 11
+    commit: 85cbe966f3948a6fac9b690c82a21e2531cc25e1
     subdir: app
     gradle:
       - yes
 
 MaintainerNotes: |-
-  Candidate 0.2.1, versionCode 3. The build source includes corrected
-  Fastlane descriptions and the official logo assets, not a stable release tag.
-  Message polling is experimental and actual delivery is not validated.
+  Candidate 0.2.7-test, versionCode 11, commit
+  85cbe966f3948a6fac9b690c82a21e2531cc25e1. Superseded candidate
+  0.2.1/versionCode 3 (commit 25189d316d8345a601b4dae2fa9987d286831d1e)
+  is kept only as prior validation history, not as the proposal.
+  Message delivery now uses WorkManager, a periodic ~15-minute check
+  (no Gotify, no permanent foreground service), consolidated into a
+  single Android notification per cycle. This was validated on a
+  physical phone (Samsung) on 2026-10-24; pagination and exhaustive
+  delivery over long periods remain unverified.
   Native recovery was tested in an Android 15 emulator using local HTML;
-  this did not test authenticated services or actual message delivery.
+  this did not test authenticated services end to end.
   Web pages automatically load Google Fonts (fonts.googleapis.com and
   fonts.gstatic.com); the homepage also loads WordPress emoji from s.w.org.
-  Third-party cookies are enabled. These web requests are now disclosed
-  upstream. Google font blocking left the observed public controls visible;
-  authenticated pages and tracking behavior remain unaudited. A Site Kit
-  generator marker was present without an analytics request observed.
-  Please review any additional Anti-Feature classification using the
-  recorded requests; absence of GMS/Firebase is a native dependency claim.
+  Third-party cookies are enabled. These web requests are disclosed
+  upstream; absence of GMS/Firebase is a native dependency claim.
+  Signing: the application's own release key was replaced on 2026-10-23
+  (new "v2" key, certificate SHA-256
+  ec6b47258ca1acd76a5855ce06b533017eb893b544fb95b1db867c57d71efccc;
+  decision recorded in docs/release/SIGNING-KEY-V2-DECISION.md). This
+  recipe lets F-Droid build and sign the APK with F-Droid's own key, as
+  is standard for the main repo; this is a different signature from any
+  directly-distributed v2-signed APK, so devices that installed a direct
+  build cannot upgrade in place from an F-Droid-installed build or vice
+  versa without uninstalling. No independent reproducible-build
+  comparison between an F-Droid build and the developer build has been
+  performed; a successful local/CI compilation is not equivalent to a
+  demonstrated reproducible build.
   Review of the Quality Control user exception is requested: public history
   starts on 2026-10-14, and the project representative reported a candidate
   trial on a phone. No user count or accepted exception is claimed.
-  Live message acceptance is disclosed as pending during inclusion review;
-  the proposal does not claim validated notification delivery.
 
 AutoUpdateMode: Version
 UpdateCheckMode: Tags v[0-9].*
-CurrentVersion: 0.2.1
-CurrentVersionCode: 3
+CurrentVersion: 0.2.7-test
+CurrentVersionCode: 11

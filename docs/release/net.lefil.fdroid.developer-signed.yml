@@ -19,36 +19,42 @@ Repo: https://github.com/infolefilodlma-oss/LeFil-FDroid.git
 Binaries: https://github.com/infolefilodlma-oss/LeFil-FDroid/releases/download/v%v/LeFil.apk
 
 Builds:
-  - versionName: 0.2.1
-    versionCode: 3
-    commit: 25189d316d8345a601b4dae2fa9987d286831d1e
+  - versionName: 0.2.7-test
+    versionCode: 11
+    commit: 85cbe966f3948a6fac9b690c82a21e2531cc25e1
     subdir: app
     gradle:
       - yes
 
-AllowedAPKSigningKeys: d0755310dbd84319bbd0cb658475168cb9234cd1b60f9893a092afa19c31b902
+# Corrigé le 2026-10-24 : l'empreinte v1 (d0755310...) correspondait à la clé
+# abandonnée le 2026-10-24 (voir docs/release/SIGNING-KEY-V2-DECISION.md).
+# La clé officielle actuelle est v2.
+AllowedAPKSigningKeys: ec6b47258ca1acd76a5855ce06b533017eb893b544fb95b1db867c57d71efccc
+
+# BLOCAGE NON RÉSOLU (2026-10-24) : ce champ Binaries pointe vers un
+# asset de release GitHub "v0.2.7-test/LeFil.apk" qui n'existe pas
+# encore pour ce candidat signé v2 et n'a pas été publié (aucune
+# publication d'APK n'est autorisée dans le cadre de cette préparation).
+# Sans cet asset, F-Droid ne peut pas effectuer la vérification de
+# build reproductible nécessaire à la conservation de la signature du
+# développeur sur ce chemin. Cette variante "developer-signed" ne peut
+# donc pas être proposée telle quelle ; seule la recette principale
+# (net.lefil.fdroid.yml, signée par F-Droid) est en l'état soumissible.
 
 MaintainerNotes: |-
-  Candidate 0.2.1, versionCode 3. The build source includes corrected
-  Fastlane descriptions and the official logo assets, not a stable release tag.
-  Message polling is experimental and actual delivery is not validated.
-  Native recovery was tested in an Android 15 emulator using local HTML;
-  this did not test authenticated services or actual message delivery.
-  Web pages automatically load Google Fonts (fonts.googleapis.com and
-  fonts.gstatic.com); the homepage also loads WordPress emoji from s.w.org.
-  Third-party cookies are enabled. These web requests are now disclosed
-  upstream. Google font blocking left the observed public controls visible;
-  authenticated pages and tracking behavior remain unaudited. A Site Kit
-  generator marker was present without an analytics request observed.
-  Please review any additional Anti-Feature classification using the
-  recorded requests; absence of GMS/Firebase is a native dependency claim.
-  Review of the Quality Control user exception is requested: public history
-  starts on 2026-10-14, and the project representative reported a candidate
-  trial on a phone. No user count or accepted exception is claimed.
-  Live message acceptance is disclosed as pending during inclusion review;
-  the proposal does not claim validated notification delivery.
+  Candidate 0.2.7-test, versionCode 11, commit
+  85cbe966f3948a6fac9b690c82a21e2531cc25e1. Superseded candidate
+  0.2.1/versionCode 3 (commit 25189d316d8345a601b4dae2fa9987d286831d1e)
+  is kept only as prior validation history, not as the proposal.
+  This variant requests F-Droid to verify a reproducible build against
+  the developer-signed Binaries URL above and keep that signature
+  (AllowedAPKSigningKeys = v2 certificate) instead of F-Droid's own key.
+  As of 2026-10-24 the required Binaries asset for this versionCode does
+  not exist and no reproducible-build comparison has been attempted;
+  this path is not usable until both are done. See net.lefil.fdroid.yml
+  for the standard F-Droid-signed path, which has no such dependency.
 
 AutoUpdateMode: Version
 UpdateCheckMode: Tags v[0-9].*
-CurrentVersion: 0.2.1
-CurrentVersionCode: 3
+CurrentVersion: 0.2.7-test
+CurrentVersionCode: 11

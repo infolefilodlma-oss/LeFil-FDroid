@@ -1,4 +1,8 @@
 {
+  "superseded_notice": {
+    "added_utc": "2026-10-24",
+    "status": "All checks below ran against the superseded 0.2.1/versionCode 3 candidate (commit 25189d316d8345a601b4dae2fa9987d286831d1e). The current candidate is 0.2.7-test/versionCode 11, commit 85cbe966f3948a6fac9b690c82a21e2531cc25e1. None of the recorded test/build/scan runs below have been repeated for the new candidate; they must not be cited as validating it. See net.lefil.fdroid.yml and docs/release/SIGNING-KEY-V2-DECISION.md."
+  },
   "checked_at_utc": "2026-10-17T07:52:59.970501+00:00",
   "candidate": {
     "package": "net.lefil.fdroid",

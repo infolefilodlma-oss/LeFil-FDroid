@@ -1,5 +1,15 @@
 # Candidature officielle F-Droid — préparée, non déposée
 
+> **Candidat dépassé (2026-10-24).** Le candidat décrit ici est 0.2.1 /
+> code 3. Le candidat actuel est 0.2.7-test / versionCode 11, commit
+> `85cbe966f3948a6fac9b690c82a21e2531cc25e1` (voir
+> `net.lefil.fdroid.yml` et `docs/release/SIGNING-KEY-V2-DECISION.md`
+> pour le changement de clé de signature v1→v2). Aucune soumission n'a
+> été déposée pour ce nouveau candidat ; les points « à exposer à
+> l'examen » ci-dessous restent d'actualité et s'ajoutent désormais le
+> changement de clé de signature et l'absence de vérification de
+> reproductibilité binaire.
+
 Le Fil reste la même application Android `net.lefil.fdroid`, version candidate `0.2.1` / code `3`. La finalisation du dossier est isolée sur `codex/fdroid-submission-readiness`, à partir des travaux validés de `codex/notifications-fdroid-validation`. `main`, `notifications-reelles` et la PR nº 2 sont préservées.
 
 ## État réel

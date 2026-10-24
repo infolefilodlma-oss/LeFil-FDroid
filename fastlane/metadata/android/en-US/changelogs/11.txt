@@ -1,0 +1,1 @@
+Fixed icon: solid white background, larger logo. Notifications now use a native periodic check (WorkManager, about every 15 minutes) instead of a permanent background service; new messages from one cycle are grouped into a single notification. Added Radio (radio.le-fil.net) to the menu. Release candidate; extended on-device trials still recommended.

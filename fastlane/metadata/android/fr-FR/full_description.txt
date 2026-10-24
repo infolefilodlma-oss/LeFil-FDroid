@@ -1,12 +1,12 @@
-Le Fil donne accès au réseau Le Fil depuis Android : Agora (Friendica), Atrium (HumHub) et Talk, la messagerie intégrée à Atrium.
+Le Fil donne accès au réseau Le Fil depuis Android : Agora (Friendica), Atrium (HumHub), Talk (le Messenger HumHub intégré à Atrium) et Radio (webradio).
 
-Les services s’utilisent dans une interface WebView avec vos comptes habituels. Le menu permet de passer directement d’un service à l’autre. Talk ne désigne pas Nextcloud Talk.
+Les services s’utilisent dans une interface WebView avec vos comptes habituels. Le menu permet de passer directement d’un service à l’autre, y compris la radio. Talk ne désigne pas Nextcloud Talk.
 
 À partir d’Android 8, si le moteur d’affichage s’arrête, un panneau natif permet de recharger la dernière page ou de choisir un autre service dans le menu.
 
 Une fonction expérimentale de surveillance des messages est présente et désactivée par défaut. La détection des messages authentifiés, la réception des alertes et l’ouverture des conversations privées depuis celles-ci n’ont pas encore été validées de bout en bout sur les services réels. Ne comptez pas sur cette version candidate pour être averti d’un message.
 
-Cette surveillance réutilise les sessions de connexion du WebView, sans Firebase ni Google Play Services. Le mécanisme prévu consulte les services environ chaque minute lorsque Android le permet ; il ne s’agit pas de notifications push. La veille, les restrictions de batterie, une session expirée et un arrêt forcé peuvent retarder ou interrompre les vérifications. Le menu permet de désactiver la surveillance.
+Cette surveillance réutilise les sessions de connexion du WebView, sans Firebase ni Google Play Services, via WorkManager (sans service permanent). Le mécanisme consulte les services environ toutes les 15 minutes lorsque Android le permet, et regroupe les nouveaux messages détectés en une seule notification Android par cycle ; il ne s’agit pas de notifications push. La veille, les restrictions de batterie, une session expirée et un arrêt forcé peuvent retarder ou interrompre les vérifications. Le menu permet de désactiver la surveillance.
 
 Une connexion Internet et un compte sur chaque service sont nécessaires pour la messagerie. La réception immédiate et exhaustive n’est pas garantie : les listes serveur sont paginées et l’identification des messages dépend de leur format.
 

@@ -1,12 +1,12 @@
-Access Le Fil’s Agora (Friendica), Atrium (HumHub) and Talk, the messaging module built into Atrium. Talk does not refer to Nextcloud Talk.
+Access Le Fil’s Agora (Friendica), Atrium (HumHub), Talk (the HumHub Messenger built into Atrium) and Radio (web radio). Talk does not refer to Nextcloud Talk.
 
-Services run in a WebView using your existing accounts. The native menu provides direct access to each service.
+Services run in a WebView using your existing accounts. The native menu provides direct access to each service, including the radio.
 
 On Android 8 or newer, a native recovery panel can reload the last page or switch services from the menu if the web renderer exits.
 
 Optional message polling is experimental and disabled by default. Authenticated message detection, notification delivery and opening private conversations from alerts have not yet been validated end to end on the live services. This candidate must not be relied on for message alerts.
 
-The polling mechanism uses signed-in WebView sessions without Firebase or Google Play Services. It is designed to check approximately once per minute when Android permits it. This is not push messaging. Doze, battery restrictions, expired sessions and force-stop can delay or interrupt checks. Polling can be disabled from the menu.
+The polling mechanism uses signed-in WebView sessions without Firebase or Google Play Services, via WorkManager (no permanent background service). It checks approximately every 15 minutes when Android permits it, grouping newly detected messages from one cycle into a single Android notification. This is not push messaging. Doze, battery restrictions, expired sessions and force-stop can delay or interrupt checks. Polling can be disabled from the menu.
 
 Internet access and service accounts are required for messaging. Immediate or exhaustive delivery is not guaranteed: server lists are paginated and detection depends on their response format.
 

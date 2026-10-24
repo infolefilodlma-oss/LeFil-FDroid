@@ -1,5 +1,18 @@
 # Admission F-Droid — vérification du 17 octobre 2026
 
+> **Candidat dépassé (2026-10-24).** Ce relevé porte sur le candidat
+> 0.2.1 / versionCode 3 (commit `25189d316d8345a601b4dae2fa9987d286831d1e`).
+> Le candidat actuel est 0.2.7-test / versionCode 11 (commit
+> `85cbe966f3948a6fac9b690c82a21e2531cc25e1`), qui remplace le sondage
+> Gotify par WorkManager (~15 min, notification unique par cycle) et
+> ajoute Radio au menu ; voir `net.lefil.fdroid.yml` pour la recette
+> actualisée. La politique F-Droid citée ci-dessous (règle des trois
+> mois, exigence de fonctions natives pour les enveloppes WebView) a
+> été reconfirmée le 2026-10-24 sur le dépôt officiel et reste
+> d'application ; les preuves techniques détaillées (tests, scans,
+> exécutions CI) ci-dessous n'ont pas été recommencées pour le nouveau
+> candidat et ne doivent pas être lues comme le validant.
+
 Le dossier de Le Fil 0.2.1 est techniquement prêt à être proposé pour examen, avec demande explicite d'examen de l'exception d'ancienneté et déclaration des notifications non validées. Cela ne certifie pas son admission. La politique fixe des critères pour l'ajout au catalogue ; le guide prévoit que les mainteneurs examinent la proposition et déterminent les écarts à résoudre. Les limites connues restent ouvertes dans le texte de MR, sans être transformées en interdiction générale de déposer une proposition.
 
 ## Critères et preuves
