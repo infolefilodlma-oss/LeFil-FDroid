@@ -28,7 +28,7 @@ private fun fakeRequest(url: String, mainFrame: Boolean = true): WebResourceRequ
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [34, 35])
 class AndroidNavigationTest {
-    @Before fun disableLiveWatch() { MessageWatchService.setEnabled(RuntimeEnvironment.getApplication(), false) }
+    @Before fun disableLiveWatch() { MessageWatch.setEnabled(RuntimeEnvironment.getApplication(), false) }
 
     @Test fun coldLaunchOpensNotificationConversation() {
         val url = "https://atrium.le-fil.net/mail/mail/index?id=31"

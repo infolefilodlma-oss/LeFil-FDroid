@@ -11,8 +11,8 @@ android {
         applicationId 'net.lefil.fdroid'
         minSdk 24
         targetSdk 35
-        versionCode 10
-        versionName '0.2.6-test'
+        versionCode 11
+        versionName '0.2.7-test'
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
 
@@ -44,9 +44,9 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.7.0'
     implementation 'androidx.fragment:fragment-ktx:1.8.2'
     implementation 'com.google.android.material:material:1.12.0'
-    // Transport WebSocket officiel utilisé par Gotify Android (Apache 2.0).
-    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+    implementation 'androidx.work:work-runtime-ktx:2.9.1'
     testImplementation 'junit:junit:4.13.2'
+    testImplementation 'androidx.work:work-testing:2.9.1'
     testImplementation 'org.json:json:20240303'
     testImplementation 'org.robolectric:robolectric:4.14.1'
     androidTestImplementation 'androidx.test:runner:1.6.2'

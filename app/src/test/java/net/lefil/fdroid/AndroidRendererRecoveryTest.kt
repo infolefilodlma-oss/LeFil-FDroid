@@ -24,7 +24,7 @@ class AndroidRendererRecoveryTest {
         override fun rendererPriorityAtExit() = WebView.RENDERER_PRIORITY_IMPORTANT
     }
     @Before fun disableWatch() {
-        MessageWatchService.setEnabled(RuntimeEnvironment.getApplication(), false)
+        MessageWatch.setEnabled(RuntimeEnvironment.getApplication(), false)
     }
     @Test fun rendererExitIsHandledWithoutKillingTheActivity() {
         val controller = Robolectric.buildActivity(MainActivity::class.java).setup()

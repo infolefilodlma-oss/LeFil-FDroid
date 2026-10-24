@@ -15,7 +15,7 @@ import org.junit.runner.RunWith
 class NotificationLockInstrumentedTest {
     @Test fun activateWatcherForLockedScreenCheck() {
         val context = ApplicationProvider.getApplicationContext<android.content.Context>()
-        MessageWatchService.setEnabled(context, true)
-        assertTrue(MessageWatchService.start(context))
+        MessageWatch.setEnabled(context, true)
+        assertTrue(MessageWatch.start(context))
     }
 }

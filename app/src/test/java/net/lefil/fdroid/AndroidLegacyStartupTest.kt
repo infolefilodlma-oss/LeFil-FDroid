@@ -16,7 +16,7 @@ import org.robolectric.annotation.Config
 @Config(sdk = [24])
 class AndroidLegacyStartupTest {
     @Test fun android7StillOpensTheHomePage() {
-        MessageWatchService.setEnabled(RuntimeEnvironment.getApplication(), false)
+        MessageWatch.setEnabled(RuntimeEnvironment.getApplication(), false)
         val controller = Robolectric.buildActivity(MainActivity::class.java).setup()
         val webView = controller.get().findViewById<WebView>(R.id.site_webview)
         assertNotNull(webView)

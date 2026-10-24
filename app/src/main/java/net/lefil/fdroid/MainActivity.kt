@@ -104,7 +104,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             if (history == null) loadSite(lastSiteUrl)
         }
 
-        MessageWatchService.start(this)
+        MessageWatch.start(this)
         offerNotificationsOnce()
 
         onBackPressedDispatcher.addCallback(
@@ -193,7 +193,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 CookieManager.getInstance().flush()
                 // Just logged in to Agora or Atrium: pair this phone for native notifications without waiting.
                 val host = url?.let { Uri.parse(it).host }
-                if (host == "agora.le-fil.net" || host == "atrium.le-fil.net") MessageWatchService.pollNow(this@MainActivity)
+                if (host == "agora.le-fil.net" || host == "atrium.le-fil.net") MessageWatch.pollNow(this@MainActivity)
             }
 
             @RequiresApi(26)
@@ -268,7 +268,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     override fun onPause() {
         super.onPause()
         CookieManager.getInstance().flush()
-        MessageWatchService.pollNow(this)
+        MessageWatch.pollNow(this)
     }
 
     private fun messageUrlFrom(intent: Intent?): String? {
@@ -291,10 +291,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             }
         }
         toolbar.menu.add("Notifications des messages").setOnMenuItemClickListener {
-            if (MessageWatchService.enabled(this)) {
+            if (MessageWatch.enabled(this)) {
                 AlertDialog.Builder(this).setTitle("Notifications activées")
                     .setMessage("La surveillance utilise votre connexion Agora et Atrium. Elle peut être retardée par la veille ou les restrictions Android.")
-                    .setPositiveButton("Désactiver") { _, _ -> MessageWatchService.stop(this) }
+                    .setPositiveButton("Désactiver") { _, _ -> MessageWatch.stop(this) }
                     .setNegativeButton("Conserver", null).show()
             } else {
                 AlertDialog.Builder(this).setTitle("Activer les notifications ?")
@@ -322,7 +322,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private fun offerNotificationsOnce() {
         val prefs = getSharedPreferences("lefil_watch", Context.MODE_PRIVATE)
-        if (MessageWatchService.enabled(this) || prefs.getBoolean("notification_intro_seen", false)) return
+        if (MessageWatch.enabled(this) || prefs.getBoolean("notification_intro_seen", false)) return
         prefs.edit().putBoolean("notification_intro_seen", true).apply()
         AlertDialog.Builder(this)
             .setTitle("Recevoir les messages du Fil ?")
@@ -340,9 +340,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     private fun enableWatch() {
-        MessageWatchService.setEnabled(this, true)
-        if (!MessageWatchService.start(this)) {
-            MessageWatchService.setEnabled(this, false)
+        MessageWatch.setEnabled(this, true)
+        if (!MessageWatch.start(this)) {
+            MessageWatch.setEnabled(this, false)
             Toast.makeText(this, "Android n’a pas autorisé le démarrage. Réessayez avec l’application ouverte.", Toast.LENGTH_LONG).show()
         } else offerBatteryExemption()
     }
