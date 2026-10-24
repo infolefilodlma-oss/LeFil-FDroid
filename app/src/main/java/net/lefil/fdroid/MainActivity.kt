@@ -132,6 +132,14 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         webView.settings.javaScriptEnabled = true
         webView.settings.domStorageEnabled = true
+        // Radio (le-fil.net/radio) : le bouton "Écouter" lance la lecture via
+        // un lecteur YouTube en iframe (postMessage) ou l'élément <audio> de
+        // la page, selon la source. Le geste de l'utilisateur (son clic) ne
+        // se propage pas de façon fiable à travers cette frontière dans
+        // WebView comme il le fait dans Chrome ; sans ce réglage, play()
+        // échoue silencieusement (NotAllowedError) alors que le flux
+        // https://stream.le-fil.net/radio.mp3 et la page sont corrects.
+        webView.settings.mediaPlaybackRequiresUserGesture = false
 
         webView.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(
