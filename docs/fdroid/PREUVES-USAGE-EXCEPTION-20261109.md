@@ -2,6 +2,9 @@
 Date : 9 novembre 2026
 Objet : réouverture de fdroiddata!52965, fermée le 20 octobre 2026 pour ancienneté de développement insuffisante.
 
+## Précision fondamentale : distribution avant F-Droid
+**Le Fil n'a jamais été distribué depuis le catalogue officiel F-Droid.** Il est donc impossible d'exiger des installations *depuis F-Droid* avant son admission. L'exception « some users » porte sur des personnes qui utilisent l'application Android, y compris au moyen d'une APK de test ou d'un autre canal de distribution. Il faut distinguer l'existence d'un canal de test, l'inscription à ce canal, le téléchargement et l'utilisation réelle. Ne jamais décrire les 12 testeurs Google Play comme 12 installations F-Droid ni 12 installations Android confirmées.
+
 ## Données communiquées par le responsable
 1. **12 personnes inscrites au programme de test fermé Google Play** de l'application Le Fil. C'est un effectif d'inscrits, **pas** une preuve que les 12 ont utilisé l'APK. Leur participation effective et l'identité exacte des paquets/version distribués restent à distinguer. Des demandes Google Play ont signalé un besoin de tests supplémentaires ; ne pas présenter ces inscriptions comme validation fonctionnelle.
 2. **Quelques utilisateurs réels de l'application Android** : attestation explicite du responsable du projet, sans nombre exact, fréquence, dates ni identification des versions documentés.
@@ -17,7 +20,7 @@ Thank you for clarifying the three-month criterion. We would like to request con
 
 Le Fil is linked to an already active community service: the Agora instance lists **33 local accounts**, with dated posts, replies and interactions. The Android application has a **closed-testing group with 12 enrolled testers**, and the project representative confirms that some people have already used the Android app on real devices.
 
-We want to be precise: **12 enrolled testers does not imply 12 active Android users**, and the 33 Agora accounts are service users, not 33 confirmed app installs. We can provide anonymised evidence of actual Android app usage or testing as required, without exposing private member information. Could you specify which forms of evidence would suffice to review the exception and reopen this existing MR?
+To be precise, **the app has not been published on F-Droid yet, so none of these users obtained it through F-Droid**. Other test/distribution channels exist, but **12 enrolled testers does not imply 12 active Android users**, and the 33 Agora accounts are service users, not 33 confirmed app installs. We can provide anonymised evidence of actual Android app usage or testing as required, without exposing private member information. Could you specify which forms of evidence would suffice to review the exception and reopen this existing MR?
 
 We understand that acceptance remains at the maintainers' discretion. We will also keep the native functionality and descriptions truthful and verifiable.
 
