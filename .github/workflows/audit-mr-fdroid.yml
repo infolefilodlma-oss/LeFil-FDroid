@@ -19,7 +19,7 @@ jobs:
           python3 - <<'PY'
           import json,urllib.request,urllib.error,time
           base="https://gitlab.com/api/v4/projects/fdroid%2Ffdroiddata/merge_requests/52965"
-          paths={"MR":base,"NOTES":base+"/notes?per_page=100&sort=asc","COMMITS":base+"/commits?per_page=100","PIPELINES":base+"/pipelines?per_page=20"}
+          paths={"MR":base,"NOTES":base+"/notes?per_page=100&sort=asc","COMMITS":base+"/commits?per_page=100","PIPELINES":base+"/pipelines?per_page=20","DISCUSSIONS":base+"/discussions?per_page=100","VERSIONS":base+"/versions?per_page=100"}
           for name,url in paths.items():
               print("### "+name,flush=True)
               try:
@@ -31,6 +31,10 @@ jobs:
                       obj=[{"created_at":x.get("created_at"),"author":x.get("author",{}).get("username"),"body":x.get("body"),"system":x.get("system")} for x in obj]
                   elif name=="COMMITS":
                       obj=[{"id":x.get("id"),"title":x.get("title")} for x in obj]
+                  elif name=="DISCUSSIONS":
+                      obj=[{"id":x.get("id"),"notes":[{"author":n.get("author",{}).get("username"),"created_at":n.get("created_at"),"body":n.get("body"),"system":n.get("system")} for n in x.get("notes",[])]} for x in obj]
+                  elif name=="VERSIONS":
+                      obj=[{"id":x.get("id"),"created_at":x.get("created_at"),"head_commit_sha":x.get("head_commit_sha")} for x in obj]
                   elif name=="PIPELINES":
                       obj=[{"id":x.get("id"),"status":x.get("status"),"web_url":x.get("web_url")} for x in obj]
                   print(json.dumps(obj,ensure_ascii=False,default=str)[:25000],flush=True)
