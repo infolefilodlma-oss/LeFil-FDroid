@@ -3,6 +3,12 @@
 
     <!-- Requis par MainActivity (WebView vers le-fil.net et ses sous-domaines, HTTPS uniquement). -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
 
     <application
         android:theme="@style/Theme.LeFilFDroid"
@@ -14,6 +20,7 @@
 
         <activity
             android:name=".MainActivity"
+            android:launchMode="singleTask"
             android:exported="true">
 
             <intent-filter>
@@ -23,5 +30,16 @@
 
         </activity>
 
+        <service android:name=".MessageWatchService" android:foregroundServiceType="specialUse" android:exported="false">
+            <property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="Reception des messages prives Agora et Atrium sans Google Play Services" />
+        </service>
+        <receiver android:name=".BootReceiver" android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".PollAlarmReceiver" android:exported="false" />
     </application>
 </manifest>

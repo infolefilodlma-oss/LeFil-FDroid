@@ -1,5 +1,13 @@
 package net.lefil.fdroid
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.content.Context
+import android.content.pm.PackageManager
+import android.os.Build
+import android.os.PowerManager
+import android.provider.Settings
+import androidx.core.content.ContextCompat
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -26,9 +34,14 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     companion object {
         private const val FIL_URL = "https://le-fil.net/"
         private const val STATE_WEBVIEW = "site_webview_state"
+        const val EXTRA_URL = "net.lefil.fdroid.OPEN_URL"
     }
 
     private lateinit var webView: WebView
+
+    private val permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+        askBatteryOnce()
+    }
 
     private var pendingFileCallback: ValueCallback<Array<Uri>>? = null
 
@@ -111,11 +124,17 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             }
         }
 
-        if (savedInstanceState != null) {
+        val messageUrl = messageUrlFrom(intent)
+        if (messageUrl != null) {
+            webView.loadUrl(messageUrl)
+        } else if (savedInstanceState != null) {
             webView.restoreState(savedInstanceState.getBundle(STATE_WEBVIEW) ?: Bundle())
         } else {
             webView.loadUrl(FIL_URL)
         }
+
+        MessageWatchService.start(this)
+        askPermissions()
 
         onBackPressedDispatcher.addCallback(
             this,
@@ -130,6 +149,46 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 }
             }
         )
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        messageUrlFrom(intent)?.let { webView.loadUrl(it) }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        CookieManager.getInstance().flush()
+        MessageWatchService.pollNow(this)
+    }
+
+    private fun messageUrlFrom(intent: Intent?): String? {
+        val url = intent?.getStringExtra(EXTRA_URL) ?: return null
+        val uri = Uri.parse(url)
+        return if (uri.scheme == "https" && isFilHost(uri.host)) url else null
+    }
+
+    private fun askPermissions() {
+        if (Build.VERSION.SDK_INT >= 33 &&
+            ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+                != PackageManager.PERMISSION_GRANTED) {
+            permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+        } else askBatteryOnce()
+    }
+
+    @SuppressLint("BatteryLife")
+    private fun askBatteryOnce() {
+        if (Build.VERSION.SDK_INT < 23) return
+        val prefs = getSharedPreferences("lefil_app", Context.MODE_PRIVATE)
+        if (prefs.getBoolean("battery_asked", false)) return
+        val power = getSystemService(Context.POWER_SERVICE) as PowerManager
+        if (power.isIgnoringBatteryOptimizations(packageName)) return
+        prefs.edit().putBoolean("battery_asked", true).apply()
+        runCatching {
+            startActivity(Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)
+                .setData(Uri.parse("package:$packageName")))
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
