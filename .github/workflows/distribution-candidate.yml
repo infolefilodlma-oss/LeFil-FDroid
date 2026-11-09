@@ -32,6 +32,20 @@ jobs:
           test -s app/build/outputs/apk/debug/app-debug.apk
           test -s app/build/outputs/apk/release/app-release-unsigned.apk
           sha256sum app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/release/app-release-unsigned.apk | tee apk-sha256.txt
+      - name: Installer et lancer Le Fil sur Android 15
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: default
+          arch: x86_64
+          profile: pixel_2
+          disable-animations: true
+          script: |
+            adb install -r app/build/outputs/apk/debug/app-debug.apk
+            adb shell pm path net.lefil.fdroid | grep -q package:
+            adb shell monkey -p net.lefil.fdroid 1
+            sleep 10
+            adb shell pidof net.lefil.fdroid
       - uses: actions/upload-artifact@v4
         with:
           name: lefil-candidat-debug-non-publiable
