@@ -1,0 +1,39 @@
+name: Audit public F-Droid MR 52965 - lecture seule
+on:
+  workflow_dispatch:
+  push:
+    branches: [distribution-directe]
+    paths:
+      - '.github/workflows/audit-mr-fdroid.yml'
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Lire l'etat et les commentaires publics de la MR F-Droid
+        env:
+          GITLAB_API: https://gitlab.com/api/v4/projects/fdroid%2Ffdroiddata
+        run: |
+          python3 - <<'PY'
+          import json,urllib.request,urllib.error,time
+          base="https://gitlab.com/api/v4/projects/fdroid%2Ffdroiddata/merge_requests/52965"
+          paths={"MR":base,"NOTES":base+"/notes?per_page=100&sort=asc","COMMITS":base+"/commits?per_page=100","PIPELINES":base+"/pipelines?per_page=20"}
+          for name,url in paths.items():
+              print("### "+name,flush=True)
+              try:
+                  req=urllib.request.Request(url,headers={"User-Agent":"LeFil-FDroid-readonly-audit/1.0"})
+                  with urllib.request.urlopen(req,timeout=35) as res: obj=json.load(res)
+                  if name=="MR":
+                      obj={k:obj.get(k) for k in ("iid","title","state","merged_at","closed_at","closed_by","description","source_branch","target_branch","web_url","sha","detailed_merge_status")}
+                  elif name=="NOTES":
+                      obj=[{"created_at":x.get("created_at"),"author":x.get("author",{}).get("username"),"body":x.get("body"),"system":x.get("system")} for x in obj]
+                  elif name=="COMMITS":
+                      obj=[{"id":x.get("id"),"title":x.get("title")} for x in obj]
+                  elif name=="PIPELINES":
+                      obj=[{"id":x.get("id"),"status":x.get("status"),"web_url":x.get("web_url")} for x in obj]
+                  print(json.dumps(obj,ensure_ascii=False,default=str)[:25000],flush=True)
+              except Exception as e:
+                  print("ERREUR",type(e).__name__,str(e),flush=True)
+          PY
