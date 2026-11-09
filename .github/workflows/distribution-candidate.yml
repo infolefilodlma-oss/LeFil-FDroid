@@ -28,13 +28,15 @@ jobs:
           gradle-version: '8.7'
       - name: Compiler et contrôler
         run: |
-          gradle --no-daemon :app:assembleDebug :app:lintDebug
+          gradle --no-daemon :app:testDebugUnitTest :app:lintDebug :app:assembleDebug :app:assembleRelease
           test -s app/build/outputs/apk/debug/app-debug.apk
-          sha256sum app/build/outputs/apk/debug/app-debug.apk | tee apk-sha256.txt
+          test -s app/build/outputs/apk/release/app-release-unsigned.apk
+          sha256sum app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/release/app-release-unsigned.apk | tee apk-sha256.txt
       - uses: actions/upload-artifact@v4
         with:
           name: lefil-candidat-debug-non-publiable
           path: |
             app/build/outputs/apk/debug/app-debug.apk
+            app/build/outputs/apk/release/app-release-unsigned.apk
             apk-sha256.txt
           if-no-files-found: error
