@@ -14,17 +14,15 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 
 /**
- * Interface unique de l'application : le site complet https://le-fil.net/
- * (WordPress, LWS) dans un WebView natif. Aucune interface de service n'est
- * reconstruite, aucun onglet artificiel : la navigation est celle du site
- * lui-même, y compris vers ses sous-domaines réels (Agora, Atrium, Talk,
- * Radio...). Seuls les liens réellement externes à le-fil.net s'ouvrent
- * dans le navigateur du téléphone.
+ * Prototype indépendant « Le Fil Talk » : ouvre uniquement la messagerie
+ * HumHub existante dans Atrium. Aucun changement du serveur ou des comptes.
+ * Les liens extérieurs à Atrium s'ouvrent dans le navigateur système.
+ * Les notifications push et appels entrants ne sont PAS implémentés.
  */
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     companion object {
-        private const val FIL_URL = "https://le-fil.net/"
+        private const val FIL_URL = "https://atrium.le-fil.net/index.php?r=mail%2Fmail%2Findex"
         private const val STATE_WEBVIEW = "site_webview_state"
     }
 
@@ -40,7 +38,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     private fun isFilHost(host: String?): Boolean {
-        return host != null && (host == "le-fil.net" || host.endsWith(".le-fil.net"))
+        return host == "atrium.le-fil.net"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
