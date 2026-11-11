@@ -6,7 +6,7 @@
 
     <application
         android:theme="@style/Theme.LeFilFDroid"
-        android:label="Le Fil"
+        android:label="Le Fil Talk"
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:allowBackup="false"
