@@ -8,11 +8,11 @@ android {
     compileSdk 35
 
     defaultConfig {
-        applicationId 'net.lefil.fdroid'
+        applicationId 'net.lefil.talk.humhub'
         minSdk 24
         targetSdk 35
         versionCode 1
-        versionName '0.1'
+        versionName '0.1-talk-prototype'
     }
 
     compileOptions {
